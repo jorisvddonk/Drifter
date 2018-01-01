@@ -44,7 +44,7 @@ function displayTerrain() {
     geom.computeFaceNormals();
     geom.computeVertexNormals();
     geom.rotateX(1.5708*3);
-    geom.translate(-500, -400, 500);
+    geom.translate(-1000, -500, 1000);
 
     //Generate UVs:
     for (var i = 0; i < geom.faces.length; i++) {
