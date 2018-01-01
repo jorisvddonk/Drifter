@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Drifter</title>
+    <script src="lib/aframe-v0.7.1.js"></script>
+    <script src="shaders/skyGradient.js"></script>
+    <script src='lib/lodash.js'></script>
+    <script src="//cdn.rawgit.com/donmccurdy/aframe-extras/v3.12.4/dist/aframe-extras.min.js"></script>
+    <script src="https://unpkg.com/super-hands@2.1.0/dist/super-hands.min.js"></script>
+    
+    <script src="src/drifter-components.js"></script>
+
+    <script src="src/noctis_iv/niv_globals.js"></script>
+		<script src="src/noctis_iv/niv_starmap.js"></script>
+		<script src="src/noctis_iv/niv_drawingSpace.js"></script>
+		<script src="src/noctis_iv/niv_drawingSurface.js"></script>
+		<script src="src/noctis_iv/niv_surface.js"></script>
+		<script src="src/noctis_iv/niv_space.js"></script>
+		<script src="src/noctis_iv/niv_rand.js"></script>
+  </head>
+  <body>
+    <a-scene fog="type: linear; color: #CF9; near:1; far:100;" vr-mode-ui="enabled: true">
+      <a-assets></a-assets>
+      <a-entity id="sky" geometry="primitive: sphere; radius: 100;" material="shader: skyGradient; colorTop: #BD6; colorBottom: #CF9; side: back"/>
+      <a-entity id="pgeom" class="collidable" geometry="primitive: planetsurface" scale="0.1 0.1 0.1" planet-material ></a-entity>
+      <a-camera color="black"  collider-check>
+      </a-camera>
+    </a-scene>
+  </body>
+</html>
