@@ -21,10 +21,10 @@
 		<script src="src/noctis_iv/niv_rand.js"></script>
   </head>
   <body>
-    <a-scene fog="type: linear; color: #CF9; near:1; far:100;" vr-mode-ui="enabled: true">
+    <a-scene fog="type: linear; color: #CF9; near:1; far:200;" vr-mode-ui="enabled: true">
       <a-assets></a-assets>
-      <a-entity id="sky" geometry="primitive: sphere; radius: 100;" material="shader: skyGradient; colorTop: #BD6; colorBottom: #CF9; side: back"/>
-      <a-entity id="pgeom" class="collidable" geometry="primitive: planetsurface" scale="0.1 0.1 0.1" planet-material ></a-entity>
+      <a-entity id="sky" geometry="primitive: sphere; radius: 1000;" material="shader: skyGradient; colorTop: #BD6; colorBottom: #CF9; side: back"/>
+      <a-entity id="pgeom" class="collidable" geometry="primitive: planetsurface" scale="0.2 0.2 0.2" planet-material ></a-entity>
       <a-camera color="black" collider-check gamepad-controls>
       </a-camera>
     </a-scene>
