@@ -2,7 +2,12 @@ var xinited = false;
 var xinit = function() {
     if (!xinited) {
         xinited = true;
-        CURRENTSTAR = prepare_star(extract_target_info({x:-18928,y:-29680,z:-67336}));
+        //CURRENTSTAR = prepare_star(extract_target_info({x:-18928,y:-29680,z:-67336}));
+        var randCoord = function() {
+            return parseInt(Math.random() * 100000) - 50000;
+        };
+
+        CURRENTSTAR = prepare_star(extract_target_info({x:randCoord(),y:randCoord(),z:randCoord()}))
         nearstar_r = CURRENTSTAR['r'];
         nearstar_g = CURRENTSTAR['g'];
         nearstar_b = CURRENTSTAR['b'];
