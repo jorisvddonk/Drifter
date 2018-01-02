@@ -3,7 +3,6 @@ var xinit = function() {
   if (!xinited) {
     c_srand(parseInt(Math.random() * 256));
     xinited = true;
-    //CURRENTSTAR = prepare_star(extract_target_info({x:-18928,y:-29680,z:-67336}));
     var randCoord = function() {
       var range = 10000000;
       return parseInt(Math.random() * range) - range * 0.5;
@@ -80,19 +79,7 @@ var xinit = function() {
       )
     );
 
-    /*prepare_space();
-        create_thinatmosphere_space();
-        //create_icy_space();
-        //create_quartz_space();
-        //create_craterized_space();
-        //create_volcanic_space();
-        //create_largeinconsistent_space();
-        //create_thickatmosphere_space();
-        finish_space();*/
-
     convTerrain();
-    //displaySphere();
-    //renderPlanetTexture(p_background,360,180,2);
   }
 };
 
