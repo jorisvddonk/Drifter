@@ -7,13 +7,6 @@ function convTerrain() {
   };
 }
 
-function setPixel(imageData, x, y, r, g, b, a) {
-  index = (x + y * imageData.width) * 4;
-  imageData.data[index + 0] = r;
-  imageData.data[index + 1] = g;
-  imageData.data[index + 2] = b;
-  imageData.data[index + 3] = a;
-}
 function getTerrain(x, y, hideerrors) {
   return p_surfacemap[y * TERRAIN_HEIGHT + x];
 }
@@ -72,12 +65,4 @@ function displayTerrain() {
 
 function getVertexIndex(x, y) {
   return y * terrain.width + x;
-}
-
-function setPixel(imageData, x, y, r, g, b, a) {
-  index = (x + y * imageData.width) * 4;
-  imageData.data[index + 0] = r;
-  imageData.data[index + 1] = g;
-  imageData.data[index + 2] = b;
-  imageData.data[index + 3] = a;
 }

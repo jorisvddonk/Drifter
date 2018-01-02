@@ -160,3 +160,11 @@ function generatePalette(type) {
   shade(tmppal, colorbase + 32, 16, r2, g2, b2, r3, g3, b3);
   shade(tmppal, colorbase + 48, 16, r3, g3, b3, 64, 64, 64);
 }
+
+function setPixel(imageData, x, y, r, g, b, a) {
+  index = (x + y * imageData.width) * 4;
+  imageData.data[index + 0] = r;
+  imageData.data[index + 1] = g;
+  imageData.data[index + 2] = b;
+  imageData.data[index + 3] = a;
+}
