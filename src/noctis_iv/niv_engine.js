@@ -539,3 +539,54 @@ function txtr_similar() {
     }
   }
 }
+
+function create_creased_world() {
+  // descritto come "di medie dimensioni, pietroso
+  // (petroso) e corrugato". � un pianeta roccioso
+  // che non ha pressoch� nessun cratere d'impatto,
+  // ma la cui superficie � disseminata di enormi
+  // massi grandi come case. nel sistema solare
+  // un possibile corrispondente � la superficie
+  // di phobos, ma per certi versi lo sarebbe anche
+  // la Luna, se non avesse crateri...
+
+  // il terreno � piuttosto liscio, di per s�,
+  // con dislivelli simili a colline molto schiacciate,
+  // che possono essere inframezzate da ampie pianure...
+  rockyground(15, 3 + RANDOM(3), -RANDOM(5));
+
+  // e ora si aggiungono i pietroni della descrizione.
+  // pu� anche non essercene nessuno, in un quadrante...
+  n = RANDOM(15);
+  while (n) {
+    hf = RANDOM(15) + 7;
+    hr = hf * (flandom() * 3.5 + 3.5);
+    ht = hr * (flandom() * 0.2 + 0.3);
+    if (ht > 127) ht = 127;
+    round_hill(RANDOM(200), RANDOM(200), hf, hr, ht, 0);
+    n--;
+  }
+
+  // vanno per� arrotondati un po', perch� in effetti
+  // � presumibile che siano coperti di polvere...
+  smoothterrain(1 + RANDOM(2));
+
+  // qui disegna dei piccolissimi crateri sulla texture
+  // di superficie... che pi� che altro rappresentano
+  // macchie e avvallamenti nelle zone a albedo bassa.
+  n = 64 - raw_albedo;
+  hf = 0.5; // Craters shouldn't get shallower at night-time! O_o (SL, Joris)
+  while (n > 0) {
+    cx = RANDOM(150) + 25;
+    cz = RANDOM(150) + 25;
+    cr = RANDOM(10) + 15;
+    std_crater(txtr, cx, cz, -cr, 31, hf, 1, 256);
+    n--;
+  }
+
+  // piccoli sassi a grappoli, frammenti dei grandi
+  // massi e polveri addensate..
+  rockscaling = 100 + RANDOM(200);
+  rockdensity = 3 + 4 * RANDOM(2);
+  rockpeaking = 100 + RANDOM(200);
+}
