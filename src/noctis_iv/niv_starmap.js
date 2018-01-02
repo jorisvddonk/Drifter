@@ -10,7 +10,9 @@ function extract_target_info(sysinfo)
 	echo $ss."\n";
 	c_srand($ss);
 	*/
-	c_srand(parseInt(x/100000*y/100000*z/100000));
+	var seed = parseInt((x/100000)*(y/100000)*(z/100000));
+	c_srand(seed);
+	console.log("Target info seed: ", seed);
 	var s_class = c_random (star_classes);
 	var s_ray = (class_ray[s_class] + c_random(class_rayvar[s_class])) * 0.001;
 
