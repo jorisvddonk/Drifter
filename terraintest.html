@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<script src="niv_globals.js"></script>
-		<script src="niv_starmap.js"></script>
-		<script src="niv_drawingSpace.js"></script>
-		<script src="niv_drawingSurface.js"></script>
-		<script src="niv_surface.js"></script>
-		<script src="niv_space.js"></script>
-		<script src="niv_rand.js"></script>
-		<script src="jquery-1.7.2.min.js"></script>
-		<script src="Three.js"></script>
+		<script src="./src/noctis_iv/niv_globals.js"></script>
+		<script src="./src/noctis_iv/niv_starmap.js"></script>
+		<script src="./src/noctis_iv/niv_drawingSpace.js"></script>
+		<script src="./src/noctis_iv/niv_drawingSurface.js"></script>
+		<script src="./src/noctis_iv/niv_engine.js"></script>
+		<script src="./src/noctis_iv/niv_space.js"></script>
+		<script src="./src/noctis_iv/niv_rand.js"></script>
+		<script src="./src/noctis_iv/niv_textures.js"></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js'></script>
 		<script type="text/javascript">
 			var THREE_texture;
 			$(function(){
@@ -18,8 +18,6 @@
 				nearstar_g = CURRENTSTAR['g'];
 				nearstar_b = CURRENTSTAR['b'];
 
-
-				THREE_texture = THREE.ImageUtils.generateDataTexture( 1, 1, new THREE.Color( 0xff0000 ) );
 				c_srand(parseInt(Math.random()*256));
 				console.log("Seed is: " + Seed);
 
@@ -42,10 +40,7 @@
 
 				finish_space();
 				convTerrain();
-				displayTerrain();
-				displaySphere();
 				renderPlanetTexture(p_background,360,180,2);
-				
 			});
 		</script>
 		<title>Noctis IV JS</title>
