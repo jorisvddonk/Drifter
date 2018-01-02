@@ -258,6 +258,38 @@ function create_volcanic_world() {
   }
 }
 
+function create_icy_world() {
+  rockyground(10 - raw_albedo / 8, 0, 20 + RANDOM(100));
+  n = raw_albedo - RANDOM(raw_albedo) + 10;
+  while (n > 0) {
+    // fai qualche crepaccio nella superficie
+    srf_darkline(p_surfacemap, RANDOM(500), -1, -1, 200);
+    n--;
+  }
+  n = raw_albedo + RANDOM(200) - RANDOM(100);
+  if (n < 0) n = 0;
+  while (n > 0) {
+    // e aggiungi piccoli crateri "a macchia"
+    cx = RANDOM(192) + 32;
+    cz = RANDOM(192) + 32;
+    cr = RANDOM(16) + 16;
+    std_crater(txtr, cx, cz, -cr, 31, 0.15, 1, 256);
+    n--;
+  }
+  n = raw_albedo + RANDOM(100) - RANDOM(50);
+  if (n < 0) n = 0;
+  n = n * 0.5;
+  while (n > 0) {
+    // ma s�, anche qualche crepetta pi� piccola, sparsa...
+    srf_darkline(txtr, RANDOM(100), -RANDOM(2), -RANDOM(2), 256);
+    n--;
+  }
+  // pietre? poche. qualcuna, di media taglia...
+  rockscaling = 50 + RANDOM(400);
+  rockpeaking = 50 + RANDOM(200);
+  rockdensity = 3 + 4 * RANDOM(2);
+}
+
 function create_thinatmosphere_world() {
   if (RANDOM(2)) {
     n = 5 + RANDOM(10);
