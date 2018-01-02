@@ -65,19 +65,23 @@ var xinit = function() {
       }
     };
 
-    //generatePlanet(2);
-    generatePlanet(
-      _.sample(
-        _.without(
-          _.map(planet_typesWithSurface, function(x, i) {
-            if (x) {
-              return i;
-            }
-          }),
-          undefined
+    var force_planet_type = null;
+    if (force_planet_type !== null) {
+      generatePlanet(force_planet_type);
+    } else {
+      generatePlanet(
+        _.sample(
+          _.without(
+            _.map(planet_typesWithSurface, function(x, i) {
+              if (x) {
+                return i;
+              }
+            }),
+            undefined
+          )
         )
-      )
-    );
+      );
+    }
 
     convTerrain();
   }
@@ -136,7 +140,7 @@ AFRAME.registerComponent('planet-material', {
     THREE_texture = generateNIVDataTexture(256, 256);
     var geommat = new THREE.MeshLambertMaterial({
       map: THREE_texture,
-      opacity: 0.5
+      opacity: 1
     });
     this.material = this.el.getOrCreateObject3D('mesh').material = geommat;
   }
