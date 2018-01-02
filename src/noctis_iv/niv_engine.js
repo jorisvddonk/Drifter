@@ -293,11 +293,11 @@ function create_icy_world() {
 function create_thinatmosphere_world() {
   if (RANDOM(2)) {
     n = 5 + RANDOM(10);
-    if (raw_albedo > 48) n /= 2; //Fixing this to raw albedo so terrain doesn't change in a sector due to atmospheric conditions or nighttime (SL)
+    if (raw_albedo > 48) n = n * 0.5; //Fixing this to raw albedo so terrain doesn't change in a sector due to atmospheric conditions or nighttime (SL)
     rockyground(n, 1, 0);
   } else {
     n = 15 + RANDOM(32);
-    if (raw_albedo > 48) n /= 2; //Fixing this to raw albedo so terrain doesn't change in a sector due to atmospheric conditions or nighttime (SL)
+    if (raw_albedo > 48) n = n * 0.5; //Fixing this to raw albedo so terrain doesn't change in a sector due to atmospheric conditions or nighttime (SL)
     rockyground(n, 1, -RANDOM(24));
   }
   // va incluso qualche cratere eroso: Š possibile...
@@ -452,4 +452,90 @@ function create_thickatmosphere_world() {
   rockscaling = 500 + RANDOM(500);
   rockdensity = 7 + 8 * RANDOM(2);
   rockpeaking = 50 + RANDOM(150);
+}
+
+function create_quartz_world() {
+  // lattiginosi (pianeti al quarzo).
+  // le zone pi� scure sono coperte di strutture
+  // piuttosto allungate, simili a duomi tettonici.
+  if (raw_albedo < 20) {
+    ptr = 100 - raw_albedo;
+    while (ptr > 0) {
+      hr = RANDOM(300);
+      round_hill(
+        RANDOM(150) + 25,
+        RANDOM(150) + 25,
+        RANDOM(5) + 2,
+        hr + 1,
+        127,
+        0
+      );
+      ptr--;
+    }
+    smoothterrain(2 + RANDOM(3));
+  }
+  // altrove, sono normalmente coperti di montagnole,
+  // o da agglomerati informi...
+  ptr = (100 - raw_albedo) * 2;
+  while (ptr > 0) {
+    round_hill(RANDOM(200), RANDOM(200), RANDOM(25) + 1, RANDOM(25) + 1, 0, 1);
+    ptr--;
+  }
+  // abbastanza roccioso, s�... direi.
+  // quarziti molto irregolari, � ovvio...
+  quartz = 1;
+  rockscaling = 50 + RANDOM(300);
+  rockpeaking = 50 + RANDOM(300);
+  rockdensity = 7 + 8 * RANDOM(2);
+  // le macchie chiare sono zone pi� pianeggianti...
+  // quarzo fuso e successivamente risolidificato
+  // da estrusioni calde dall'interno: meno sassi qui.
+  if (raw_albedo > 40) {
+    rockscaling *= 0.5;
+    rockpeaking = rockscaling;
+    rockdensity = 3 + 4 * RANDOM(2);
+    smoothterrain(1 + RANDOM(10));
+  }
+  // ripeti una texture "nevosa" o "ghiacciata".
+  // non ci stanno male.
+  snowy = 0;
+  frosty = 0;
+  if (RANDOM(2)) {
+    snowy = 1;
+  } else {
+    frosty = 1;
+  }
+  txtr_similar();
+}
+
+function txtr_similar() {
+  if (snowy || frosty) {
+    // textures "nevose"
+    T_SCALE = 32;
+    n = RANDOM(16) + 16;
+    ptr = 65535;
+    while (ptr > 0) {
+      txtr[ptr] = RANDOM(n);
+      ptr--;
+    }
+    n = 1 + RANDOM(3);
+    while (n > 0) {
+      ptr = 65535 - 257;
+      while (ptr) {
+        cx = txtr[ptr] + txtr[ptr + 1] + txtr[ptr + 256] + txtr[ptr + 257];
+        txtr[ptr] = cx >> 2;
+        ptr--;
+      }
+      n--;
+    }
+  }
+  if (frosty) {
+    // textures "ghiacciate"
+    T_SCALE = 16 + RANDOM(48);
+    n = RANDOM(250);
+    while (n) {
+      srf_darkline(txtr, 100 + RANDOM(200), -RANDOM(2), 0, 256);
+      n--;
+    }
+  }
 }
