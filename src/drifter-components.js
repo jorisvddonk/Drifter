@@ -1,18 +1,21 @@
 var xinited = false;
 var xinit = function() {
     if (!xinited) {
+        c_srand(parseInt(Math.random()*256));
         xinited = true;
         //CURRENTSTAR = prepare_star(extract_target_info({x:-18928,y:-29680,z:-67336}));
         var randCoord = function() {
-            return parseInt(Math.random() * 100000) - 50000;
+            var range = 10000000;
+            return parseInt(Math.random() * range) - (range*0.5);
         };
 
-        CURRENTSTAR = prepare_star(extract_target_info({x:randCoord(),y:randCoord(),z:randCoord()}))
+        TGT_INFO = extract_target_info({x:randCoord(),y:randCoord(),z:randCoord()});
+        CURRENTSTAR = prepare_star(TGT_INFO);
+        console.log("Star class: ", CURRENTSTAR.class);
         nearstar_r = CURRENTSTAR['r'];
         nearstar_g = CURRENTSTAR['g'];
         nearstar_b = CURRENTSTAR['b'];
 
-        c_srand(parseInt(Math.random()*256));
         console.log("Seed is: " + Seed);
 
         generatePalette(5); 
