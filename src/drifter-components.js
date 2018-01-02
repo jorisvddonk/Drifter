@@ -69,6 +69,24 @@ AFRAME.registerComponent('planet-sky', {
     }
 });
 
+AFRAME.registerComponent('planet-fog', {
+    init: function () {
+        xinit();
+        var toHex = function(noctis_color) {
+            var v = Math.min(255, (noctis_color * 4)).toString(16);
+            if (v.length === 0) {
+                v = '0' + v;
+            }
+            return v;
+        }
+        var r = toHex(nearstar_r);
+        var g = toHex(nearstar_g);
+        var b = toHex(nearstar_b);
+        
+        this.el.setAttribute('fog', 'color', '#' + r + g + b);
+    }
+});
+
 var planMat = null;
 
 AFRAME.registerComponent('planet-material', {
