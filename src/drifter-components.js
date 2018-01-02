@@ -99,6 +99,15 @@ AFRAME.registerComponent('planet-material', {
     }
 });
 
+AFRAME.registerComponent('controller-actions', {
+    init: function() {
+        this.el.addEventListener('gamepadbuttondown', function (e) {
+            if (e.detail.index === 0) { // 'action' button, e.g. A
+                window.location.reload();
+            }
+        });
+    }
+})
 
 AFRAME.registerComponent('collider-check', {
     dependencies: [],
