@@ -53,7 +53,10 @@ function getFromPalette(index) {
   };
 }
 
-function renderPlanetTexture(buffer, width, height, scale) {
+function renderPlanetTexture(buffer, width, height, scale, usePalette) {
+  if (usePalette === undefined) {
+    usePalette = true;
+  }
   if (buffer === undefined) {
     buffer = p_background;
   }
@@ -76,7 +79,10 @@ function renderPlanetTexture(buffer, width, height, scale) {
   var img = ctx.createImageData(width * scale, height * scale);
   for (var y = 0; y < height; y++) {
     for (var x = 0; x < width; x++) {
-      var colr = getFromPalette(buffer[y * width + x]);
+      var val = buffer[y * width + x];
+      var colr = usePalette
+        ? getFromPalette(val)
+        : { r: parseInt(val), g: parseInt(val), b: parseInt(val) };
       for (var v = 0; v < scale; v++) {
         for (var u = 0; u < scale; u++) {
           setPixel(
