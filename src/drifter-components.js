@@ -22,13 +22,63 @@ var xinit = function() {
 
     console.log('Seed is: ' + Seed);
 
-    generatePalette(5);
-    //renderPalette();
+    var generatePlanet = function(typeId) {
+      console.log('Generating planet of type ' + planet_typesStr[typeId]);
+      generatePalette(typeId);
+      switch (typeId) {
+        case 0:
+          create_volcanic_world();
+          break;
+        case 1:
+          create_craterized_world();
+          break;
+        case 2:
+          create_thickatmosphere_world();
+          break;
+        case 3:
+          //create_felisian_world(); // TODO
+          console.log(
+            'Felysian world not supported yet; creating Icy world instead'
+          );
+          create_icy_world();
+          break;
+        case 4:
+          create_creased_world();
+          break;
+        case 5:
+          create_thinatmosphere_world();
+          break;
+        case 6:
+          // large not consistent; not supported
+          break;
+        case 7:
+          create_icy_world();
+          break;
+        case 8:
+          create_quartz_world();
+          break;
+        case 9:
+          // substellar object; not supported
+          break;
+        case 10:
+          // companion star; not supported
+          break;
+      }
+    };
 
-    //create_craterized_world();
-    create_thickatmosphere_world();
-    //create_volcanic_world();
-    //create_thinatmosphere_world();
+    //generatePlanet(2);
+    generatePlanet(
+      _.sample(
+        _.without(
+          _.map(planet_typesWithSurface, function(x, i) {
+            if (x) {
+              return i;
+            }
+          }),
+          undefined
+        )
+      )
+    );
 
     /*prepare_space();
         create_thinatmosphere_space();

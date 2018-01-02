@@ -176,6 +176,19 @@ var planet_typesStr = [
   'SUBSTELLAR OBJECT',
   'COMPANION STAR'
 ];
+var planet_typesWithSurface = [
+  true,
+  true,
+  true,
+  true,
+  true,
+  true,
+  false,
+  true,
+  true,
+  false,
+  false
+];
 
 var M_PI = Math.PI;
 var M_PI_2 = Math.PI * 0.5;
