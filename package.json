@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack --config webpack.conf.js"
+    "webpack": "webpack --config webpack.conf.js",
+    "precommit": "lint-staged",
+    "prettier": "prettier --write --config .prettierrc src/**/*.js"
   },
   "author": "Joris van de Donk",
   "license": "MIT",
@@ -20,7 +22,16 @@
     "super-hands": "^2.1.0"
   },
   "devDependencies": {
+    "husky": "^0.14.3",
+    "lint-staged": "^6.0.0",
+    "prettier": "^1.9.2",
     "webpack": "^3.10.0",
     "webpack-livereload-plugin": "^1.0.0"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
   }
 }
