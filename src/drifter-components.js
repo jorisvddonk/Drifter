@@ -1,5 +1,5 @@
 var xinited = false;
-var RIGHT_HAND_TOOLS = ['none', 'map'];
+var RIGHT_HAND_TOOLS = ['none', 'map', 'texture_surface', 'texture_planet'];
 var LEFT_HAND_TOOLS = ['none', 'planet'];
 var SELECTED_LEFT_HAND_TOOL = 0;
 var SELECTED_RIGHT_HAND_TOOL = 0;
@@ -188,15 +188,31 @@ AFRAME.registerComponent('remove-hand-controls', {
   }
 });
 
-var planMat = null;
-
-AFRAME.registerComponent('planet-material', {
+AFRAME.registerComponent('texture-material', {
+  schema: {
+    src: { type: 'string', default: 'txtr' },
+    width: { type: 'number', default: 256 },
+    height: { type: 'number', default: 256 },
+    type: { type: 'string', default: 'surface' }
+  },
   init: function() {
     xinit();
-    planMat = this;
-    THREE_texture = generateNIVDataTexture(256, 256);
+    var texture;
+    if (this.data.type === 'surface') {
+      texture = generateNIVDataTexture(
+        this.data.width,
+        this.data.height,
+        eval(this.data.src)
+      );
+    } else if (this.data.type === 'space') {
+      texture = generateNIVSpaceDataTexture(
+        this.data.width,
+        this.data.height,
+        eval(this.data.src)
+      );
+    }
     var geommat = new THREE.MeshLambertMaterial({
-      map: THREE_texture,
+      map: texture,
       opacity: 1
     });
     this.material = this.el.getOrCreateObject3D('mesh').material = geommat;
@@ -330,7 +346,10 @@ AFRAME.registerComponent('collider-check', {
       new THREE.Vector3(pos.x, pos.y + 4, pos.z),
       new THREE.Vector3(0, -1, 0)
     );
-    var intersects = raycaster.intersectObject(planMat.el.object3D, true);
+    var intersects = raycaster.intersectObject(
+      document.getElementById('planet_geometry').object3D,
+      true
+    );
     if (intersects.length > 0) {
       var intersect = intersects.pop();
       if (intersect && intersect.distance > 0) {
