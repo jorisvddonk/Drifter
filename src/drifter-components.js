@@ -212,24 +212,12 @@ AFRAME.registerComponent('planet-space-material', {
   }
 });
 
-AFRAME.registerComponent('apply-position-to-parent', {
-  init: function() {
-    this.done = false;
-  },
+AFRAME.registerComponent('follow-camera', {
+  init: function() {},
   tick: function(time) {
-    var el = this.el;
-    if (time > 1000 && !this.done) {
-      var oldSet = el.setAttribute;
-      el.setAttribute = function(attr) {
-        if (attr === 'position') {
-          console.log('on parent');
-          el.parentEl.setAttribute.apply(el.parentEl, arugments);
-        } else {
-          console.log('OLD ');
-          oldSet.apply(el, arugments);
-        }
-      };
-      this.done = true;
+    var camera = this.el.sceneEl.camera.el;
+    if (camera) {
+      this.el.setAttribute('position', camera.getAttribute('position'));
     }
   }
 });
