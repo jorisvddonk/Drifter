@@ -206,9 +206,6 @@ AFRAME.registerComponent('planet-space-material', {
       map: THREE_texturespace
     });
     this.material = this.el.getOrCreateObject3D('mesh').material = geommat;
-  },
-  tick: function() {
-    this.el.object3D.rotation.y += Math.PI * 0.003;
   }
 });
 
