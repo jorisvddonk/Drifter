@@ -257,7 +257,7 @@ AFRAME.registerComponent('collider-check', {
           y: oldPos.y,
           z: oldPos.z
         };
-        newPos.y = intersect.point.y + 1;
+        newPos.y = intersect.point.y;
         collider.setAttribute('position', newPos);
       }
     }
