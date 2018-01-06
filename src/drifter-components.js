@@ -171,6 +171,18 @@ AFRAME.registerComponent('planet-fog', {
   }
 });
 
+AFRAME.registerComponent('remove-hand-controls', {
+  init: function() {},
+  tick: function(time) {
+    // remove default hand model
+    // TODO: improve performance.
+    var obj3d = this.el.getObject3D('mesh');
+    if (obj3d) {
+      this.el.removeObject3D('mesh');
+    }
+  }
+});
+
 var planMat = null;
 
 AFRAME.registerComponent('planet-material', {
@@ -200,6 +212,28 @@ AFRAME.registerComponent('planet-space-material', {
   }
 });
 
+AFRAME.registerComponent('apply-position-to-parent', {
+  init: function() {
+    this.done = false;
+  },
+  tick: function(time) {
+    var el = this.el;
+    if (time > 1000 && !this.done) {
+      var oldSet = el.setAttribute;
+      el.setAttribute = function(attr) {
+        if (attr === 'position') {
+          console.log('on parent');
+          el.parentEl.setAttribute.apply(el.parentEl, arugments);
+        } else {
+          console.log('OLD ');
+          oldSet.apply(el, arugments);
+        }
+      };
+      this.done = true;
+    }
+  }
+});
+
 AFRAME.registerComponent('controller-actions', {
   init: function() {
     this.el.addEventListener('gamepadbuttondown', function(e) {
@@ -208,6 +242,10 @@ AFRAME.registerComponent('controller-actions', {
         window.location.reload();
       }
     });
+    this.el.addEventListener('xbuttondown', function(e) {
+      // X button on left Oculus controller
+      window.location.reload();
+    });
   }
 });
 
@@ -215,7 +253,8 @@ AFRAME.registerComponent('collider-check', {
   dependencies: [],
 
   tick: function(time, timeDelta) {
-    var pos = this.el.object3D.position;
+    var pos = document.getElementById('collider').object3D.position;
+    //console.log(pos);
     var raycaster = new THREE.Raycaster(pos, new THREE.Vector3(0, -1, 0));
     var intersects = raycaster.intersectObject(planMat.el.object3D, true);
     if (intersects.length > 0) {
@@ -224,14 +263,14 @@ AFRAME.registerComponent('collider-check', {
         if (time < 1) {
           return;
         }
-        var oldPos = this.el.getAttribute('position');
+        var oldPos = collider.getAttribute('position');
         var newPos = {
           x: oldPos.x,
           y: oldPos.y,
           z: oldPos.z
         };
         newPos.y = intersect.point.y + 1;
-        this.el.setAttribute('position', newPos);
+        collider.setAttribute('position', newPos);
       }
     }
   },
