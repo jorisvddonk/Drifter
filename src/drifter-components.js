@@ -243,7 +243,8 @@ AFRAME.registerComponent('collider-check', {
   tick: function(time, timeDelta) {
     var pos = document.getElementById('collider').object3D.position;
     //console.log(pos);
-    var raycaster = new THREE.Raycaster(pos, new THREE.Vector3(0, -1, 0));
+    var calsPos = new THREE.Vector3(pos.x, pos.y + 4, pos.z);
+    var raycaster = new THREE.Raycaster(calsPos, new THREE.Vector3(0, -1, 0));
     var intersects = raycaster.intersectObject(planMat.el.object3D, true);
     if (intersects.length > 0) {
       var intersect = intersects.pop();
