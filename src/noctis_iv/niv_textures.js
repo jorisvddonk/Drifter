@@ -1,4 +1,7 @@
-function generateNIVDataTexture(width, height) {
+function generateNIVDataTexture(width, height, texture) {
+  if (texture === undefined) {
+    texture = txtr;
+  }
   var size = width * height;
   var data = new Uint8Array(3 * size);
 
@@ -7,9 +10,9 @@ function generateNIVDataTexture(width, height) {
 
   for (var y = 0; y < height; y++) {
     for (var x = 0; x < width; x++) {
-      data[(y * width + x) * 3] = txtr[y * 256 + x] + 20;
-      data[(y * width + x) * 3 + 1] = txtr[y * 256 + x] + 20;
-      data[(y * width + x) * 3 + 2] = txtr[y * 256 + x] + 20;
+      data[(y * width + x) * 3] = texture[y * 256 + x] + 20;
+      data[(y * width + x) * 3 + 1] = texture[y * 256 + x] + 20;
+      data[(y * width + x) * 3 + 2] = texture[y * 256 + x] + 20;
     }
   }
 

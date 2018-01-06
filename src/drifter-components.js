@@ -24,6 +24,7 @@ var xinit = function() {
     var generatePlanet = function(typeId) {
       console.log('Generating planet of type ' + planet_typesStr[typeId]);
       generatePalette(typeId);
+      //create_sky_for_planettype(typeId);
       switch (typeId) {
         case 0:
           create_volcanic_world();
@@ -63,6 +64,45 @@ var xinit = function() {
           // companion star; not supported
           break;
       }
+
+      prepare_space();
+      switch (typeId) {
+        case 0:
+          create_volcanic_space();
+          break;
+        case 1:
+          create_craterized_space();
+          break;
+        case 2:
+          create_thickatmosphere_space();
+          break;
+        case 3:
+          create_felysian_space();
+          break;
+        case 4:
+          create_creased_space();
+          break;
+        case 5:
+          create_thinatmosphere_space();
+          break;
+        case 6:
+          create_largeinconsistent_space();
+          break;
+        case 7:
+          create_icy_space();
+          break;
+        case 8:
+          create_quartz_space();
+          break;
+        case 9:
+          // substellar object; not supported yet
+          break;
+        case 10:
+          // companion star; not supported yet
+          break;
+      }
+
+      finish_space();
     };
 
     var force_planet_type = null;
@@ -143,6 +183,20 @@ AFRAME.registerComponent('planet-material', {
       opacity: 1
     });
     this.material = this.el.getOrCreateObject3D('mesh').material = geommat;
+  }
+});
+
+AFRAME.registerComponent('planet-space-material', {
+  init: function() {
+    xinit();
+    THREE_texturespace = generateNIVSpaceDataTexture(360, 120, p_background);
+    var geommat = new THREE.MeshBasicMaterial({
+      map: THREE_texturespace
+    });
+    this.material = this.el.getOrCreateObject3D('mesh').material = geommat;
+  },
+  tick: function() {
+    this.el.object3D.rotation.y += Math.PI * 0.003;
   }
 });
 
