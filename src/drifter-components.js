@@ -217,7 +217,43 @@ AFRAME.registerComponent('follow-camera', {
   tick: function(time) {
     var camera = this.el.sceneEl.camera.el;
     if (camera) {
-      this.el.setAttribute('position', camera.getAttribute('position'));
+      // need to add the Y position of the parent element, as that's used to fix the height of the user in the world
+      var pos = camera.getAttribute('position');
+      var posS = { x: pos.x, y: pos.y, z: pos.z };
+      posS.y += camera.parentElement.getAttribute('position').y;
+      this.el.setAttribute('position', posS);
+    }
+  }
+});
+
+var CAMERAHEIGHT = 1.65;
+AFRAME.registerComponent('follow-room', {
+  init: function() {
+    navigator.getVRDisplays().then(displays => {
+      this.display = displays[0];
+    });
+    this.vfd = new VRFrameData();
+  },
+  tick: function() {
+    if (this.display) {
+      this.display.getFrameData(this.vfd);
+      var camera = this.el.sceneEl.camera.el;
+      if (camera) {
+        // need to add the Y position of the camera's parent element, as that's used to fix the height of the user in the world
+        var posC = camera.getAttribute('position');
+        var posHMD = this.vfd.pose.position;
+        if (posHMD === null) {
+          posHMD = [0, 0, 0];
+        }
+        var posS = {
+          x: posC.x - posHMD[0],
+          y: posC.y - posHMD[1],
+          z: posC.z - posHMD[2]
+        };
+        posS.y += camera.parentElement.getAttribute('position').y;
+        posS.y -= CAMERAHEIGHT;
+        this.el.setAttribute('position', posS);
+      }
     }
   }
 });
@@ -237,17 +273,28 @@ AFRAME.registerComponent('controller-actions', {
   }
 });
 
+AFRAME.registerComponent('debug-show-always', {
+  init: function() {
+    var mat = new THREE.MeshBasicMaterial({
+      depthTest: false
+    });
+    this.material = this.el.getOrCreateObject3D('mesh').material = mat;
+  }
+});
+
 AFRAME.registerComponent('collider-check', {
   dependencies: [],
 
   tick: function(time, timeDelta) {
     var objToGetPositionFrom = this.el;
     var objToSetPositionTo = this.el;
-    var offsetY = 1;
+    var offsetY = CAMERAHEIGHT;
 
     var pos = objToGetPositionFrom.object3D.position;
-    var calsPos = new THREE.Vector3(pos.x, pos.y + 4, pos.z);
-    var raycaster = new THREE.Raycaster(calsPos, new THREE.Vector3(0, -1, 0));
+    var raycaster = new THREE.Raycaster(
+      new THREE.Vector3(pos.x, pos.y + 4, pos.z),
+      new THREE.Vector3(0, -1, 0)
+    );
     var intersects = raycaster.intersectObject(planMat.el.object3D, true);
     if (intersects.length > 0) {
       var intersect = intersects.pop();
@@ -261,8 +308,10 @@ AFRAME.registerComponent('collider-check', {
           y: oldPos.y,
           z: oldPos.z
         };
-        newPos.y = intersect.point.y + offsetY;
-        objToSetPositionTo.setAttribute('position', newPos);
+        newPos.x = 0;
+        newPos.y = intersect.point.y;
+        newPos.z = 0;
+        this.el.parentElement.setAttribute('position', newPos);
       }
     }
   },

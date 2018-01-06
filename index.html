@@ -32,13 +32,18 @@
         <a-entity id="sky" geometry="primitive: sphere; radius: 1000;" planet-sky material="shader: skyGradient; colorTop: #000; colorBottom: #000; side: back"></a-entity>
       </a-entity>
 
-      <a-entity id="collider" gamepad-controls>
-        <a-sphere radius="0.1" color="red"></a-sphere>
-        <a-entity geometry="primitive: box" hand-controls="left" remove-hand-controls controller-actions>
+      <a-entity id="collider" follow-camera>
+        <a-box width="0.1" height="0.1" depth="0.1" position="0 -1 0" debug-show-always></a-box>
+      </a-entity>
+      <a-entity follow-room>
+        <a-sphere radius="0.1" position="0 0 0" debug-show-always></a-sphere>
+        <a-entity hand-controls="left" remove-hand-controls controller-actions>
           <a-sphere radius="0.1" position="0 0 -0.1" planet-space-material></a-sphere>
         </a-entity>
-        <a-camera controller-actions collider-check>
-        </a-camera>
+      </a-entity>
+      
+      <a-entity>
+        <a-camera gamepad-controls controller-actions collider-check></a-camera>
       </a-entity>
     </a-scene>
   </body>
