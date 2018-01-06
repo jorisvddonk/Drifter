@@ -1,4 +1,9 @@
 var xinited = false;
+var RIGHT_HAND_TOOLS = ['none', 'map'];
+var LEFT_HAND_TOOLS = ['none', 'planet'];
+var SELECTED_LEFT_HAND_TOOL = 0;
+var SELECTED_RIGHT_HAND_TOOL = 0;
+
 var xinit = function() {
   if (!xinited) {
     c_srand(parseInt(Math.random() * 256));
@@ -255,6 +260,27 @@ AFRAME.registerComponent('follow-room', {
   }
 });
 
+AFRAME.registerComponent('hand-tool', {
+  schema: {
+    hand: { type: 'string', default: 'left' },
+    name: { type: 'string', default: 'none' }
+  },
+  tick: function() {
+    var visible = false;
+    if (this.data.hand === 'left') {
+      if (LEFT_HAND_TOOLS[SELECTED_LEFT_HAND_TOOL] === this.data.name) {
+        visible = true;
+      }
+    }
+    if (this.data.hand === 'right') {
+      if (RIGHT_HAND_TOOLS[SELECTED_RIGHT_HAND_TOOL] === this.data.name) {
+        visible = true;
+      }
+    }
+    this.el.object3D.visible = visible;
+  }
+});
+
 AFRAME.registerComponent('controller-actions', {
   init: function() {
     this.el.addEventListener('gamepadbuttondown', function(e) {
@@ -266,6 +292,18 @@ AFRAME.registerComponent('controller-actions', {
     this.el.addEventListener('xbuttondown', function(e) {
       // X button on left Oculus controller
       window.location.reload();
+    });
+    this.el.addEventListener('ybuttondown', function(e) {
+      SELECTED_LEFT_HAND_TOOL += 1;
+      if (SELECTED_LEFT_HAND_TOOL > LEFT_HAND_TOOLS.length - 1) {
+        SELECTED_LEFT_HAND_TOOL = 0;
+      }
+    });
+    this.el.addEventListener('bbuttondown', function(e) {
+      SELECTED_RIGHT_HAND_TOOL += 1;
+      if (SELECTED_RIGHT_HAND_TOOL > RIGHT_HAND_TOOLS.length - 1) {
+        SELECTED_RIGHT_HAND_TOOL = 0;
+      }
     });
   }
 });
