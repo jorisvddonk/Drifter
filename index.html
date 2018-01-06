@@ -24,7 +24,7 @@
     </script>
   </head>
   <body>
-    <a-scene fog="type: linear; color: #000; near:1; far:200;" planet-fog vr-mode-ui="enabled: true">
+    <a-scene id="scene" fog="type: linear; color: #000; near:1; far:200;" planet-fog vr-mode-ui="enabled: true">
       <a-assets></a-assets>
       <a-entity id="pgeom" class="collidable" geometry="primitive: planetsurface" scale="0.2 0.2 0.2" planet-material ></a-entity>
       
@@ -33,6 +33,7 @@
       </a-entity>
 
       <a-entity id="collider" gamepad-controls>
+        <a-sphere radius="0.1" color="red"></a-sphere>
         <a-entity geometry="primitive: box" hand-controls="left" remove-hand-controls controller-actions>
           <a-sphere radius="0.1" position="0 0 -0.1" planet-space-material></a-sphere>
         </a-entity>

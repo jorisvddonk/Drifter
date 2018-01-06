@@ -241,8 +241,11 @@ AFRAME.registerComponent('collider-check', {
   dependencies: [],
 
   tick: function(time, timeDelta) {
-    var pos = document.getElementById('collider').object3D.position;
-    //console.log(pos);
+    var objToGetPositionFrom = this.el;
+    var objToSetPositionTo = this.el;
+    var offsetY = 1;
+
+    var pos = objToGetPositionFrom.object3D.position;
     var calsPos = new THREE.Vector3(pos.x, pos.y + 4, pos.z);
     var raycaster = new THREE.Raycaster(calsPos, new THREE.Vector3(0, -1, 0));
     var intersects = raycaster.intersectObject(planMat.el.object3D, true);
@@ -252,14 +255,14 @@ AFRAME.registerComponent('collider-check', {
         if (time < 1) {
           return;
         }
-        var oldPos = collider.getAttribute('position');
+        var oldPos = objToGetPositionFrom.object3D.position;
         var newPos = {
           x: oldPos.x,
           y: oldPos.y,
           z: oldPos.z
         };
-        newPos.y = intersect.point.y;
-        collider.setAttribute('position', newPos);
+        newPos.y = intersect.point.y + offsetY;
+        objToSetPositionTo.setAttribute('position', newPos);
       }
     }
   },
