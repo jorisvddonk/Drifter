@@ -2,8 +2,6 @@
 
 `npm run-script webpack`
 
-or
+# Developing
 
-`npm run-script webpack -- --watch`
-
-Then launch index.html
+`npm run-script dev`

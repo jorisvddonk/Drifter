@@ -1,3 +1,9 @@
+// Debug functions:
+// renderPlanetTexture(terrain.array, 200, 200, 2, false); // render planet heightmap
+// renderPlanetTexture(ruinschart, 200, 200, 2, false); // render planet ruins chart (ruins on Felysian worlds, lava)
+// renderPlanetTexture(txtr,256,256,2); // render surface texture
+// renderPalette(); // render palette
+
 var xinited = false;
 var RIGHT_HAND_TOOLS = ['none', 'map', 'texture_surface', 'texture_planet'];
 var LEFT_HAND_TOOLS = ['none', 'planet'];
