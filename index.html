@@ -2,7 +2,8 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title>Drifter</title>
+    <title>Drifter - a Space Exploration VR experiment</title>
+    <!-- Note: following files contain Noctis IV code ported to JavaScript, and are licensed under the WTOF public license: http://anywherebb.com/wpl/wtof_public_license.html -->
     <script src="src/noctis_iv/niv_globals.js"></script>
 		<script src="src/noctis_iv/niv_starmap.js"></script>
 		<script src="src/noctis_iv/niv_drawingSpace.js"></script>
@@ -11,17 +12,10 @@
 		<script src="src/noctis_iv/niv_space.js"></script>
     <script src="src/noctis_iv/niv_rand.js"></script>
     <script src="src/noctis_iv/niv_textures.js"></script>
+    <!-- End of Noctis IV code -->
     
+    <!-- Drifter main bundle -->
     <script src="dist/bundle.js"></script>
-    <script src="http://localhost:35729/livereload.js"></script>
-
-    <script>
-      // Debug functions:
-      // renderPlanetTexture(terrain.array, 200, 200, 2, false); // render planet heightmap
-      // renderPlanetTexture(ruinschart, 200, 200, 2, false); // render planet ruins chart (ruins on Felysian worlds, lava)
-      // renderPlanetTexture(txtr,256,256,2); // render surface texture
-      // renderPalette(); // render palette
-    </script>
   </head>
   <body>
     <a-scene id="scene" fog="type: linear; color: #000; near:1; far:200;" planet-fog vr-mode-ui="enabled: true">

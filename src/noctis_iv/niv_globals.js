@@ -1,3 +1,15 @@
+/*
+This file contains modified Noctis IV / Noctis IV Plus / Noctis IV CE source code,
+and is therefore licensed under the WTOF PUBLIC LICENSE
+
+For more information, visit:
+http://anywherebb.com/wpl/wtof_public_license.html
+
+See also 'General conditions for distribution of modified versions of Noctis IV's source code':
+http://anynowhere.com/bb/posts.php?t=409&p=5
+
+*/
+
 var TERRAINMULT_X = 10;
 var TERRAINMULT_Y = 10;
 var TERRAINMULT_Z = 2;
