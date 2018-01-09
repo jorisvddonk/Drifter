@@ -352,9 +352,10 @@ AFRAME.registerComponent('collider-check', {
       new THREE.Vector3(pos.x, pos.y + 4, pos.z),
       new THREE.Vector3(0, -1, 0)
     );
+    raycaster.near = 0;
     var intersects = raycaster.intersectObject(
-      document.getElementById('planet_geometry').object3D,
-      true
+      document.getElementById('planet_geometry').object3D.children[0],
+      false
     );
     if (intersects.length > 0) {
       var intersect = intersects.pop();
