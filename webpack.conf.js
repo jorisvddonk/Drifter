@@ -1,14 +1,25 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
 
-var plugins = [];
-if (process.env.NODE_ENV === 'production') {
-  plugins.push(new UglifyJsPlugin({}));
+var plugins = [
+  new HtmlWebpackPlugin({
+    template: 'index.html',
+    inject: 'head'
+  })
+];
+if (
+  process.env.NODE_ENV === 'production' ||
+  process.env.npm_lifecycle_event === 'webpack'
+) {
+  plugins.unshift(new UglifyJsPlugin({}));
 }
 
 module.exports = {
   entry: './index.js',
   output: {
-    filename: 'dist/bundle.js'
+    path: path.resolve('./dist/'),
+    filename: 'bundle.js'
   },
   plugins: plugins
 };
