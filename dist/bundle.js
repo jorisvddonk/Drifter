@@ -4901,28 +4901,28 @@
     i(150);
   },
   function(t, e, i) {
-    t.exports = i.p + 'niv.js';
+    t.exports = i.p + 'niv_globals.js';
   },
   function(t, e, i) {
-    t.exports = i.p + 'niv.js';
+    t.exports = i.p + 'niv_starmap.js';
   },
   function(t, e, i) {
-    t.exports = i.p + 'niv.js';
+    t.exports = i.p + 'niv_drawingSpace.js';
   },
   function(t, e, i) {
-    t.exports = i.p + 'niv.js';
+    t.exports = i.p + 'niv_drawingSurface.js';
   },
   function(t, e, i) {
-    t.exports = i.p + 'niv.js';
+    t.exports = i.p + 'niv_engine.js';
   },
   function(t, e, i) {
-    t.exports = i.p + 'niv.js';
+    t.exports = i.p + 'niv_space.js';
   },
   function(t, e, i) {
-    t.exports = i.p + 'niv.js';
+    t.exports = i.p + 'niv_rand.js';
   },
   function(t, e, i) {
-    t.exports = i.p + 'niv.js';
+    t.exports = i.p + 'niv_textures.js';
   },
   function(t, i, n) {
     (function(i, n) {
