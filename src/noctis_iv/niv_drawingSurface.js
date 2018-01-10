@@ -24,7 +24,7 @@ function getTerrain(x, y, hideerrors) {
 }
 
 function displayTerrain() {
-  geom = new THREE.Geometry();
+  var geom = new THREE.Geometry();
   for (var y = 0; y < terrain.height; y++) {
     for (var x = 0; x < terrain.width; x++) {
       var vert = new THREE.Vector3(
