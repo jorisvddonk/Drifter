@@ -58,10 +58,11 @@ function displayTerrain() {
       geom.faces.push(face);
     }
   }
-  geom.computeFaceNormals();
-  geom.computeVertexNormals();
   geom.rotateX(1.5708 * 3);
   geom.translate(-1000, -500, 1000);
+  geom.scale(0.2, 0.2, 0.2);
+  geom.computeFaceNormals();
+  geom.computeVertexNormals();
 
   //Generate UVs:
   for (var i = 0; i < geom.faces.length; i++) {
