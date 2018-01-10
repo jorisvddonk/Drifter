@@ -340,21 +340,30 @@ AFRAME.registerComponent('debug-show-always', {
 });
 
 AFRAME.registerComponent('collider-check', {
-  dependencies: [],
+  schema: {},
+
+  init: function() {
+    this.raycaster = new THREE.Raycaster();
+    this.raycaster.near = 0;
+    this.raycaster.far = 1000;
+    this.planetElement = document.getElementById('planet_geometry');
+    this.vector_dir = new THREE.Vector3(0, -1, 0);
+    this.TEMP_VEC = new THREE.Vector3(0, 0, 0);
+  },
 
   tick: function(time, timeDelta) {
+    if (time < 10) {
+      return;
+    }
     var objToGetPositionFrom = this.el;
     var objToSetPositionTo = this.el;
     var offsetY = CAMERAHEIGHT;
 
     var pos = objToGetPositionFrom.object3D.position;
-    var raycaster = new THREE.Raycaster(
-      new THREE.Vector3(pos.x, pos.y + 4, pos.z),
-      new THREE.Vector3(0, -1, 0)
-    );
-    raycaster.near = 0;
-    var intersects = raycaster.intersectObject(
-      document.getElementById('planet_geometry').object3D.children[0],
+    this.TEMP_VEC.set(pos.x, pos.y + 4, pos.z);
+    this.raycaster.set(this.TEMP_VEC, this.vector_dir);
+    var intersects = this.raycaster.intersectObject(
+      this.planetElement.object3D.children[0],
       false
     );
     if (intersects.length > 0) {
@@ -375,7 +384,5 @@ AFRAME.registerComponent('collider-check', {
         this.el.parentElement.setAttribute('position', newPos);
       }
     }
-  },
-
-  init: function() {}
+  }
 });
