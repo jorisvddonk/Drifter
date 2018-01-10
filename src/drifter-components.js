@@ -9,6 +9,7 @@ var RIGHT_HAND_TOOLS = ['none', 'map', 'texture_surface', 'texture_planet'];
 var LEFT_HAND_TOOLS = ['none', 'planet'];
 var SELECTED_LEFT_HAND_TOOL = 0;
 var SELECTED_RIGHT_HAND_TOOL = 0;
+var PLANET_TYPE = undefined;
 
 var xinit = function() {
   if (!xinited) {
@@ -34,6 +35,7 @@ var xinit = function() {
 
     var generatePlanet = function(typeId) {
       console.log('Generating planet of type ' + planet_typesStr[typeId]);
+      PLANET_TYPE = typeId;
       generatePalette(typeId);
       //create_sky_for_planettype(typeId);
       switch (typeId) {
@@ -145,16 +147,17 @@ AFRAME.registerGeometry('planetsurface', {
   }
 });
 
+var toHex = function(noctis_color) {
+  var v = Math.min(255, noctis_color * 4).toString(16);
+  if (v.length === 1) {
+    v = '0' + v;
+  }
+  return v;
+};
+
 AFRAME.registerComponent('planet-sky', {
   init: function() {
     xinit();
-    var toHex = function(noctis_color) {
-      var v = Math.min(255, noctis_color * 4).toString(16);
-      if (v.length === 0) {
-        v = '0' + v;
-      }
-      return v;
-    };
     var r = toHex(nearstar_r);
     var g = toHex(nearstar_g);
     var b = toHex(nearstar_b);
@@ -167,18 +170,16 @@ AFRAME.registerComponent('planet-sky', {
 AFRAME.registerComponent('planet-fog', {
   init: function() {
     xinit();
-    var toHex = function(noctis_color) {
-      var v = Math.min(255, noctis_color * 4).toString(16);
-      if (v.length === 0) {
-        v = '0' + v;
-      }
-      return v;
-    };
     var r = toHex(nearstar_r);
     var g = toHex(nearstar_g);
     var b = toHex(nearstar_b);
-
-    this.el.setAttribute('fog', 'color', '#' + r + g + b);
+    var atmosphericDensity = planet_typesAtmosphericDensity[PLANET_TYPE];
+    if (atmosphericDensity > 0) {
+      this.el.setAttribute('fog', 'type', 'linear');
+      this.el.setAttribute('fog', 'near', '1');
+      this.el.setAttribute('fog', 'far', 300 - atmosphericDensity); // should be less on a thick atmo world
+      this.el.setAttribute('fog', 'color', '#' + r + g + b);
+    }
   }
 });
 
