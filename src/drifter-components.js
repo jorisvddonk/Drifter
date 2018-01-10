@@ -352,14 +352,7 @@ AFRAME.registerComponent('collider-check', {
   },
 
   tick: function(time, timeDelta) {
-    if (time < 10) {
-      return;
-    }
-    var objToGetPositionFrom = this.el;
-    var objToSetPositionTo = this.el;
-    var offsetY = CAMERAHEIGHT;
-
-    var pos = objToGetPositionFrom.object3D.position;
+    var pos = this.el.object3D.position;
     this.TEMP_VEC.set(pos.x, pos.y + 4, pos.z);
     this.raycaster.set(this.TEMP_VEC, this.vector_dir);
     var intersects = this.raycaster.intersectObject(
@@ -369,19 +362,11 @@ AFRAME.registerComponent('collider-check', {
     if (intersects.length > 0) {
       var intersect = intersects.pop();
       if (intersect && intersect.distance > 0) {
-        if (time < 1) {
-          return;
-        }
-        var oldPos = objToGetPositionFrom.object3D.position;
-        var newPos = {
-          x: oldPos.x,
-          y: oldPos.y,
-          z: oldPos.z
-        };
-        newPos.x = 0;
-        newPos.y = intersect.point.y;
-        newPos.z = 0;
-        this.el.parentElement.setAttribute('position', newPos);
+        this.el.parentElement.setAttribute('position', {
+          x: 0,
+          y: intersect.point.y,
+          z: 0
+        });
       }
     }
   }
