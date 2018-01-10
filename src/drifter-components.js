@@ -191,6 +191,34 @@ AFRAME.registerComponent('planet-sky', {
   }
 });
 
+AFRAME.registerComponent('create-stars', {
+  init: function() {
+    var createStar = () => {
+      var elem = document.createElement('a-sphere');
+      var azim = Math.random() * Math.PI * 0.5;
+      var rot = Math.random() * Math.PI * 4;
+      var dist = 1000;
+      var pos = {
+        x: Math.sin(rot) * Math.cos(azim),
+        y: Math.sin(azim),
+        z: Math.cos(rot) * Math.cos(azim)
+      };
+      pos.x *= dist;
+      pos.y *= dist;
+      pos.z *= dist;
+      elem.setAttribute('radius', '2');
+      elem.setAttribute('segments-height', '1');
+      elem.setAttribute('segments-width', '1');
+      elem.setAttribute('material', 'fog', false);
+      elem.setAttribute('position', AFRAME.utils.coordinates.stringify(pos));
+      this.el.appendChild(elem);
+    };
+    for (var i = 0; i < 1000; i++) {
+      createStar();
+    }
+  }
+});
+
 AFRAME.registerComponent('planet-fog', {
   init: function() {
     xinit();
