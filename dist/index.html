@@ -15,9 +15,9 @@
     <!-- End of Noctis IV code -->
   <script type="text/javascript" src="bundle.js"></script></head>
   <body>
-    <a-scene id="scene" fog="type: linear; color: #000; near:1; far:200;" planet-fog vr-mode-ui="enabled: true">
+    <a-scene id="scene" planet-fog vr-mode-ui="enabled: true">
       <a-assets></a-assets>
-      <a-entity id="planet_geometry" class="collidable" geometry="primitive: planetsurface" scale="0.2 0.2 0.2" texture-material="src: txtr" ></a-entity>
+      <a-entity id="planet_geometry" geometry="primitive: planetsurface" texture-material="src: txtr"></a-entity>
       
       <a-entity follow-camera>
         <a-entity id="sky" geometry="primitive: sphere; radius: 1000;" planet-sky material="shader: skyGradient; colorTop: #000; colorBottom: #000; side: back"></a-entity>
@@ -32,7 +32,7 @@
           <a-sphere hand-tool="hand: left; name: planet" radius="0.1" position="0 0 0" rotation="0 60 80" planet-space-material></a-sphere>
         </a-entity>
         <a-entity hand-controls="right" remove-hand-controls>
-          <a-entity hand-tool="hand: right; name: map" rotation="0 60 80" material="color: cyan; roughness: 1; metalness: 1;" geometry="primitive: planetsurface" scale="0.0003 0.0003 0.0003"></a-entity>
+          <a-entity hand-tool="hand: right; name: map" rotation="0 60 80" material="color: cyan; roughness: 1; metalness: 1;" geometry="primitive: planetsurface" scale="0.0015 0.0015 0.0015"></a-entity>
           <a-entity hand-tool="hand: right; name: texture_surface" rotation="0 -20 0" geometry="primitive: plane" texture-material="src: txtr" scale="0.4 0.4 0.4"></a-entity>
           <a-entity hand-tool="hand: right; name: texture_planet" rotation="0 -20 0" geometry="primitive: plane" texture-material="src: p_background; width: 360; height: 160; type: space" scale="0.36 0.16 0.4"></a-entity>
         </a-entity>

@@ -24,7 +24,7 @@ function getTerrain(x, y, hideerrors) {
 }
 
 function displayTerrain() {
-  geom = new THREE.Geometry();
+  var geom = new THREE.Geometry();
   for (var y = 0; y < terrain.height; y++) {
     for (var x = 0; x < terrain.width; x++) {
       var vert = new THREE.Vector3(
@@ -58,10 +58,11 @@ function displayTerrain() {
       geom.faces.push(face);
     }
   }
-  geom.computeFaceNormals();
-  geom.computeVertexNormals();
   geom.rotateX(1.5708 * 3);
   geom.translate(-1000, -500, 1000);
+  geom.scale(0.2, 0.2, 0.2);
+  geom.computeFaceNormals();
+  geom.computeVertexNormals();
 
   //Generate UVs:
   for (var i = 0; i < geom.faces.length; i++) {

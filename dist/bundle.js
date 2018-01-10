@@ -30,7 +30,7 @@
       return Object.prototype.hasOwnProperty.call(t, e);
     }),
     (i.p = ''),
-    i((i.s = 40));
+    i((i.s = 41));
 })([
   function(t, e, i) {
     t.exports = r;
@@ -959,7 +959,7 @@
       o = i(4),
       s = i(2),
       a = (i(13), i(3)),
-      c = i(16);
+      c = i(17);
     function l(t) {
       (t = t || {}),
         n.apply(this),
@@ -1371,55 +1371,55 @@
   },
   function(t, e, i) {
     t.exports = {
-      version: i(55).version,
+      version: i(56).version,
       AABB: i(3),
       ArrayCollisionMatrix: i(28),
       Body: i(5),
-      Box: i(16),
-      Broadphase: i(17),
+      Box: i(17),
+      Broadphase: i(18),
       Constraint: i(10),
       ContactEquation: i(6),
       Narrowphase: i(30),
-      ConeTwistConstraint: i(57),
+      ConeTwistConstraint: i(58),
       ContactMaterial: i(33),
       ConvexPolyhedron: i(8),
-      Cylinder: i(59),
-      DistanceConstraint: i(60),
+      Cylinder: i(60),
+      DistanceConstraint: i(61),
       Equation: i(11),
       EventTarget: i(24),
       FrictionEquation: i(25),
       GSSolver: i(34),
-      GridBroadphase: i(61),
-      Heightfield: i(62),
+      GridBroadphase: i(62),
+      Heightfield: i(63),
       HingeConstraint: i(35),
-      LockConstraint: i(63),
+      LockConstraint: i(64),
       Mat3: i(4),
       Material: i(13),
       NaiveBroadphase: i(36),
-      ObjectCollisionMatrix: i(64),
+      ObjectCollisionMatrix: i(65),
       Pool: i(32),
       Particle: i(37),
       Plane: i(29),
-      PointToPointConstraint: i(20),
+      PointToPointConstraint: i(21),
       Quaternion: i(2),
-      Ray: i(18),
-      RaycastVehicle: i(65),
+      Ray: i(19),
+      RaycastVehicle: i(66),
       RaycastResult: i(14),
-      RigidVehicle: i(67),
-      RotationalEquation: i(21),
+      RigidVehicle: i(68),
+      RotationalEquation: i(22),
       RotationalMotorEquation: i(26),
-      SAPBroadphase: i(68),
-      SPHSystem: i(69),
+      SAPBroadphase: i(69),
+      SPHSystem: i(70),
       Shape: i(1),
-      Solver: i(19),
+      Solver: i(20),
       Sphere: i(38),
-      SplitSolver: i(70),
-      Spring: i(71),
+      SplitSolver: i(71),
+      Spring: i(72),
       Transform: i(9),
-      Trimesh: i(72),
+      Trimesh: i(73),
       Vec3: i(0),
       Vec3Pool: i(31),
-      World: i(74)
+      World: i(75)
     };
   },
   function(t, e, i) {
@@ -1942,7 +1942,7 @@
   },
   function(t, e, i) {
     t.exports = o;
-    var n = i(56),
+    var n = i(57),
       r = i(0);
     function o(t, e, i, r) {
       (this.id = o.id++),
@@ -2142,6 +2142,18 @@
         }
       };
     })();
+  },
+  function(t, e) {
+    var i;
+    i = (function() {
+      return this;
+    })();
+    try {
+      i = i || Function('return this')() || (0, eval)('this');
+    } catch (t) {
+      'object' == typeof window && (i = window);
+    }
+    t.exports = i;
   },
   function(t, e, i) {
     t.exports = s;
@@ -2363,7 +2375,7 @@
     var n = i(0),
       r = i(2),
       o = i(9),
-      s = (i(8), i(16), i(14)),
+      s = (i(8), i(17), i(14)),
       a = i(1),
       c = i(3);
     function l(t, e) {
@@ -2839,26 +2851,14 @@
       );
     };
   },
-  function(t, e) {
-    var i;
-    i = (function() {
-      return this;
-    })();
-    try {
-      i = i || Function('return this')() || (0, eval)('this');
-    } catch (t) {
-      'object' == typeof window && (i = window);
-    }
-    t.exports = i;
-  },
   function(t, e, i) {
     var n = i(7),
-      r = i(77);
+      r = i(78);
     (t.exports = {
-      'dynamic-body': i(80),
-      'static-body': i(84),
-      constraint: i(85),
-      system: i(86),
+      'dynamic-body': i(81),
+      'static-body': i(85),
+      constraint: i(86),
+      system: i(87),
       registerAll: function(t) {
         this._registered ||
           ((t = t || window.AFRAME),
@@ -3224,11 +3224,11 @@
     var n = i(3),
       r = i(5),
       o = i(1),
-      s = i(18),
+      s = i(19),
       a = i(0),
       c = i(9),
       l = (i(8), i(2)),
-      u = (i(19), i(31)),
+      u = (i(20), i(31)),
       h = i(6),
       d = i(25);
     function p(t) {
@@ -4497,7 +4497,7 @@
   function(t, e, i) {
     t.exports = r;
     i(0), i(2);
-    var n = i(19);
+    var n = i(20);
     function r() {
       n.call(this), (this.iterations = 10), (this.tolerance = 1e-7);
     }
@@ -4568,8 +4568,8 @@
   function(t, e, i) {
     t.exports = a;
     i(10);
-    var n = i(20),
-      r = i(21),
+    var n = i(21),
+      r = i(22),
       o = i(26),
       s = (i(6), i(0));
     function a(t, e, i) {
@@ -4623,7 +4623,7 @@
   },
   function(t, e, i) {
     t.exports = o;
-    var n = i(17),
+    var n = i(18),
       r = i(3);
     function o() {
       n.apply(this);
@@ -4721,8 +4721,8 @@
       s,
       a,
       c = i(7),
-      l = i(81);
-    i(83),
+      l = i(82);
+    i(84),
       (t.exports = {
         schema: {
           shape: {
@@ -4884,9 +4884,32 @@
         })
       });
   },
+  function(t, e) {
+    t.exports = function(t) {
+      return (
+        t.webpackPolyfill ||
+          ((t.deprecate = function() {}),
+          (t.paths = []),
+          t.children || (t.children = []),
+          Object.defineProperty(t, 'loaded', {
+            enumerable: !0,
+            get: function() {
+              return t.l;
+            }
+          }),
+          Object.defineProperty(t, 'id', {
+            enumerable: !0,
+            get: function() {
+              return t.i;
+            }
+          }),
+          (t.webpackPolyfill = 1)),
+        t
+      );
+    };
+  },
   function(t, e, i) {
-    i(41),
-      i(42),
+    i(42),
       i(43),
       i(44),
       i(45),
@@ -4894,11 +4917,12 @@
       i(47),
       i(48),
       i(49),
-      i(53),
-      i(132);
-    var n = i(145);
-    AFRAME.registerComponent('gamepad-controls', n), i(148), i(149);
-    i(150);
+      i(50),
+      i(54),
+      i(133);
+    var n = i(146);
+    AFRAME.registerComponent('gamepad-controls', n), i(149), i(150);
+    i(157);
   },
   function(t, e, i) {
     t.exports = i.p + 'niv_globals.js';
@@ -47153,7 +47177,7 @@
                   r = '\n',
                   o = /\s/;
                 function s(t, e, i, n) {
-                  var r = a17400.indexOf(e, i);
+                  var r = a17408.indexOf(e, i);
                   return -1 === r || r > n ? n : r;
                 }
                 function a(t) {
@@ -60102,7 +60126,7 @@
         )(171);
       }),
         (t.exports = o());
-    }.call(i, n(22), n(50).setImmediate));
+    }.call(i, n(16), n(51).setImmediate));
   },
   function(t, e, i) {
     var n = Function.prototype.apply;
@@ -60136,7 +60160,7 @@
             t._onTimeout && t._onTimeout();
           }, e));
       }),
-      i(51),
+      i(52),
       (e.setImmediate = setImmediate),
       (e.clearImmediate = clearImmediate);
   },
@@ -60261,7 +60285,7 @@
           }
         }
       })('undefined' == typeof self ? (void 0 === t ? this : t) : self);
-    }.call(e, i(22), i(52)));
+    }.call(e, i(16), i(53)));
   },
   function(t, e) {
     var i,
@@ -60380,12 +60404,12 @@
   },
   function(t, e, i) {
     t.exports = {
-      controls: i(54),
-      loaders: i(98),
-      misc: i(108),
-      pathfinding: i(117),
+      controls: i(55),
+      loaders: i(99),
+      misc: i(109),
+      pathfinding: i(118),
       physics: i(23),
-      primitives: i(125),
+      primitives: i(126),
       registerAll: function() {
         this.controls.registerAll(),
           this.loaders.registerAll(),
@@ -60399,13 +60423,13 @@
   function(t, e, i) {
     var n = i(23);
     t.exports = {
-      'checkpoint-controls': i(88),
-      'gamepad-controls': i(89),
-      'hmd-controls': i(92),
-      'keyboard-controls': i(93),
-      'mouse-controls': i(95),
-      'touch-controls': i(96),
-      'universal-controls': i(97),
+      'checkpoint-controls': i(89),
+      'gamepad-controls': i(90),
+      'hmd-controls': i(93),
+      'keyboard-controls': i(94),
+      'mouse-controls': i(96),
+      'touch-controls': i(97),
+      'universal-controls': i(98),
       registerAll: function(t) {
         this._registered ||
           ((t = t || window.AFRAME),
@@ -60509,9 +60533,9 @@
   function(t, e, i) {
     t.exports = a;
     i(10);
-    var n = i(20),
-      r = i(58),
-      o = i(21),
+    var n = i(21),
+      r = i(59),
+      o = i(22),
       s = (i(6), i(0));
     function a(t, e, i) {
       var a = void 0 !== (i = i || {}).maxForce ? i.maxForce : 1e6,
@@ -60647,7 +60671,7 @@
   },
   function(t, e, i) {
     t.exports = s;
-    var n = i(17),
+    var n = i(18),
       r = i(0),
       o = i(1);
     function s(t, e, i, o, s) {
@@ -61111,8 +61135,8 @@
   function(t, e, i) {
     t.exports = s;
     i(10);
-    var n = i(20),
-      r = i(21),
+    var n = i(21),
+      r = i(22),
       o = (i(26), i(6), i(0));
     function s(t, e, i) {
       var s = void 0 !== (i = i || {}).maxForce ? i.maxForce : 1e6,
@@ -61180,8 +61204,8 @@
     i(5);
     var n = i(0),
       r = i(2),
-      o = (i(14), i(18)),
-      s = i(66);
+      o = (i(14), i(19)),
+      s = i(67);
     function a(t) {
       (this.chassisBody = t.chassisBody),
         (this.wheelInfos = []),
@@ -61646,7 +61670,7 @@
   function(t, e, i) {
     var n = i(5),
       r = i(38),
-      o = i(16),
+      o = i(17),
       s = i(0),
       a = i(35);
     function c(t) {
@@ -61746,7 +61770,7 @@
   },
   function(t, e, i) {
     i(1);
-    var n = i(17);
+    var n = i(18);
     function r(t) {
       n.apply(this),
         (this.axisList = []),
@@ -62040,7 +62064,7 @@
   function(t, e, i) {
     t.exports = o;
     i(0), i(2);
-    var n = i(19),
+    var n = i(20),
       r = i(5);
     function o(t) {
       for (
@@ -62215,7 +62239,7 @@
       r = i(0),
       o = (i(2), i(9)),
       s = i(3),
-      a = i(73);
+      a = i(74);
     function c(t, e) {
       n.call(this),
         (this.type = n.types.TRIMESH),
@@ -62553,14 +62577,14 @@
       s = (i(6), i(25), i(30)),
       a = i(24),
       c = i(28),
-      l = i(75),
+      l = i(76),
       u = i(13),
       h = i(33),
       d = i(5),
-      p = i(76),
+      p = i(77),
       f = i(14),
       m = i(3),
-      g = i(18),
+      g = i(19),
       v = i(36);
     function y(t) {
       (t = t || {}),
@@ -63105,8 +63129,8 @@
   },
   function(t, e, i) {
     t.exports = {
-      velocity: i(78),
-      quaternion: i(79),
+      velocity: i(79),
+      quaternion: i(80),
       registerAll: function(t) {
         this._registered ||
           ((t = t || window.AFRAME).components.velocity ||
@@ -63183,7 +63207,7 @@
   },
   function(t, e, i) {
     var n = i(7),
-      r = i(82),
+      r = i(83),
       o = Math.PI / 2,
       s = {
         BOX: 'Box',
@@ -63846,7 +63870,7 @@
   },
   function(t, e, i) {
     var n = i(7),
-      r = i(87),
+      r = i(88),
       o = r.GRAVITY,
       s = r.CONTACT_MATERIAL;
     t.exports = {
@@ -64027,8 +64051,8 @@
     };
   },
   function(t, e, i) {
-    var n = i(90),
-      r = i(91);
+    var n = i(91),
+      r = i(92);
     t.exports = {
       GamepadButton: n,
       schema: {
@@ -64229,7 +64253,7 @@
     };
   },
   function(t, e, i) {
-    i(94);
+    i(95);
     var n = window.KeyboardEvent;
     t.exports = {
       schema: { enabled: { default: !0 }, debug: { default: !1 } },
@@ -65124,12 +65148,12 @@
   },
   function(t, e, i) {
     t.exports = {
-      'animation-mixer': i(99),
-      'fbx-model': i(100),
-      'gltf-model-legacy': i(102),
-      'json-model': i(104),
-      'object-model': i(105),
-      'ply-model': i(106),
+      'animation-mixer': i(100),
+      'fbx-model': i(101),
+      'gltf-model-legacy': i(103),
+      'json-model': i(105),
+      'object-model': i(106),
+      'ply-model': i(107),
       registerAll: function(t) {
         this._registered ||
           ((t = t || window.AFRAME).components['animation-mixer'] ||
@@ -65256,7 +65280,7 @@
     };
   },
   function(t, e, i) {
-    (THREE.FBXLoader = i(101)),
+    (THREE.FBXLoader = i(102)),
       (t.exports = {
         schema: { src: { type: 'asset' }, crossorigin: { default: '' } },
         init: function() {
@@ -67077,7 +67101,7 @@
     })();
   },
   function(t, e, i) {
-    var n = i(103)();
+    var n = i(104)();
     t.exports = {
       schema: { type: 'model' },
       init: function() {
@@ -67247,7 +67271,7 @@
     };
   },
   function(t, e, i) {
-    (THREE.PLYLoader = i(107)),
+    (THREE.PLYLoader = i(108)),
       (t.exports.System = {
         init: function() {
           this.cache = {};
@@ -67555,14 +67579,14 @@
   function(t, e, i) {
     var n = i(23);
     t.exports = {
-      checkpoint: i(109),
-      'cube-env-map': i(110),
-      grab: i(111),
-      'jump-ability': i(112),
-      'kinematic-body': i(113),
-      'mesh-smooth': i(114),
-      'sphere-collider': i(115),
-      'toggle-velocity': i(116),
+      checkpoint: i(110),
+      'cube-env-map': i(111),
+      grab: i(112),
+      'jump-ability': i(113),
+      'kinematic-body': i(114),
+      'mesh-smooth': i(115),
+      'sphere-collider': i(116),
+      'toggle-velocity': i(117),
       registerAll: function(t) {
         this._registered ||
           ((t = t || window.AFRAME),
@@ -67997,9 +68021,9 @@
   },
   function(t, e, i) {
     t.exports = {
-      'nav-mesh': i(118),
-      'nav-controller': i(119),
-      system: i(120),
+      'nav-mesh': i(119),
+      'nav-controller': i(120),
+      system: i(121),
       registerAll: function(t) {
         this._registered ||
           ((t = t || window.AFRAME).components['nav-mesh'] ||
@@ -68098,7 +68122,7 @@
     };
   },
   function(t, e, i) {
-    var n = i(121);
+    var n = i(122);
     t.exports = {
       init: function() {
         (this.navMesh = null),
@@ -68131,8 +68155,8 @@
   },
   function(t, e, i) {
     const n = i(27),
-      r = i(122),
-      o = i(124);
+      r = i(123),
+      o = i(125);
     var s = 1,
       a = function(t) {
         console.log(
@@ -68329,7 +68353,7 @@
     };
   },
   function(t, e, i) {
-    const n = i(123),
+    const n = i(124),
       r = i(27);
     t.exports = class {
       static init(t) {
@@ -68515,10 +68539,10 @@
   },
   function(t, e, i) {
     t.exports = {
-      'a-grid': i(126),
-      'a-hexgrid': i(127),
-      'a-ocean': i(130),
-      'a-tube': i(131),
+      'a-grid': i(127),
+      'a-hexgrid': i(128),
+      'a-ocean': i(131),
+      'a-tube': i(132),
       registerAll: function(t) {
         this._registered ||
           ((t = t || window.AFRAME),
@@ -68555,8 +68579,8 @@
   },
   function(t, e, i) {
     var n,
-      r = i(128),
-      o = i(129),
+      r = i(129),
+      o = i(130),
       s = (t.exports.Primitive = {
         defaultComponents: { hexgrid: {} },
         mappings: { src: 'hexgrid.src' }
@@ -70579,10 +70603,9 @@
       throw new Error(
         'Component attempted to register before AFRAME was available.'
       );
-    i(133),
-      i(134),
+    i(134),
       i(135),
-      i(137),
+      i(136),
       i(138),
       i(139),
       i(140),
@@ -70590,6 +70613,7 @@
       i(142),
       i(143),
       i(144),
+      i(145),
       AFRAME.registerComponent('super-hands', {
         schema: {
           colliderState: { default: '' },
@@ -71088,7 +71112,7 @@
   },
   function(t, e, i) {
     const n = AFRAME.utils.extendDeep,
-      r = i(136),
+      r = i(137),
       o = i(15);
     AFRAME.registerComponent(
       'grabbable',
@@ -71837,8 +71861,8 @@
     );
   },
   function(t, e, i) {
-    var n = i(146),
-      r = i(147),
+    var n = i(147),
+      r = i(148),
       o = Math.PI / 2;
     t.exports = {
       GamepadButton: n,
@@ -72070,12 +72094,14 @@
         '\n   uniform vec3 colorTop;\n   uniform vec3 colorBottom;\n   uniform vec3 sunPosition;\n\n   varying vec3 vWorldPosition;\n\n   void main()\n\n   {\n     vec3 pointOnSphere = normalize(vWorldPosition.xyz);\n     float f = 1.0;\n     f = sin((pointOnSphere.y+0.0) * 1.5);\n     gl_FragColor = vec4(mix(colorBottom,colorTop, f ), 1.0);\n   }'
     });
   },
-  function(module, exports) {
-    var xinited = !1,
+  function(module, exports, __webpack_require__) {
+    var url = __webpack_require__(151),
+      xinited = !1,
       RIGHT_HAND_TOOLS = ['none', 'map', 'texture_surface', 'texture_planet'],
       LEFT_HAND_TOOLS = ['none', 'planet'],
       SELECTED_LEFT_HAND_TOOL = 0,
       SELECTED_RIGHT_HAND_TOOL = 0,
+      PLANET_TYPE = void 0,
       xinit = function() {
         if (!xinited) {
           c_srand(parseInt(256 * Math.random())), (xinited = !0);
@@ -72090,80 +72116,86 @@
             (nearstar_b = CURRENTSTAR.b),
             console.log('Seed is: ' + Seed);
           var e = function(t) {
-            switch ((console.log(
-              'Generating planet of type ' + planet_typesStr[t]
-            ),
-            generatePalette(t),
-            t)) {
-              case 0:
-                create_volcanic_world();
-                break;
-              case 1:
-                create_craterized_world();
-                break;
-              case 2:
-                create_thickatmosphere_world();
-                break;
-              case 3:
-                console.log(
-                  'Felysian world not supported yet; creating Icy world instead'
-                ),
+              switch ((console.log(
+                'Generating planet of type ' + planet_typesStr[t]
+              ),
+              (PLANET_TYPE = t),
+              generatePalette(t),
+              t)) {
+                case 0:
+                  create_volcanic_world();
+                  break;
+                case 1:
+                  create_craterized_world();
+                  break;
+                case 2:
+                  create_thickatmosphere_world();
+                  break;
+                case 3:
+                  console.log(
+                    'Felysian world not supported yet; creating Icy world instead'
+                  ),
+                    create_icy_world();
+                  break;
+                case 4:
+                  create_creased_world();
+                  break;
+                case 5:
+                  create_thinatmosphere_world();
+                  break;
+                case 6:
+                  break;
+                case 7:
                   create_icy_world();
-                break;
-              case 4:
-                create_creased_world();
-                break;
-              case 5:
-                create_thinatmosphere_world();
-                break;
-              case 6:
-                break;
-              case 7:
-                create_icy_world();
-                break;
-              case 8:
-                create_quartz_world();
-            }
-            switch ((prepare_space(), t)) {
-              case 0:
-                create_volcanic_space();
-                break;
-              case 1:
-                create_craterized_space();
-                break;
-              case 2:
-                create_thickatmosphere_space();
-                break;
-              case 3:
-                create_felysian_space();
-                break;
-              case 4:
-                create_creased_space();
-                break;
-              case 5:
-                create_thinatmosphere_space();
-                break;
-              case 6:
-                create_largeinconsistent_space();
-                break;
-              case 7:
-                create_icy_space();
-                break;
-              case 8:
-                create_quartz_space();
-            }
-            finish_space();
-          };
-          e(
-            _.sample(
-              _.without(
-                _.map(planet_typesWithSurface, function(t, e) {
-                  if (t) return e;
-                }),
-                void 0
-              )
-            )
-          ),
+                  break;
+                case 8:
+                  create_quartz_world();
+              }
+              switch ((prepare_space(), t)) {
+                case 0:
+                  create_volcanic_space();
+                  break;
+                case 1:
+                  create_craterized_space();
+                  break;
+                case 2:
+                  create_thickatmosphere_space();
+                  break;
+                case 3:
+                  create_felysian_space();
+                  break;
+                case 4:
+                  create_creased_space();
+                  break;
+                case 5:
+                  create_thinatmosphere_space();
+                  break;
+                case 6:
+                  create_largeinconsistent_space();
+                  break;
+                case 7:
+                  create_icy_space();
+                  break;
+                case 8:
+                  create_quartz_space();
+              }
+              finish_space();
+            },
+            i = null,
+            n = url.parse(document.location.toString(), !0);
+          n.query.planetType && (i = parseInt(n.query.planetType)),
+            e(
+              null !== i
+                ? i
+                : _.sample(
+                    _.without(
+                      _.map(planet_typesWithSurface, function(t, e) {
+                        if (t) return e;
+                      }),
+                      void 0
+                    )
+                  )
+            ),
             convTerrain();
         }
       };
@@ -72171,32 +72203,79 @@
       init: function() {
         xinit(), (this.geometry = displayTerrain());
       }
+    });
+    var toHex = function(t) {
+        var e = t.toString(16);
+        return 1 === e.length && (e = '0' + e), e;
+      },
+      getSkyHexColor = function() {
+        var t = planet_typesAtmosphericDensity[PLANET_TYPE],
+          e = Math.min(255, 4 * nearstar_r),
+          i = Math.min(255, 4 * nearstar_g),
+          n = Math.min(255, 4 * nearstar_b);
+        return (
+          0 === t
+            ? ((e = 0), (i = 0), (n = 0))
+            : ((e *= t / 100), (i *= t / 100), (n *= t / 100)),
+          (e = parseInt(e)),
+          (i = parseInt(i)),
+          (n = parseInt(n)),
+          '#' + (e = toHex(e)) + (i = toHex(i)) + (n = toHex(n))
+        );
+      };
+    AFRAME.registerComponent('planet-sky', {
+      init: function() {
+        xinit();
+        toHex(Math.min(255, 4 * nearstar_r)),
+          toHex(Math.min(255, 4 * nearstar_g)),
+          toHex(Math.min(255, 4 * nearstar_b));
+        var t = getSkyHexColor();
+        this.el.setAttribute('material', 'colorTop', t),
+          this.el.setAttribute('material', 'colorBottom', t);
+      }
     }),
-      AFRAME.registerComponent('planet-sky', {
+      AFRAME.registerComponent('create-stars', {
         init: function() {
-          xinit();
-          var t = function(t) {
-              var e = Math.min(255, 4 * t).toString(16);
-              return 0 === e.length && (e = '0' + e), e;
-            },
-            e = t(nearstar_r),
-            i = t(nearstar_g),
-            n = t(nearstar_b);
-          this.el.setAttribute('material', 'colorTop', '#' + e + i + n),
-            this.el.setAttribute('material', 'colorBottom', '#' + e + i + n);
+          for (
+            var t = () => {
+                var t = document.createElement('a-sphere'),
+                  e = Math.random() * Math.PI * 0.5,
+                  i = Math.random() * Math.PI * 4,
+                  n = {
+                    x: Math.sin(i) * Math.cos(e),
+                    y: Math.sin(e),
+                    z: Math.cos(i) * Math.cos(e)
+                  };
+                (n.x *= 1e3),
+                  (n.y *= 1e3),
+                  (n.z *= 1e3),
+                  t.setAttribute('radius', '2'),
+                  t.setAttribute('segments-height', '1'),
+                  t.setAttribute('segments-width', '1'),
+                  t.setAttribute('material', 'fog', !1),
+                  t.setAttribute(
+                    'position',
+                    AFRAME.utils.coordinates.stringify(n)
+                  ),
+                  this.el.appendChild(t);
+              },
+              e = 0;
+            e < 1e3;
+            e++
+          )
+            t();
         }
       }),
       AFRAME.registerComponent('planet-fog', {
         init: function() {
           xinit();
-          var t = function(t) {
-              var e = Math.min(255, 4 * t).toString(16);
-              return 0 === e.length && (e = '0' + e), e;
-            },
-            e = t(nearstar_r),
-            i = t(nearstar_g),
-            n = t(nearstar_b);
-          this.el.setAttribute('fog', 'color', '#' + e + i + n);
+          var t = getSkyHexColor(),
+            e = planet_typesAtmosphericDensity[PLANET_TYPE];
+          e > 0 &&
+            (this.el.setAttribute('fog', 'type', 'linear'),
+            this.el.setAttribute('fog', 'near', '1'),
+            this.el.setAttribute('fog', 'far', 300 - 2 * e),
+            this.el.setAttribute('fog', 'color', t));
         }
       }),
       AFRAME.registerComponent('remove-hand-controls', {
@@ -72325,34 +72404,727 @@
         }
       }),
       AFRAME.registerComponent('collider-check', {
-        dependencies: [],
+        schema: {},
+        init: function() {
+          (this.raycaster = new THREE.Raycaster()),
+            (this.raycaster.near = 0),
+            (this.raycaster.far = 1e3),
+            (this.planetElement = document.getElementById('planet_geometry')),
+            (this.vector_dir = new THREE.Vector3(0, -1, 0)),
+            (this.TEMP_VEC = new THREE.Vector3(0, 0, 0));
+        },
         tick: function(t, e) {
-          var i = this.el,
-            n = (this.el, i.object3D.position),
-            r = new THREE.Raycaster(
-              new THREE.Vector3(n.x, n.y + 4, n.z),
-              new THREE.Vector3(0, -1, 0)
-            );
-          r.near = 0;
-          var o = r.intersectObject(
-            document.getElementById('planet_geometry').object3D.children[0],
+          var i = this.el.object3D.position;
+          this.TEMP_VEC.set(i.x, i.y + 4, i.z),
+            this.raycaster.set(this.TEMP_VEC, this.vector_dir);
+          var n = this.raycaster.intersectObject(
+            this.planetElement.object3D.children[0],
             !1
           );
-          if (o.length > 0) {
-            var s = o.pop();
-            if (s && s.distance > 0) {
-              if (t < 1) return;
-              var a = i.object3D.position,
-                c = { x: a.x, y: a.y, z: a.z };
-              (c.x = 0),
-                (c.y = s.point.y),
-                (c.z = 0),
-                this.el.parentElement.setAttribute('position', c);
+          if (n.length > 0) {
+            var r = n.pop();
+            r &&
+              r.distance > 0 &&
+              this.el.parentElement.setAttribute('position', {
+                x: 0,
+                y: r.point.y,
+                z: 0
+              });
+          }
+        }
+      });
+  },
+  function(t, e, i) {
+    'use strict';
+    var n = i(152),
+      r = i(153);
+    function o() {
+      (this.protocol = null),
+        (this.slashes = null),
+        (this.auth = null),
+        (this.host = null),
+        (this.port = null),
+        (this.hostname = null),
+        (this.hash = null),
+        (this.search = null),
+        (this.query = null),
+        (this.pathname = null),
+        (this.path = null),
+        (this.href = null);
+    }
+    (e.parse = w),
+      (e.resolve = function(t, e) {
+        return w(t, !1, !0).resolve(e);
+      }),
+      (e.resolveObject = function(t, e) {
+        return t ? w(t, !1, !0).resolveObject(e) : e;
+      }),
+      (e.format = function(t) {
+        r.isString(t) && (t = w(t));
+        return t instanceof o ? t.format() : o.prototype.format.call(t);
+      }),
+      (e.Url = o);
+    var s = /^([a-z0-9.+-]+:)/i,
+      a = /:[0-9]*$/,
+      c = /^(\/\/?(?!\/)[^\?\s]*)(\?[^\s]*)?$/,
+      l = ['{', '}', '|', '\\', '^', '`'].concat([
+        '<',
+        '>',
+        '"',
+        '`',
+        ' ',
+        '\r',
+        '\n',
+        '\t'
+      ]),
+      u = ["'"].concat(l),
+      h = ['%', '/', '?', ';', '#'].concat(u),
+      d = ['/', '?', '#'],
+      p = /^[+a-z0-9A-Z_-]{0,63}$/,
+      f = /^([+a-z0-9A-Z_-]{0,63})(.*)$/,
+      m = { javascript: !0, 'javascript:': !0 },
+      g = { javascript: !0, 'javascript:': !0 },
+      v = {
+        http: !0,
+        https: !0,
+        ftp: !0,
+        gopher: !0,
+        file: !0,
+        'http:': !0,
+        'https:': !0,
+        'ftp:': !0,
+        'gopher:': !0,
+        'file:': !0
+      },
+      y = i(154);
+    function w(t, e, i) {
+      if (t && r.isObject(t) && t instanceof o) return t;
+      var n = new o();
+      return n.parse(t, e, i), n;
+    }
+    (o.prototype.parse = function(t, e, i) {
+      if (!r.isString(t))
+        throw new TypeError(
+          "Parameter 'url' must be a string, not " + typeof t
+        );
+      var o = t.indexOf('?'),
+        a = -1 !== o && o < t.indexOf('#') ? '?' : '#',
+        l = t.split(a);
+      l[0] = l[0].replace(/\\/g, '/');
+      var w = (t = l.join(a));
+      if (((w = w.trim()), !i && 1 === t.split('#').length)) {
+        var M = c.exec(w);
+        if (M)
+          return (
+            (this.path = w),
+            (this.href = w),
+            (this.pathname = M[1]),
+            M[2]
+              ? ((this.search = M[2]),
+                (this.query = e
+                  ? y.parse(this.search.substr(1))
+                  : this.search.substr(1)))
+              : e && ((this.search = ''), (this.query = {})),
+            this
+          );
+      }
+      var E = s.exec(w);
+      if (E) {
+        var b = (E = E[0]).toLowerCase();
+        (this.protocol = b), (w = w.substr(E.length));
+      }
+      if (i || E || w.match(/^\/\/[^@\/]+@[^@\/]+/)) {
+        var x = '//' === w.substr(0, 2);
+        !x || (E && g[E]) || ((w = w.substr(2)), (this.slashes = !0));
+      }
+      if (!g[E] && (x || (E && !v[E]))) {
+        for (var A, T, L = -1, N = 0; N < d.length; N++) {
+          -1 !== (D = w.indexOf(d[N])) && (-1 === L || D < L) && (L = D);
+        }
+        -1 !== (T = -1 === L ? w.lastIndexOf('@') : w.lastIndexOf('@', L)) &&
+          ((A = w.slice(0, T)),
+          (w = w.slice(T + 1)),
+          (this.auth = decodeURIComponent(A))),
+          (L = -1);
+        for (N = 0; N < h.length; N++) {
+          var D;
+          -1 !== (D = w.indexOf(h[N])) && (-1 === L || D < L) && (L = D);
+        }
+        -1 === L && (L = w.length),
+          (this.host = w.slice(0, L)),
+          (w = w.slice(L)),
+          this.parseHost(),
+          (this.hostname = this.hostname || '');
+        var S =
+          '[' === this.hostname[0] &&
+          ']' === this.hostname[this.hostname.length - 1];
+        if (!S)
+          for (
+            var C = this.hostname.split(/\./), _ = ((N = 0), C.length);
+            N < _;
+            N++
+          ) {
+            var I = C[N];
+            if (I && !I.match(p)) {
+              for (var j = '', O = 0, R = I.length; O < R; O++)
+                I.charCodeAt(O) > 127 ? (j += 'x') : (j += I[O]);
+              if (!j.match(p)) {
+                var z = C.slice(0, N),
+                  k = C.slice(N + 1),
+                  B = I.match(f);
+                B && (z.push(B[1]), k.unshift(B[2])),
+                  k.length && (w = '/' + k.join('.') + w),
+                  (this.hostname = z.join('.'));
+                break;
+              }
             }
           }
-        },
-        init: function() {}
+        this.hostname.length > 255
+          ? (this.hostname = '')
+          : (this.hostname = this.hostname.toLowerCase()),
+          S || (this.hostname = n.toASCII(this.hostname));
+        var P = this.port ? ':' + this.port : '',
+          U = this.hostname || '';
+        (this.host = U + P),
+          (this.href += this.host),
+          S &&
+            ((this.hostname = this.hostname.substr(
+              1,
+              this.hostname.length - 2
+            )),
+            '/' !== w[0] && (w = '/' + w));
+      }
+      if (!m[b])
+        for (N = 0, _ = u.length; N < _; N++) {
+          var F = u[N];
+          if (-1 !== w.indexOf(F)) {
+            var H = encodeURIComponent(F);
+            H === F && (H = escape(F)), (w = w.split(F).join(H));
+          }
+        }
+      var V = w.indexOf('#');
+      -1 !== V && ((this.hash = w.substr(V)), (w = w.slice(0, V)));
+      var G = w.indexOf('?');
+      if (
+        (-1 !== G
+          ? ((this.search = w.substr(G)),
+            (this.query = w.substr(G + 1)),
+            e && (this.query = y.parse(this.query)),
+            (w = w.slice(0, G)))
+          : e && ((this.search = ''), (this.query = {})),
+        w && (this.pathname = w),
+        v[b] && this.hostname && !this.pathname && (this.pathname = '/'),
+        this.pathname || this.search)
+      ) {
+        P = this.pathname || '';
+        var Y = this.search || '';
+        this.path = P + Y;
+      }
+      return (this.href = this.format()), this;
+    }),
+      (o.prototype.format = function() {
+        var t = this.auth || '';
+        t &&
+          ((t = (t = encodeURIComponent(t)).replace(/%3A/i, ':')), (t += '@'));
+        var e = this.protocol || '',
+          i = this.pathname || '',
+          n = this.hash || '',
+          o = !1,
+          s = '';
+        this.host
+          ? (o = t + this.host)
+          : this.hostname &&
+            ((o =
+              t +
+              (-1 === this.hostname.indexOf(':')
+                ? this.hostname
+                : '[' + this.hostname + ']')),
+            this.port && (o += ':' + this.port)),
+          this.query &&
+            r.isObject(this.query) &&
+            Object.keys(this.query).length &&
+            (s = y.stringify(this.query));
+        var a = this.search || (s && '?' + s) || '';
+        return (
+          e && ':' !== e.substr(-1) && (e += ':'),
+          this.slashes || ((!e || v[e]) && !1 !== o)
+            ? ((o = '//' + (o || '')),
+              i && '/' !== i.charAt(0) && (i = '/' + i))
+            : o || (o = ''),
+          n && '#' !== n.charAt(0) && (n = '#' + n),
+          a && '?' !== a.charAt(0) && (a = '?' + a),
+          e +
+            o +
+            (i = i.replace(/[?#]/g, function(t) {
+              return encodeURIComponent(t);
+            })) +
+            (a = a.replace('#', '%23')) +
+            n
+        );
+      }),
+      (o.prototype.resolve = function(t) {
+        return this.resolveObject(w(t, !1, !0)).format();
+      }),
+      (o.prototype.resolveObject = function(t) {
+        if (r.isString(t)) {
+          var e = new o();
+          e.parse(t, !1, !0), (t = e);
+        }
+        for (var i = new o(), n = Object.keys(this), s = 0; s < n.length; s++) {
+          var a = n[s];
+          i[a] = this[a];
+        }
+        if (((i.hash = t.hash), '' === t.href)) return (i.href = i.format()), i;
+        if (t.slashes && !t.protocol) {
+          for (var c = Object.keys(t), l = 0; l < c.length; l++) {
+            var u = c[l];
+            'protocol' !== u && (i[u] = t[u]);
+          }
+          return (
+            v[i.protocol] &&
+              i.hostname &&
+              !i.pathname &&
+              (i.path = i.pathname = '/'),
+            (i.href = i.format()),
+            i
+          );
+        }
+        if (t.protocol && t.protocol !== i.protocol) {
+          if (!v[t.protocol]) {
+            for (var h = Object.keys(t), d = 0; d < h.length; d++) {
+              var p = h[d];
+              i[p] = t[p];
+            }
+            return (i.href = i.format()), i;
+          }
+          if (((i.protocol = t.protocol), t.host || g[t.protocol]))
+            i.pathname = t.pathname;
+          else {
+            for (
+              var f = (t.pathname || '').split('/');
+              f.length && !(t.host = f.shift());
+
+            );
+            t.host || (t.host = ''),
+              t.hostname || (t.hostname = ''),
+              '' !== f[0] && f.unshift(''),
+              f.length < 2 && f.unshift(''),
+              (i.pathname = f.join('/'));
+          }
+          if (
+            ((i.search = t.search),
+            (i.query = t.query),
+            (i.host = t.host || ''),
+            (i.auth = t.auth),
+            (i.hostname = t.hostname || t.host),
+            (i.port = t.port),
+            i.pathname || i.search)
+          ) {
+            var m = i.pathname || '',
+              y = i.search || '';
+            i.path = m + y;
+          }
+          return (i.slashes = i.slashes || t.slashes), (i.href = i.format()), i;
+        }
+        var w = i.pathname && '/' === i.pathname.charAt(0),
+          M = t.host || (t.pathname && '/' === t.pathname.charAt(0)),
+          E = M || w || (i.host && t.pathname),
+          b = E,
+          x = (i.pathname && i.pathname.split('/')) || [],
+          A = ((f = (t.pathname && t.pathname.split('/')) || []),
+          i.protocol && !v[i.protocol]);
+        if (
+          (A &&
+            ((i.hostname = ''),
+            (i.port = null),
+            i.host && ('' === x[0] ? (x[0] = i.host) : x.unshift(i.host)),
+            (i.host = ''),
+            t.protocol &&
+              ((t.hostname = null),
+              (t.port = null),
+              t.host && ('' === f[0] ? (f[0] = t.host) : f.unshift(t.host)),
+              (t.host = null)),
+            (E = E && ('' === f[0] || '' === x[0]))),
+          M)
+        )
+          (i.host = t.host || '' === t.host ? t.host : i.host),
+            (i.hostname =
+              t.hostname || '' === t.hostname ? t.hostname : i.hostname),
+            (i.search = t.search),
+            (i.query = t.query),
+            (x = f);
+        else if (f.length)
+          x || (x = []),
+            x.pop(),
+            (x = x.concat(f)),
+            (i.search = t.search),
+            (i.query = t.query);
+        else if (!r.isNullOrUndefined(t.search)) {
+          if (A)
+            (i.hostname = i.host = x.shift()),
+              (S =
+                !!(i.host && i.host.indexOf('@') > 0) && i.host.split('@')) &&
+                ((i.auth = S.shift()), (i.host = i.hostname = S.shift()));
+          return (
+            (i.search = t.search),
+            (i.query = t.query),
+            (r.isNull(i.pathname) && r.isNull(i.search)) ||
+              (i.path =
+                (i.pathname ? i.pathname : '') + (i.search ? i.search : '')),
+            (i.href = i.format()),
+            i
+          );
+        }
+        if (!x.length)
+          return (
+            (i.pathname = null),
+            i.search ? (i.path = '/' + i.search) : (i.path = null),
+            (i.href = i.format()),
+            i
+          );
+        for (
+          var T = x.slice(-1)[0],
+            L =
+              ((i.host || t.host || x.length > 1) &&
+                ('.' === T || '..' === T)) ||
+              '' === T,
+            N = 0,
+            D = x.length;
+          D >= 0;
+          D--
+        )
+          '.' === (T = x[D])
+            ? x.splice(D, 1)
+            : '..' === T ? (x.splice(D, 1), N++) : N && (x.splice(D, 1), N--);
+        if (!E && !b) for (; N--; N) x.unshift('..');
+        !E || '' === x[0] || (x[0] && '/' === x[0].charAt(0)) || x.unshift(''),
+          L && '/' !== x.join('/').substr(-1) && x.push('');
+        var S,
+          C = '' === x[0] || (x[0] && '/' === x[0].charAt(0));
+        A &&
+          ((i.hostname = i.host = C ? '' : x.length ? x.shift() : ''),
+          (S = !!(i.host && i.host.indexOf('@') > 0) && i.host.split('@')) &&
+            ((i.auth = S.shift()), (i.host = i.hostname = S.shift())));
+        return (
+          (E = E || (i.host && x.length)) && !C && x.unshift(''),
+          x.length
+            ? (i.pathname = x.join('/'))
+            : ((i.pathname = null), (i.path = null)),
+          (r.isNull(i.pathname) && r.isNull(i.search)) ||
+            (i.path =
+              (i.pathname ? i.pathname : '') + (i.search ? i.search : '')),
+          (i.auth = t.auth || i.auth),
+          (i.slashes = i.slashes || t.slashes),
+          (i.href = i.format()),
+          i
+        );
+      }),
+      (o.prototype.parseHost = function() {
+        var t = this.host,
+          e = a.exec(t);
+        e &&
+          (':' !== (e = e[0]) && (this.port = e.substr(1)),
+          (t = t.substr(0, t.length - e.length))),
+          t && (this.hostname = t);
       });
+  },
+  function(t, e, i) {
+    (function(t, n) {
+      var r;
+      !(function(o) {
+        'object' == typeof e && e && e.nodeType,
+          'object' == typeof t && t && t.nodeType;
+        var s = 'object' == typeof n && n;
+        s.global !== s && s.window !== s && s.self;
+        var a,
+          c = 2147483647,
+          l = 36,
+          u = 1,
+          h = 26,
+          d = 38,
+          p = 700,
+          f = 72,
+          m = 128,
+          g = '-',
+          v = /^xn--/,
+          y = /[^\x20-\x7E]/,
+          w = /[\x2E\u3002\uFF0E\uFF61]/g,
+          M = {
+            overflow: 'Overflow: input needs wider integers to process',
+            'not-basic': 'Illegal input >= 0x80 (not a basic code point)',
+            'invalid-input': 'Invalid input'
+          },
+          E = l - u,
+          b = Math.floor,
+          x = String.fromCharCode;
+        function A(t) {
+          throw new RangeError(M[t]);
+        }
+        function T(t, e) {
+          for (var i = t.length, n = []; i--; ) n[i] = e(t[i]);
+          return n;
+        }
+        function L(t, e) {
+          var i = t.split('@'),
+            n = '';
+          return (
+            i.length > 1 && ((n = i[0] + '@'), (t = i[1])),
+            n + T((t = t.replace(w, '.')).split('.'), e).join('.')
+          );
+        }
+        function N(t) {
+          for (var e, i, n = [], r = 0, o = t.length; r < o; )
+            (e = t.charCodeAt(r++)) >= 55296 && e <= 56319 && r < o
+              ? 56320 == (64512 & (i = t.charCodeAt(r++)))
+                ? n.push(((1023 & e) << 10) + (1023 & i) + 65536)
+                : (n.push(e), r--)
+              : n.push(e);
+          return n;
+        }
+        function D(t) {
+          return T(t, function(t) {
+            var e = '';
+            return (
+              t > 65535 &&
+                ((e += x((((t -= 65536) >>> 10) & 1023) | 55296)),
+                (t = 56320 | (1023 & t))),
+              (e += x(t))
+            );
+          }).join('');
+        }
+        function S(t, e) {
+          return t + 22 + 75 * (t < 26) - ((0 != e) << 5);
+        }
+        function C(t, e, i) {
+          var n = 0;
+          for (
+            t = i ? b(t / p) : t >> 1, t += b(t / e);
+            t > (E * h) >> 1;
+            n += l
+          )
+            t = b(t / E);
+          return b(n + (E + 1) * t / (t + d));
+        }
+        function _(t) {
+          var e,
+            i,
+            n,
+            r,
+            o,
+            s,
+            a,
+            d,
+            p,
+            v,
+            y,
+            w = [],
+            M = t.length,
+            E = 0,
+            x = m,
+            T = f;
+          for ((i = t.lastIndexOf(g)) < 0 && (i = 0), n = 0; n < i; ++n)
+            t.charCodeAt(n) >= 128 && A('not-basic'), w.push(t.charCodeAt(n));
+          for (r = i > 0 ? i + 1 : 0; r < M; ) {
+            for (
+              o = E, s = 1, a = l;
+              r >= M && A('invalid-input'),
+                ((d =
+                  (y = t.charCodeAt(r++)) - 48 < 10
+                    ? y - 22
+                    : y - 65 < 26 ? y - 65 : y - 97 < 26 ? y - 97 : l) >= l ||
+                  d > b((c - E) / s)) &&
+                  A('overflow'),
+                (E += d * s),
+                !(d < (p = a <= T ? u : a >= T + h ? h : a - T));
+              a += l
+            )
+              s > b(c / (v = l - p)) && A('overflow'), (s *= v);
+            (T = C(E - o, (e = w.length + 1), 0 == o)),
+              b(E / e) > c - x && A('overflow'),
+              (x += b(E / e)),
+              (E %= e),
+              w.splice(E++, 0, x);
+          }
+          return D(w);
+        }
+        function I(t) {
+          var e,
+            i,
+            n,
+            r,
+            o,
+            s,
+            a,
+            d,
+            p,
+            v,
+            y,
+            w,
+            M,
+            E,
+            T,
+            L = [];
+          for (w = (t = N(t)).length, e = m, i = 0, o = f, s = 0; s < w; ++s)
+            (y = t[s]) < 128 && L.push(x(y));
+          for (n = r = L.length, r && L.push(g); n < w; ) {
+            for (a = c, s = 0; s < w; ++s) (y = t[s]) >= e && y < a && (a = y);
+            for (
+              a - e > b((c - i) / (M = n + 1)) && A('overflow'),
+                i += (a - e) * M,
+                e = a,
+                s = 0;
+              s < w;
+              ++s
+            )
+              if (((y = t[s]) < e && ++i > c && A('overflow'), y == e)) {
+                for (
+                  d = i, p = l;
+                  !(d < (v = p <= o ? u : p >= o + h ? h : p - o));
+                  p += l
+                )
+                  (T = d - v),
+                    (E = l - v),
+                    L.push(x(S(v + T % E, 0))),
+                    (d = b(T / E));
+                L.push(x(S(d, 0))), (o = C(i, M, n == r)), (i = 0), ++n;
+              }
+            ++i, ++e;
+          }
+          return L.join('');
+        }
+        (a = {
+          version: '1.4.1',
+          ucs2: { decode: N, encode: D },
+          decode: _,
+          encode: I,
+          toASCII: function(t) {
+            return L(t, function(t) {
+              return y.test(t) ? 'xn--' + I(t) : t;
+            });
+          },
+          toUnicode: function(t) {
+            return L(t, function(t) {
+              return v.test(t) ? _(t.slice(4).toLowerCase()) : t;
+            });
+          }
+        }),
+          void 0 ===
+            (r = function() {
+              return a;
+            }.call(e, i, e, t)) || (t.exports = r);
+      })();
+    }.call(e, i(40)(t), i(16)));
+  },
+  function(t, e, i) {
+    'use strict';
+    t.exports = {
+      isString: function(t) {
+        return 'string' == typeof t;
+      },
+      isObject: function(t) {
+        return 'object' == typeof t && null !== t;
+      },
+      isNull: function(t) {
+        return null === t;
+      },
+      isNullOrUndefined: function(t) {
+        return null == t;
+      }
+    };
+  },
+  function(t, e, i) {
+    'use strict';
+    (e.decode = e.parse = i(155)), (e.encode = e.stringify = i(156));
+  },
+  function(t, e, i) {
+    'use strict';
+    t.exports = function(t, e, i, r) {
+      (e = e || '&'), (i = i || '=');
+      var o = {};
+      if ('string' != typeof t || 0 === t.length) return o;
+      var s = /\+/g;
+      t = t.split(e);
+      var a = 1e3;
+      r && 'number' == typeof r.maxKeys && (a = r.maxKeys);
+      var c,
+        l,
+        u = t.length;
+      a > 0 && u > a && (u = a);
+      for (var h = 0; h < u; ++h) {
+        var d,
+          p,
+          f,
+          m,
+          g = t[h].replace(s, '%20'),
+          v = g.indexOf(i);
+        v >= 0
+          ? ((d = g.substr(0, v)), (p = g.substr(v + 1)))
+          : ((d = g), (p = '')),
+          (f = decodeURIComponent(d)),
+          (m = decodeURIComponent(p)),
+          (c = o),
+          (l = f),
+          Object.prototype.hasOwnProperty.call(c, l)
+            ? n(o[f]) ? o[f].push(m) : (o[f] = [o[f], m])
+            : (o[f] = m);
+      }
+      return o;
+    };
+    var n =
+      Array.isArray ||
+      function(t) {
+        return '[object Array]' === Object.prototype.toString.call(t);
+      };
+  },
+  function(t, e, i) {
+    'use strict';
+    var n = function(t) {
+      switch (typeof t) {
+        case 'string':
+          return t;
+        case 'boolean':
+          return t ? 'true' : 'false';
+        case 'number':
+          return isFinite(t) ? t : '';
+        default:
+          return '';
+      }
+    };
+    t.exports = function(t, e, i, a) {
+      return (
+        (e = e || '&'),
+        (i = i || '='),
+        null === t && (t = void 0),
+        'object' == typeof t
+          ? o(s(t), function(s) {
+              var a = encodeURIComponent(n(s)) + i;
+              return r(t[s])
+                ? o(t[s], function(t) {
+                    return a + encodeURIComponent(n(t));
+                  }).join(e)
+                : a + encodeURIComponent(n(t[s]));
+            }).join(e)
+          : a ? encodeURIComponent(n(a)) + i + encodeURIComponent(n(t)) : ''
+      );
+    };
+    var r =
+      Array.isArray ||
+      function(t) {
+        return '[object Array]' === Object.prototype.toString.call(t);
+      };
+    function o(t, e) {
+      if (t.map) return t.map(e);
+      for (var i = [], n = 0; n < t.length; n++) i.push(e(t[n], n));
+      return i;
+    }
+    var s =
+      Object.keys ||
+      function(t) {
+        var e = [];
+        for (var i in t)
+          Object.prototype.hasOwnProperty.call(t, i) && e.push(i);
+        return e;
+      };
   },
   function(t, e, i) {
     (function(t, n) {
@@ -77172,30 +77944,6 @@
             return Ui;
           }.call(e, i, e, n)) === o || (n.exports = r);
       }.call(this));
-    }.call(e, i(22), i(151)(t)));
-  },
-  function(t, e) {
-    t.exports = function(t) {
-      return (
-        t.webpackPolyfill ||
-          ((t.deprecate = function() {}),
-          (t.paths = []),
-          t.children || (t.children = []),
-          Object.defineProperty(t, 'loaded', {
-            enumerable: !0,
-            get: function() {
-              return t.l;
-            }
-          }),
-          Object.defineProperty(t, 'id', {
-            enumerable: !0,
-            get: function() {
-              return t.i;
-            }
-          }),
-          (t.webpackPolyfill = 1)),
-        t
-      );
-    };
+    }.call(e, i(16), i(40)(t)));
   }
 ]);
