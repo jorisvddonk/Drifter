@@ -147,38 +147,60 @@ AFRAME.registerGeometry('planetsurface', {
   }
 });
 
-var toHex = function(noctis_color) {
-  var v = Math.min(255, noctis_color * 4).toString(16);
+var toHex = function(i) {
+  var v = i.toString(16);
   if (v.length === 1) {
     v = '0' + v;
   }
   return v;
 };
 
+var getSkyHexColor = function() {
+  var atmosphericDensity = planet_typesAtmosphericDensity[PLANET_TYPE];
+  var r = Math.min(255, nearstar_r * 4);
+  var g = Math.min(255, nearstar_g * 4);
+  var b = Math.min(255, nearstar_b * 4);
+  if (atmosphericDensity === 0) {
+    r = 0;
+    g = 0;
+    b = 0;
+  } else {
+    r = r * (atmosphericDensity / 100);
+    g = g * (atmosphericDensity / 100);
+    b = b * (atmosphericDensity / 100);
+  }
+  r = parseInt(r);
+  g = parseInt(g);
+  b = parseInt(b);
+  r = toHex(r);
+  g = toHex(g);
+  b = toHex(b);
+  return '#' + r + g + b;
+};
+
 AFRAME.registerComponent('planet-sky', {
   init: function() {
     xinit();
-    var r = toHex(nearstar_r);
-    var g = toHex(nearstar_g);
-    var b = toHex(nearstar_b);
+    var r = toHex(Math.min(255, nearstar_r * 4));
+    var g = toHex(Math.min(255, nearstar_g * 4));
+    var b = toHex(Math.min(255, nearstar_b * 4));
+    var skyColor = getSkyHexColor();
 
-    this.el.setAttribute('material', 'colorTop', '#' + r + g + b);
-    this.el.setAttribute('material', 'colorBottom', '#' + r + g + b);
+    this.el.setAttribute('material', 'colorTop', skyColor);
+    this.el.setAttribute('material', 'colorBottom', skyColor);
   }
 });
 
 AFRAME.registerComponent('planet-fog', {
   init: function() {
     xinit();
-    var r = toHex(nearstar_r);
-    var g = toHex(nearstar_g);
-    var b = toHex(nearstar_b);
+    var skyColor = getSkyHexColor();
     var atmosphericDensity = planet_typesAtmosphericDensity[PLANET_TYPE];
     if (atmosphericDensity > 0) {
       this.el.setAttribute('fog', 'type', 'linear');
       this.el.setAttribute('fog', 'near', '1');
-      this.el.setAttribute('fog', 'far', 300 - atmosphericDensity); // should be less on a thick atmo world
-      this.el.setAttribute('fog', 'color', '#' + r + g + b);
+      this.el.setAttribute('fog', 'far', 300 - 2 * atmosphericDensity); // less on a thick atmosphere world
+      this.el.setAttribute('fog', 'color', skyColor);
     }
   }
 });

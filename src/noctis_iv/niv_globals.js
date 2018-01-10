@@ -201,6 +201,19 @@ var planet_typesWithSurface = [
   false,
   false
 ];
+var planet_typesAtmosphericDensity = [
+  5,
+  0,
+  100, // thick atmosphere
+  33, // normal, Felysian
+  0,
+  16,
+  0,
+  1,
+  33,
+  0,
+  0
+];
 
 var M_PI = Math.PI;
 var M_PI_2 = Math.PI * 0.5;
