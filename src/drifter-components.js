@@ -4,6 +4,7 @@
 // renderPlanetTexture(txtr,256,256,2); // render surface texture
 // renderPalette(); // render palette
 
+var url = require('url');
 var xinited = false;
 var RIGHT_HAND_TOOLS = ['none', 'map', 'texture_surface', 'texture_planet'];
 var LEFT_HAND_TOOLS = ['none', 'planet'];
@@ -119,6 +120,10 @@ var xinit = function() {
     };
 
     var force_planet_type = null;
+    var parsedURL = url.parse(document.location.toString(), true);
+    if (parsedURL.query.planetType) {
+      force_planet_type = parseInt(parsedURL.query.planetType);
+    }
     if (force_planet_type !== null) {
       generatePlanet(force_planet_type);
     } else {

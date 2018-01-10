@@ -20,7 +20,8 @@
     "aframe-extras": "^3.13.1",
     "aframe-gamepad-controls": "^0.6.0",
     "lodash": "^4.17.4",
-    "super-hands": "^2.1.0"
+    "super-hands": "^2.1.0",
+    "url": "^0.11.0"
   },
   "devDependencies": {
     "file-loader": "^1.1.6",
