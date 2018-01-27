@@ -12,6 +12,7 @@ require('file-loader?name=[name].[ext]!./src/noctis_iv/niv_textures.js');
 require('aframe');
 require('aframe-extras');
 require('super-hands');
+require('aframe-point-component');
 var GamepadControls = require('aframe-gamepad-controls');
 AFRAME.registerComponent('gamepad-controls', GamepadControls);
 
@@ -19,4 +20,3 @@ require('./shaders/skyGradient.js');
 require('./src/drifter-components.js');
 
 var _ = require('lodash');
-
