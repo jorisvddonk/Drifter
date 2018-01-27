@@ -198,6 +198,7 @@ var getSkyHexColor = function() {
 AFRAME.registerComponent('planet-sky', {
   init: function() {
     xinit();
+    var atmosphericDensity = planet_typesAtmosphericDensity[PLANET_TYPE];
     var sunscattering = planet_typesSunScattering[PLANET_TYPE];
     var r = toHex(Math.min(255, nearstar_r * 4));
     var g = toHex(Math.min(255, nearstar_g * 4));
@@ -207,33 +208,7 @@ AFRAME.registerComponent('planet-sky', {
     this.el.setAttribute('material', 'colorTop', skyColor);
     this.el.setAttribute('material', 'colorBottom', skyColor);
     this.el.setAttribute('material', 'sunscattering', sunscattering);
-  }
-});
-
-AFRAME.registerComponent('create-stars', {
-  init: function() {
-    var atmosphericDensity = planet_typesAtmosphericDensity[PLANET_TYPE];
-    var dist = 400 - 4 * atmosphericDensity;
-    var createStar = () => {
-      var alt = Math.random() * Math.PI * 0.6 - Math.PI * 0.1;
-      var azim = Math.random() * Math.PI * 4;
-      var pos = {
-        x: Math.sin(azim) * Math.cos(alt),
-        y: Math.sin(alt) * 0.3,
-        z: Math.cos(azim) * Math.cos(alt)
-      };
-      pos.x *= dist;
-      pos.y *= dist;
-      pos.z *= dist;
-      return [pos.x, pos.y, pos.z];
-    };
-    if (atmosphericDensity < 60) {
-      var points = [];
-      for (var i = 0; i < 1000; i++) {
-        points.push(createStar());
-      }
-      this.el.components.point.setPoints(points);
-    }
+    this.el.setAttribute('material', 'atmosphericDensity', atmosphericDensity);
   }
 });
 
