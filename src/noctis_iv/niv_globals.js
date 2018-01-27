@@ -214,6 +214,19 @@ var planet_typesAtmosphericDensity = [
   0,
   0
 ];
+var planet_typesSunScattering = [
+  8,
+  0,
+  100, // thick atmosphere
+  20, // Felysian
+  0,
+  16, // thin atmosphere
+  0,
+  5, // icy
+  200, // quartz has LOTS of scattering
+  0,
+  0
+];
 
 var M_PI = Math.PI;
 var M_PI_2 = Math.PI * 0.5;

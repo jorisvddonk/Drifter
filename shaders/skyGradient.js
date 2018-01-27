@@ -27,7 +27,8 @@ AFRAME.registerShader('skyGradient', {
   schema: {
     colorTop: { type: 'color', default: 'black', is: 'uniform' },
     colorBottom: { type: 'color', default: 'red', is: 'uniform' },
-    sunPosition: { type: 'vec3', default: '1 1 0', is: 'uniform' }
+    sunPosition: { type: 'vec3', default: '1 1 0', is: 'uniform' },
+    sunscattering: { type: 'float', default: '0', is: 'uniform' }
   },
 
   vertexShader: `
@@ -48,6 +49,7 @@ AFRAME.registerShader('skyGradient', {
    uniform vec3 colorTop;
    uniform vec3 colorBottom;
    uniform vec3 sunPosition;
+   uniform float sunscattering;
 
    varying vec3 vWorldPosition;
    const vec3 sun = vec3(1.0, 1.0, 0.0);
@@ -56,8 +58,13 @@ AFRAME.registerShader('skyGradient', {
      float angle = acos(dot(pointOnSphere, normalize(sunPosition)));
      if (angle <= 0.03) {
        return 1.0;
+     } else {
+       if (sunscattering == 0.0) {
+         return 0.0;
+       } else {
+         return max(0.0, min(1.0, 1.0 - ((angle / (sunscattering))*100.0)));
+       }
      }
-     return 0.0;
    }
 
    void main()
@@ -66,8 +73,8 @@ AFRAME.registerShader('skyGradient', {
      vec3 pointOnSphere = normalize(vWorldPosition.xyz);
      float f = 1.0;
      f = sin((pointOnSphere.y+0.0) * 1.5);
-     gl_FragColor = vec4(mix(colorBottom,colorTop, f ), 1.0);
+     vec4 vertGradient = vec4(mix(colorBottom,colorTop, f ), 1.0);
      float sunnyness = sunEffect(pointOnSphere);
-     gl_FragColor = vec4(gl_FragColor.r + sunnyness, gl_FragColor.g + sunnyness, gl_FragColor.b + sunnyness, gl_FragColor.a);
+     gl_FragColor = vec4(vertGradient.r + sunnyness, vertGradient.g + sunnyness, vertGradient.b + sunnyness, vertGradient.a);
    }`
 });

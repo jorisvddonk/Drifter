@@ -199,6 +199,7 @@ var getSkyHexColor = function() {
 AFRAME.registerComponent('planet-sky', {
   init: function() {
     xinit();
+    var sunscattering = planet_typesSunScattering[PLANET_TYPE];
     var r = toHex(Math.min(255, nearstar_r * 4));
     var g = toHex(Math.min(255, nearstar_g * 4));
     var b = toHex(Math.min(255, nearstar_b * 4));
@@ -206,6 +207,7 @@ AFRAME.registerComponent('planet-sky', {
 
     this.el.setAttribute('material', 'colorTop', skyColor);
     this.el.setAttribute('material', 'colorBottom', skyColor);
+    this.el.setAttribute('material', 'sunscattering', sunscattering);
   }
 });
 
