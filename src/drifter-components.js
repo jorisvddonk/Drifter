@@ -236,6 +236,12 @@ AFRAME.registerComponent('create-stars', {
   }
 });
 
+AFRAME.registerComponent('hide', {
+  init: function() {
+    this.el.setAttribute('visible', false);
+  }
+});
+
 AFRAME.registerComponent('planet-fog', {
   init: function() {
     xinit();
