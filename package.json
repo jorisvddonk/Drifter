@@ -8,7 +8,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "webpack": "webpack --config webpack.conf.js",
+    "build": "webpack --config webpack.conf.js",
     "dev": "webpack-dev-server --config webpack.conf.js",
     "precommit": "lint-staged",
     "prettier": "prettier --write --config .prettierrc src/**/*.js"
