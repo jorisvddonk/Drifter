@@ -274,6 +274,7 @@ var kfract = 2;
 var c, gr, r, g, b, Acr, Acx, Acy, px, py;
 
 var palette = [];
+var surface_palette = []; // still used?
 var CURRENTSTAR;
 
 function initArrays() {
@@ -313,3 +314,19 @@ function initArrays_space() {
   }
 }
 initArrays();
+
+var sky_red_filter = 63; // Filtri per il cielo.
+var sky_grn_filter = 63;
+var sky_blu_filter = 63;
+var gnd_red_filter = 63; // Filtri per il suolo.
+var gnd_grn_filter = 63;
+var gnd_blu_filter = 63;
+var planet_grav = 150; // corrisponde alla gravit� terrestre.
+var rainy = 0; // 0..5 a seconda dell'albedo delle nubi.
+var sky_brightness = 32; // Luminosit� del cielo (0-48).
+var horiz_brt = 20; // Luminosit� minima dell'orizzonte (0-48).
+var nightzone = 0;
+
+function fabs(f) {
+  return Math.abs(f);
+}

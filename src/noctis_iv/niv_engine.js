@@ -602,3 +602,465 @@ function create_creased_world() {
   rockdensity = 3 + 4 * RANDOM(2);
   rockpeaking = 100 + RANDOM(200);
 }
+
+function create_sky_for_planettype(planetType) {
+  var planetsWithoutAtmosphere = [1, 4, 7];
+  if (planetsWithoutAtmosphere.indexOf(planetType) === -1) {
+    // have atmosphere
+    create_sky(1);
+  } else {
+    // no atmosphere
+    create_sky(0);
+  }
+}
+
+function create_sky(
+  atmosphere // atmosphere is 1 or 0
+) {
+  var ip_targetted = 0; // WAT
+  var global_surface_seed = CURRENTSTAR.p_orb_seed[ip_targetted]; // WAT
+  var surface_palette = palette; // is this OK?
+  var dsd1; // dunno
+  var exposure; // float
+  var landing_pt_lon = 0; // todo set; int
+  var landing_pt_lat = 60; // todo set; int
+  var pp_pressure = 0; // todo global?
+  // filtri colorati di base.
+
+  // floats
+  var br = parseFloat(sky_red_filter / 64);
+  var bg = parseFloat(sky_grn_filter / 64);
+  var bb = parseFloat(sky_blu_filter / 64);
+
+  var tr = parseFloat(gnd_red_filter / 64);
+  var tg = parseFloat(gnd_grn_filter / 64);
+  var tb = parseFloat(gnd_blu_filter / 64);
+
+  var fr = [0, 0, 0, 0];
+  var fg = [0, 0, 0, 0];
+  var fb = [0, 0, 0, 0];
+  var al = parseFloat(raw_albedo / 64); // costante di albedo
+
+  // calcola il fattore "distanza dal sole" per l'intensit� della luce
+  // � infuenzato anche dal tipo di stella.
+
+  var sb; // float
+  var dfs; // float
+  var owner = CURRENTSTAR['p_owner'][ip_targetted]; // int
+
+  if (owner == -1) dfs = 1 - parseFloat(ip_targetted * 0.05);
+  else dfs = 1 - parseFloat(owner * 0.05);
+
+  if (!atmosphere) sb = 1;
+  else {
+    sb = parseFloat(sky_brightness / 24);
+    if (nightzone) dfs *= 0.5;
+  }
+
+  if (owner > 2) sb *= dfs * dfs;
+  else dfs = 1;
+
+  switch (CURRENTSTAR.class) {
+    case 0:
+      dfs *= 1.0;
+      break;
+    case 1:
+      dfs *= 1.5;
+      break;
+    case 2:
+      dfs *= 0.5;
+      break;
+    case 3:
+      dfs *= 0.8;
+      break;
+    case 4:
+      dfs *= 1.2;
+      break;
+    case 5:
+      dfs *= 0.1;
+      break;
+    case 6:
+      dfs *= 0.1;
+      break;
+    case 7:
+      dfs *= 0.4;
+      break;
+    case 8:
+      dfs *= 0.9;
+      break;
+    case 9:
+      dfs *= 1.3;
+      break;
+    case 10:
+      dfs *= 0.5;
+      break;
+    case 11:
+      dfs *= 0.2;
+      break;
+  }
+
+  // calcola il fattore di saturazione (influenza i pianeti abitabili
+  // quando piove, tende a far scivolare le sfumature verso il grigio)
+
+  var saturation = 1 - 0.15 * rainy; // float
+  var shade_nr; // int
+
+  fast_srand(global_surface_seed);
+  c_srand(global_surface_seed);
+
+  function like1() {
+    // colori per le terre emerse.
+    // simili a quelli della superficie vista dallo
+    // spazio, che tendono a essere alquanto grigiastri.
+    fr[0] = tr; // * 0.5 + 0.5 * al;
+    fg[0] = tg; // * 0.5 + 0.5 * al;
+    fb[0] = tb; // * 0.5 + 0.5 * al;
+    // colori per il cielo.
+    // non c'� il cielo. non c'� aria.
+    // ma servono per le stelle, belle brillanti.
+    fr[1] = 1.5;
+    fg[1] = 1.5;
+    fb[1] = 1.5;
+    // colori per l'orizzonte.
+    // come quelli delle terre emerse, ma pi� sbiaditi.
+    fr[2] = 2 * fr[0];
+    fg[2] = 2 * fg[0];
+    fb[2] = 2 * fb[0];
+    // colori per la vegetazione.
+    // non c'� vegetazione, quindi per ora nulli.
+    fr[3] = 0.0;
+    fg[3] = 0.0;
+    fb[3] = 0.0;
+  }
+
+  function like7() {
+    // colori per le terre emerse. molto chiari.
+    // simili a quelli della superficie vista dallo
+    // spazio, che tendono a essere alquanto grigiastri.
+    fr[0] = tr + flandom() * al;
+    fg[0] = tg + flandom() * al;
+    fb[0] = tb + flandom() * al;
+    // colori per il cielo.
+    // non c'� il cielo. non c'� aria.
+    // ma servono per le stelle, brillanti.
+    fr[1] = 1.3;
+    fg[1] = 1.4;
+    fb[1] = 1.5;
+    // colori per l'orizzonte.
+    // come quelli delle terre emerse, ma pi� sbiaditi.
+    fr[2] = 0.5 + fr[0];
+    fg[2] = 0.5 + fg[0];
+    fb[2] = 0.5 + fb[0];
+    // colori per la vegetazione.
+    // non c'� vegetazione, quindi per ora nulli.
+    fr[3] = 0.0;
+    fg[3] = 0.0;
+    fb[3] = 0.0;
+  }
+
+  switch (CURRENTSTAR.p_type[ip_targetted]) {
+    // case 0: ATTUALMENTE non considerato: � un pianeta vulcanico.
+
+    case 1: // rocciosi (stile luna)
+      pp_pressure = 0;
+
+      like1();
+      break;
+
+    case 2: // con spessa atmosfera (pianeti "venusiani")
+      // colori per tutto.
+      // per questo specifico tipo di pianeta,
+      // quelli del cielo sono pressoch� uguali
+      // a quelli delle nubi. quelli del terreno
+      // sono il negativo fotografico, perch� il
+      // cielo filtra interamente i colori opposti.
+      fr[0] = 1.2 - tr;
+      fr[1] = tr + flandom() * 0.15 - flandom() * 0.15 + 0.3;
+      fr[2] = tr + flandom() * 0.3 - flandom() * 0.3 + 0.2;
+      fr[3] = tr + flandom() * 0.45 - flandom() * 0.45 + 0.1;
+      fg[0] = 1.2 - tg;
+      fg[1] = tg + flandom() * 0.15 - flandom() * 0.15 + 0.3;
+      fg[2] = tg + flandom() * 0.3 - flandom() * 0.3 + 0.2;
+      fg[3] = tg + flandom() * 0.45 - flandom() * 0.45 + 0.1;
+      fb[0] = 1.2 - tb;
+      fb[1] = tb + flandom() * 0.15 - flandom() * 0.15 + 0.3;
+      fb[2] = tb + flandom() * 0.3 - flandom() * 0.3 + 0.2;
+      fb[3] = tb + flandom() * 0.45 - flandom() * 0.45 + 0.1;
+
+      nebular_sky(); // cielo adatto all'uopo.
+
+      pp_pressure = fast_flandom() * 20 + albedo + 1;
+
+      break;
+
+    case 3: // abitabili
+      // colori per il cielo.
+      fr[1] = br * 0.5 + 0.5 * flandom();
+      fg[1] = bg * 0.5 + 0.5 * flandom();
+      fb[1] = bb * 0.5 + 0.5 * flandom();
+
+      switch (sctype) {
+        case OCEAN:
+          // albedo bassa (32-39): oceani liquidi
+          // ------------------------------------
+          // colori per le terre emerse.
+          fr[0] = 0.65 + 0.5 * flandom();
+          fg[0] = 0.45 + 0.4 * flandom();
+          fb[0] = 0.25 + 0.3 * flandom();
+          if (fg[0] < 0.6) fg[0] *= 2;
+          // colori per il mare.
+          fr[2] = 0.8 * flandom();
+          fg[2] = 0.8 * flandom();
+          fb[2] = fb[0] * 2 + 0.4;
+          // colori per la vegetazione.
+          fr[3] = 0.2 + flandom();
+          fg[3] = 0.4 + flandom();
+          fb[3] = flandom() * 0.6;
+          // cielo (solitamente) gremito di nubi.
+          cloudy_sky(50, 1);
+          break;
+        case PLAINS: // albedo media (40-47): prateria stepposa e zone "verdi".
+          // ------------------------------------
+          // colori per le terre emerse.
+          fr[0] = 0.25 + 0.5 * flandom();
+          fg[0] = 0.5 + 0.4 * flandom();
+          fb[0] = 0.25 + 0.3 * flandom();
+          if (fg[0] < 0.75) fg[0] *= 1.5;
+          // colori per l'orizzonte.
+          fr[2] = flandom() * 0.4 + fr[0] * 0.3;
+          fr[2] = flandom() * 0.7 + fg[0] * 0.3;
+          fr[2] = flandom() * 0.2 + fb[0] * 0.3;
+          // colori per la vegetazione.
+          fr[3] = flandom();
+          fg[3] = flandom();
+          fb[3] = flandom();
+          // cielo mediamente nuvoloso, pioggie in normali quantit�...
+          cloudy_sky(33, 1);
+          break;
+        case DESERT: // albedo medio-alta (48-55): aree (semi)desertiche
+          // ------------------------------------
+          // colori per le terre emerse.
+          fr[0] = tr + flandom() * 0.33;
+          fg[0] = tg + flandom() * 0.25;
+          fb[0] = tb + flandom() * 0.12;
+          // colori per l'orizzonte.
+          fr[2] = tr;
+          fg[2] = tg;
+          fb[2] = tb;
+          // colori per la vegetazione.
+          fr[3] = 0.5 * flandom();
+          fg[3] = 0.9 * flandom();
+          fb[3] = 0.4 * flandom();
+          // cielo molto pulito, pioggie molto scarse...
+          cloudy_sky(10, 1);
+          break;
+        case ICY: // albedo alta (56-63): nevi perenni e ghiacciai.
+          // ------------------------------------
+          // colori per le terre emerse.
+          fr[0] = 0.25 + flandom();
+          fg[0] = 0.55 + flandom();
+          fb[0] = 1.0 + flandom();
+          // colori per l'orizzonte.
+          fr[2] = fr[0] * 0.6;
+          fg[2] = fg[0] * 0.8;
+          fb[2] = fb[0];
+          // colori per la vegetazione.
+          fr[3] = 0.95 * flandom();
+          fg[3] = 0.95 * flandom();
+          fb[3] = 0.95 * flandom();
+          // cielo pulito (poca umidit� nell'aria)
+          cloudy_sky(15, 1);
+          break;
+      }
+
+      pp_pressure = fast_flandom() * 0.8 + 0.6;
+
+      break;
+
+    case 4: // pietrosi e corrugati...
+      pp_pressure = fast_flandom() * 0.1;
+      like1();
+      break;
+    case 5: // con atmosfera sottile (marte etc...)
+      // colori per le terre emerse.
+      // mah... in genere simili a quelli della superficie
+      // vista dallo spazio, ma qualche variazione �
+      // possibile, plausibile... dovuta ai componenti
+      // del suolo locale.
+      fr[0] = tr + 0.33 * flandom() * al;
+      fg[0] = tg + 0.33 * flandom() * al;
+      fb[0] = tb + 0.33 * flandom() * al;
+      // colori per il cielo.
+      // sono pressoch� ininfluenti, ma quasi costanti.
+      fr[1] = 0.8 * tb + 0.2 * flandom() * al;
+      fg[1] = 0.8 * tg + 0.2 * flandom() * al;
+      fb[1] = 0.8 * tr + 0.2 * flandom() * al;
+      // colori per l'orizzonte.
+      // come quelli delle terre emerse, ma pi� sbiaditi.
+      fr[2] = 0.5 + fr[0] * 0.5 * al;
+      fg[2] = 0.5 + fg[0] * 0.5 * al;
+      fb[2] = 0.5 + fb[0] * 0.5 * al;
+      // colori per la vegetazione.
+      // non c'� vegetazione, quindi per ora nulli.
+      fr[3] = 0.0;
+      fg[3] = 0.0;
+      fb[3] = 0.0;
+
+      // l'atmosfera lascia vedere le stelle
+      // per quasi tutto il giorno, di solito...
+      sky_brightness = parseFloat(sky_brightness) * 0.65;
+
+      // l'aspetto del cielo, anche qui, pu� essere nuvoloso,
+      // ma con subi sottili e poco marcate, e foschia appena percepibile.
+      cloudy_sky(10, 2);
+
+      pp_pressure = fast_flandom() * 0.05 + 0.01;
+
+      break;
+
+    // case 6: non considerato: � un gigante gassoso.
+
+    case 7: // gelido, solcato di strie (tipo Europa)
+      pp_pressure = fast_flandom() * 0.02;
+
+      like7();
+      break;
+
+    case 8: // lattiginoso.
+      pp_pressure = fast_flandom() + 0.2;
+      like7();
+      break;
+
+    // case 9: non considerato: � un oggetto substellare.
+    // case 10: non considerato: � una stella compagna.
+  }
+
+  // evita gradienti negativi, non hanno senso.
+  for (shade_nr = 0; shade_nr < 4; shade_nr++) {
+    if (fr[shade_nr] < 0) fr[shade_nr] = 0;
+    if (fg[shade_nr] < 0) fg[shade_nr] = 0;
+    if (fb[shade_nr] < 0) fb[shade_nr] = 0;
+  }
+
+  // correzione saturazione colori (foschia e pioggia, ove plausibili).
+  if (
+    CURRENTSTAR.p_type[ip_targetted] == 3 ||
+    CURRENTSTAR.p_type[ip_targetted] == 5
+  ) {
+    for (shade_nr = 0; shade_nr < 4; shade_nr++) {
+      fr[shade_nr] = (fr[shade_nr] - 0.5) * saturation + 0.5;
+      fg[shade_nr] = (fg[shade_nr] - 0.5) * saturation + 0.5;
+      fb[shade_nr] = (fb[shade_nr] - 0.5) * saturation + 0.5;
+    }
+  }
+
+  // prepara le sfumature
+  fr[0] *= 64 * dfs;
+  fg[0] *= 64 * dfs;
+  fb[0] *= 64 * dfs;
+  fr[1] *= 64 * dfs * sb;
+  fg[1] *= 64 * dfs * sb;
+  fb[1] *= 64 * dfs * sb;
+  fr[2] *= 64 * dfs;
+  fg[2] *= 64 * dfs;
+  fb[2] *= 64 * dfs;
+  fr[3] *= 64 * dfs;
+  fg[3] *= 64 * dfs;
+  fb[3] *= 64 * dfs;
+
+  var skip_stuff_for_goto_nightcolors = false;
+  // se non c'� atmosfera, stelle sempre ben visibili.
+  // alternativamente, si rendono visibili di notte.
+  if (!atmosphere) shade(surface_palette, 64, 64, 0, 0, 0, 100, 110, 120);
+  else {
+    if (nightzone) {
+      shade(surface_palette, 64, 64, 0, 0, 0, 60, 62, 64);
+      if (CURRENTSTAR.p_type[ip_targetted] == 3) {
+        shade(surface_palette, 0, 64, 0, 0, 0, 64, 62, 60);
+        shade(surface_palette, 128, 64, 0, 0, 0, 64, 64, 64);
+        shade(surface_palette, 192, 64, 8, 12, 16, 56, 60, 64);
+        skip_stuff_for_goto_nightcolors = true;
+      }
+      if (!skip_stuff_for_goto_nightcolors) {
+        fr[0] *= 0.33;
+        fg[0] *= 0.44;
+        fb[0] *= 0.55;
+        fr[2] *= 0.33;
+        fg[2] *= 0.44;
+        fb[2] *= 0.55;
+        fr[3] *= 0.33;
+        fg[3] *= 0.44;
+        fb[3] *= 0.55;
+      }
+    } else {
+      shade(surface_palette, 64, 64, 0, 0, 0, fr[1], fg[1], fb[1]);
+    }
+  }
+
+  if (!skip_stuff_for_goto_nightcolors) {
+    // sfumatura per il suolo.
+    shade(surface_palette, 0, 44, 0, 0, 0, fr[0], fg[0], fb[0]);
+    shade(surface_palette, 44, 20, fr[0], fg[0], fb[0], fr[1], fg[1], fb[1]);
+
+    // sfumatura per l'orizzonte.
+    shade(surface_palette, 128, 10, 0, 0, 0, fr[0], fg[0], fb[0]);
+    shade(surface_palette, 138, 44, fr[0], fg[0], fb[0], fr[2], fg[2], fb[2]);
+    shade(surface_palette, 182, 10, fr[2], fg[2], fb[2], fr[1], fg[1], fb[1]);
+
+    // sfumatura per la vegetazione.
+    shade(surface_palette, 192, 10, 0, 0, 0, fr[0], fg[0], fb[0]);
+    shade(surface_palette, 202, 44, fr[0], fg[0], fb[0], fr[3], fg[3], fb[3]);
+    shade(surface_palette, 246, 10, fr[3], fg[3], fb[3], fr[1], fg[1], fb[1]);
+  }
+  //nightcolors: // label here
+
+  // calcolo della temperatura.
+
+  pp_temp = 90 - dsd1 * 0.33;
+
+  if (!atmosphere) {
+    pp_temp -= 44;
+    pp_temp *= fabs(pp_temp * 0.44);
+    if (nightzone) pp_temp *= 0.3;
+    else pp_temp *= 0.3 + exposure * 0.0077;
+  } else {
+    if (nightzone) pp_temp *= 0.6;
+    else pp_temp *= 0.6 + exposure * 0.0044;
+  }
+
+  pp_temp -= (0.5 + 0.5 * fast_flandom()) * abs(landing_pt_lat - 60);
+
+  if (pp_temp < -269) pp_temp = -269 + 4 * fast_flandom();
+
+  if (CURRENTSTAR.p_type[ip_targetted] == 2) pp_temp += fast_flandom() * 150;
+
+  if (CURRENTSTAR.p_type[ip_targetted] == 3) {
+    switch (sctype) {
+      case OCEAN:
+        while (pp_temp < +10) pp_temp += fast_flandom() * 5;
+        while (pp_temp > +60) pp_temp -= fast_flandom() * 5;
+        break;
+      case PLAINS:
+        while (pp_temp < -10) pp_temp += fast_flandom() * 5;
+        while (pp_temp > +45) pp_temp -= fast_flandom() * 5;
+        break;
+      case DESERT:
+        while (pp_temp < +20) pp_temp += fast_flandom() * 5;
+        while (pp_temp > +80) pp_temp -= fast_flandom() * 5;
+        break;
+      case ICY:
+        while (pp_temp < -120) pp_temp += fast_flandom() * 5;
+        while (pp_temp > +4) pp_temp -= fast_flandom() * 5;
+    }
+  }
+
+  base_pp_temp = pp_temp;
+  base_pp_pressure = pp_pressure;
+}
+
+function cloudy_sky() {
+  // todo implement me?
+}
+function nebular_sky() {
+  // todo implement me?
+}
