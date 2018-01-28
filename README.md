@@ -8,10 +8,6 @@ http://drifter.sarvva.moos.es/
 
 First, you need to install all dependencies with `npm install`. Following that, run `npm run-script dev` and then visit http://localhost:8080/
 
-## Performance
-
-Currently, Drifter performs rather badly, especially on Google Chrome. This is mostly due to a very inefficient collision detection mechanism, which happens to perform badly on V8. Consider using Mozilla Firefox 58+ for now. I hope to be able to improve performance in the future.
-
 ## VR support
 
 Drifter has support for the Oculus Rift on [WebVR supported browsers](https://webvr.info/).

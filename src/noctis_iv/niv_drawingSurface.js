@@ -23,10 +23,12 @@ function getTerrain(x, y, hideerrors) {
   return p_surfacemap[y * TERRAIN_HEIGHT + x];
 }
 
-function displayTerrain() {
+function getTerrainGeometry(xmin, ymin, xmax, ymax) {
   var geom = new THREE.Geometry();
-  for (var y = 0; y < terrain.height; y++) {
-    for (var x = 0; x < terrain.width; x++) {
+  var xdiff = xmax - xmin;
+  var ydiff = ymax - ymin;
+  for (var y = ymin; y <= ymax; y++) {
+    for (var x = xmin; x <= xmax; x++) {
       var vert = new THREE.Vector3(
         x * TERRAINMULT_X,
         y * TERRAINMULT_Y,
@@ -37,23 +39,23 @@ function displayTerrain() {
   }
 
   //tri1
-  for (var y = 0; y < terrain.height - 1; y++) {
-    for (var x = 0; x < terrain.width - 1; x++) {
+  for (var y = 0; y <= ydiff - 1; y++) {
+    for (var x = 0; x <= xdiff - 1; x++) {
       var face = new THREE.Face3(
-        getVertexIndex(x + 0, y + 0),
-        getVertexIndex(x + 1, y + 0),
-        getVertexIndex(x + 0, y + 1)
+        getVertexIndex(x + 0, y + 0, xdiff),
+        getVertexIndex(x + 1, y + 0, xdiff),
+        getVertexIndex(x + 0, y + 1, xdiff)
       );
       geom.faces.push(face);
     }
   }
   //tri2
-  for (var y = 1; y < terrain.height; y++) {
-    for (var x = 0; x < terrain.width - 1; x++) {
+  for (var y = 1; y <= ydiff; y++) {
+    for (var x = 0; x <= xdiff - 1; x++) {
       var face = new THREE.Face3(
-        getVertexIndex(x + 0, y + 0),
-        getVertexIndex(x + 1, y - 1),
-        getVertexIndex(x + 1, y + 0)
+        getVertexIndex(x + 0, y + 0, xdiff),
+        getVertexIndex(x + 1, y - 1, xdiff),
+        getVertexIndex(x + 1, y + 0, xdiff)
       );
       geom.faces.push(face);
     }
@@ -76,6 +78,6 @@ function displayTerrain() {
   return geom;
 }
 
-function getVertexIndex(x, y) {
-  return y * terrain.width + x;
+function getVertexIndex(x, y, xdiff) {
+  return y * (xdiff + 1) + x;
 }

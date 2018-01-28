@@ -158,9 +158,46 @@ var xinit = function() {
 };
 
 AFRAME.registerGeometry('planetsurface', {
+  schema: {
+    xmin: { default: 0, min: 0, max: 200, type: 'int' },
+    xmax: { default: 199, min: 0, max: 200, type: 'int' },
+    ymin: { default: 0, min: 0, max: 200, type: 'int' },
+    ymax: { default: 199, min: 0, max: 200, type: 'int' }
+  },
+  init: function(data) {
+    xinit();
+    this.geometry = getTerrainGeometry(
+      data.xmin,
+      data.ymin,
+      data.xmax,
+      data.ymax
+    );
+  }
+});
+
+AFRAME.registerComponent('planetsurfacegridmaker', {
   init: function() {
     xinit();
-    this.geometry = displayTerrain();
+    // Generate planet surface by generating a bunch of entity elements that each cover a small section of the planet geometry
+    // Splitting a planet surface up into multiple geometries speeds up things like collision detection massively.
+    var gridelements = 10; //the actual number of grid elements generated is this number, squared
+    var gridsize = terrain.width / gridelements;
+    for (var y = 0; y < gridelements; y++) {
+      for (var x = 0; x < gridelements; x++) {
+        var xmin = x * gridsize;
+        var xmax = xmin + gridsize;
+        var ymin = y * gridsize;
+        var ymax = ymin + gridsize;
+        var newElem = document.createElement('a-entity');
+        newElem.setAttribute('geometry', 'primitive', 'planetsurface');
+        newElem.setAttribute('geometry', 'xmin', xmin);
+        newElem.setAttribute('geometry', 'xmax', xmax);
+        newElem.setAttribute('geometry', 'ymin', ymin);
+        newElem.setAttribute('geometry', 'ymax', ymax);
+        newElem.setAttribute('texture-material', 'src', 'txtr');
+        this.el.appendChild(newElem);
+      }
+    }
   }
 });
 
@@ -406,8 +443,8 @@ AFRAME.registerComponent('collider-check', {
     this.TEMP_VEC.set(pos.x, pos.y + 4, pos.z);
     this.raycaster.set(this.TEMP_VEC, this.vector_dir);
     var intersects = this.raycaster.intersectObject(
-      this.planetElement.object3D.children[0],
-      false
+      this.planetElement.object3D,
+      true
     );
     if (intersects.length > 0) {
       var intersect = intersects.pop();
