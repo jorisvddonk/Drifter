@@ -21,5 +21,13 @@ module.exports = {
     path: path.resolve('./dist/'),
     filename: 'bundle.js'
   },
+  module: {
+    loaders: [
+      {
+        test: /\.glsl$/,
+        loader: 'webpack-glsl-loader'
+      }
+    ]
+  },
   plugins: plugins
 };
