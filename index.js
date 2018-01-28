@@ -16,7 +16,7 @@ require('aframe-point-component');
 var GamepadControls = require('aframe-gamepad-controls');
 AFRAME.registerComponent('gamepad-controls', GamepadControls);
 
-require('./shaders/skyGradient.js');
+require('./shaders/sky.js');
 require('./src/drifter-components.js');
 
 var _ = require('lodash');

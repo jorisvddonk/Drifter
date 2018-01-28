@@ -26,7 +26,7 @@ THE SOFTWARE.
 var vertexShader = require('./skyVertexShader.glsl');
 var fragmentShader = require('./skyFragmentShader.glsl');
 
-AFRAME.registerShader('skyGradient', {
+AFRAME.registerShader('sky', {
   schema: {
     colorTop: { type: 'color', default: 'black', is: 'uniform' },
     colorBottom: { type: 'color', default: 'red', is: 'uniform' },
