@@ -15,6 +15,13 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 // renderPlanetTexture(ruinschart, 200, 200, 2, false); // render planet ruins chart (ruins on Felysian worlds, lava)
 // renderPlanetTexture(txtr,256,256,2); // render surface texture
 // renderPalette(); // render palette
+
+require('./aframe_components/ncc-model');
+require('./aframe_components/remove-hand-controls');
+require('./aframe_components/follow-room');
+require('./aframe_components/follow-camera');
+require('./aframe_components/debug-show-always');
+
 var url = require('url');
 var xinited = false;
 var RIGHT_HAND_TOOLS = ['none', 'map', 'texture_surface', 'texture_planet'];
@@ -156,88 +163,6 @@ var xinit = function() {
   }
 };
 
-AFRAME.registerComponent('ncc-model', {
-  schema: {
-    filename: { default: '', type: 'string' }
-  },
-  init: function() {
-    fetch(this.data.filename)
-      .then(function(res) {
-        return res.arrayBuffer();
-      })
-      .then(buffer => {
-        this.geometry = new THREE.Geometry();
-        var dataView = new DataView(buffer);
-        var offset = 0;
-        var readUInt8 = function() {
-          var retval = dataView.getUint8(offset, true);
-          offset += 1;
-          return retval;
-        };
-        var readFloat32 = function() {
-          var retval = dataView.getFloat32(offset, true);
-          offset += 4;
-          return retval;
-        };
-        var num_polys = readUInt8();
-        offset += 1; // huh?
-        var num_vertices_per_poly = [];
-        var xs = [];
-        var ys = [];
-        var zs = [];
-        var colors = [];
-        for (var i = 0; i < num_polys; i++) {
-          num_vertices_per_poly.push(readUInt8());
-        }
-        for (var i = 0; i < num_polys * 4; i++) {
-          xs.push(readFloat32());
-        }
-        for (var i = 0; i < num_polys * 4; i++) {
-          ys.push(readFloat32());
-        }
-        for (var i = 0; i < num_polys * 4; i++) {
-          zs.push(readFloat32());
-        }
-        for (var i = 0; i < num_polys; i++) {
-          colors.push(readUInt8());
-        }
-        var pindex = 0;
-        for (var i = 0; i < num_polys; i++) {
-          for (var j = 0; j < num_vertices_per_poly[i]; j++) {
-            this.geometry.vertices.push(
-              new THREE.Vector3(xs[i * 4 + j], ys[i * 4 + j], zs[i * 4 + j])
-            );
-          }
-          if (num_vertices_per_poly[i] == 3) {
-            this.geometry.faces.push(
-              new THREE.Face3(pindex + 0, pindex + 1, pindex + 2)
-            );
-          } else if (num_vertices_per_poly[i] == 4) {
-            this.geometry.faces.push(
-              new THREE.Face3(pindex + 0, pindex + 1, pindex + 2)
-            );
-            this.geometry.faces.push(
-              new THREE.Face3(pindex + 0, pindex + 2, pindex + 3)
-            );
-          }
-          pindex = pindex + num_vertices_per_poly[i];
-        }
-        this.geometry.scale(0.01, 0.01, 0.01);
-        this.geometry.rotateY(Math.PI * 0.5);
-        this.geometry.rotateZ(Math.PI * 1);
-        this.geometry.computeVertexNormals();
-        this.geometry.computeFaceNormals();
-        this.geometry.computeBoundingSphere();
-        this.material = new THREE.MeshStandardMaterial({
-          color: '#fff',
-          side: THREE.DoubleSide
-        });
-        this.mesh = new THREE.Mesh(this.geometry, this.material);
-        this.el.setObject3D('mesh', this.mesh);
-      });
-  }
-});
-
 AFRAME.registerGeometry('planetsurface', {
   schema: {
     xmin: { default: 0, min: 0, max: 200, type: 'int' },
@@ -361,18 +286,6 @@ AFRAME.registerComponent('planet-fog', {
   }
 });
 
-AFRAME.registerComponent('remove-hand-controls', {
-  init: function() {},
-  tick: function(time) {
-    // remove default hand model
-    var obj3d = this.el.getObject3D('mesh');
-    if (obj3d) {
-      this.el.removeObject3D('mesh');
-      this.el.removeAttribute('remove-hand-controls'); // once default hand model is removed; remove this component
-    }
-  }
-});
-
 AFRAME.registerComponent('texture-material', {
   schema: {
     src: { type: 'string', default: 'txtr' },
@@ -412,52 +325,6 @@ AFRAME.registerComponent('planet-space-material', {
       map: THREE_texturespace
     });
     this.material = this.el.getOrCreateObject3D('mesh').material = geommat;
-  }
-});
-
-AFRAME.registerComponent('follow-camera', {
-  init: function() {},
-  tick: function(time) {
-    var camera = this.el.sceneEl.camera.el;
-    if (camera) {
-      // need to add the Y position of the parent element, as that's used to fix the height of the user in the world
-      var pos = camera.getAttribute('position');
-      var posS = { x: pos.x, y: pos.y, z: pos.z };
-      posS.y += camera.parentElement.getAttribute('position').y;
-      this.el.setAttribute('position', posS);
-    }
-  }
-});
-
-var CAMERAHEIGHT = 1.65;
-AFRAME.registerComponent('follow-room', {
-  init: function() {
-    navigator.getVRDisplays().then(displays => {
-      this.display = displays[0];
-    });
-    this.vfd = new VRFrameData();
-  },
-  tick: function() {
-    if (this.display) {
-      this.display.getFrameData(this.vfd);
-      var camera = this.el.sceneEl.camera.el;
-      if (camera) {
-        // need to add the Y position of the camera's parent element, as that's used to fix the height of the user in the world
-        var posC = camera.getAttribute('position');
-        var posHMD = this.vfd.pose.position;
-        if (posHMD === null) {
-          posHMD = [0, 0, 0];
-        }
-        var posS = {
-          x: posC.x - posHMD[0],
-          y: posC.y - posHMD[1],
-          z: posC.z - posHMD[2]
-        };
-        posS.y += camera.parentElement.getAttribute('position').y;
-        posS.y -= CAMERAHEIGHT;
-        this.el.setAttribute('position', posS);
-      }
-    }
   }
 });
 
@@ -506,15 +373,6 @@ AFRAME.registerComponent('controller-actions', {
         SELECTED_RIGHT_HAND_TOOL = 0;
       }
     });
-  }
-});
-
-AFRAME.registerComponent('debug-show-always', {
-  init: function() {
-    var mat = new THREE.MeshBasicMaterial({
-      depthTest: false
-    });
-    this.material = this.el.getOrCreateObject3D('mesh').material = mat;
   }
 });
 
