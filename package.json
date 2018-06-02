@@ -20,6 +20,7 @@
     "aframe-extras": "^3.13.1",
     "aframe-gamepad-controls": "^0.6.0",
     "aframe-point-component": "^1.1.1",
+    "aframe-template-component": "^3.2.1",
     "file-loader": "^1.1.6",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.14.3",

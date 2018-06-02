@@ -21,6 +21,7 @@ require('./aframe_components/remove-hand-controls');
 require('./aframe_components/follow-room');
 require('./aframe_components/follow-camera');
 require('./aframe_components/debug-show-always');
+require('./aframe_components/3d-starmap');
 
 var url = require('url');
 var xinited = false;
@@ -278,11 +279,17 @@ AFRAME.registerComponent('planet-fog', {
     var skyColor = getSkyHexColor();
     var atmosphericDensity = planet_typesAtmosphericDensity[PLANET_TYPE];
     if (atmosphericDensity > 0) {
-      this.el.setAttribute('fog', 'type', 'linear');
-      this.el.setAttribute('fog', 'near', '1');
-      this.el.setAttribute('fog', 'far', 300 - 2 * atmosphericDensity); // less on a thick atmosphere world
-      this.el.setAttribute('fog', 'color', skyColor);
+      this.el.sceneEl.setAttribute('fog', 'type', 'linear');
+      this.el.sceneEl.setAttribute('fog', 'near', '1');
+      this.el.sceneEl.setAttribute('fog', 'far', 300 - 2 * atmosphericDensity); // less on a thick atmosphere world
+      this.el.sceneEl.setAttribute('fog', 'color', skyColor);
     }
+  }
+});
+
+AFRAME.registerComponent('no-fog', {
+  init: function() {
+    this.el.sceneEl.removeAttribute('fog');
   }
 });
 

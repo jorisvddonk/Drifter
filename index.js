@@ -13,6 +13,7 @@ require('aframe');
 require('aframe-extras');
 require('super-hands');
 require('aframe-point-component');
+require('aframe-template-component');
 var GamepadControls = require('aframe-gamepad-controls');
 AFRAME.registerComponent('gamepad-controls', GamepadControls);
 
@@ -20,3 +21,14 @@ require('./shaders/sky.js');
 require('./src/drifter-components.js');
 
 var _ = require('lodash');
+
+window.switchScene = function() {
+  var sceneElem = document.getElementById('selectedScene');
+  sceneElem.setAttribute(
+    'template',
+    'src',
+    sceneElem.getAttribute('template').src === '#stardrifter'
+      ? '#planet_surface'
+      : '#stardrifter'
+  );
+};
