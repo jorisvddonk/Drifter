@@ -17,13 +17,17 @@ AFRAME.registerComponent('ncc-model', {
           offset += 1;
           return retval;
         };
+        var readUInt16 = function() {
+          var retval = dataView.getUint16(offset, true);
+          offset += 2;
+          return retval;
+        };
         var readFloat32 = function() {
           var retval = dataView.getFloat32(offset, true);
           offset += 4;
           return retval;
         };
-        var num_polys = readUInt8();
-        offset += 1; // huh?
+        var num_polys = readUInt16();
         var num_vertices_per_poly = [];
         var xs = [];
         var ys = [];
