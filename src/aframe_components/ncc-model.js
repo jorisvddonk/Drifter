@@ -1,6 +1,7 @@
 AFRAME.registerComponent('ncc-model', {
   schema: {
-    filename: { default: '', type: 'string' }
+    filename: { default: '', type: 'string' },
+    scale: { default: 0.02, type: 'float' }
   },
   init: function() {
     fetch(this.data.filename)
@@ -98,7 +99,7 @@ AFRAME.registerComponent('ncc-model', {
           0 - (z_Min + (z_Max - z_Min) * 0.5)
         );
 
-        this.geometry.scale(0.01, 0.01, 0.01);
+        this.geometry.scale(this.data.scale, this.data.scale, this.data.scale);
         this.geometry.rotateY(Math.PI * 0.5);
         this.geometry.rotateZ(Math.PI * 1);
         this.geometry.computeVertexNormals();
