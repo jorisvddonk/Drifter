@@ -64,6 +64,40 @@ AFRAME.registerComponent('ncc-model', {
           }
           pindex = pindex + num_vertices_per_poly[i];
         }
+        var reduceMin = function(memo, val) {
+          if (val < memo || memo === undefined) {
+            return val;
+          }
+          return memo;
+        };
+        var reduceMax = function(memo, val) {
+          if (val > memo || memo === undefined) {
+            return val;
+          }
+          return memo;
+        };
+        var xVs = this.geometry.vertices.map(v => {
+          return v.x;
+        });
+        var yVs = this.geometry.vertices.map(v => {
+          return v.y;
+        });
+        var zVs = this.geometry.vertices.map(v => {
+          return v.z;
+        });
+        var x_Min = xVs.reduce(reduceMin);
+        var y_Min = yVs.reduce(reduceMin);
+        var z_Min = zVs.reduce(reduceMin);
+        var x_Max = xVs.reduce(reduceMax);
+        var y_Max = yVs.reduce(reduceMax);
+        var z_Max = zVs.reduce(reduceMax);
+
+        this.geometry.translate(
+          0 - (x_Min + (x_Max - x_Min) * 0.5),
+          0 - (y_Min + (y_Max - y_Min) * 0.5),
+          0 - (z_Min + (z_Max - z_Min) * 0.5)
+        );
+
         this.geometry.scale(0.01, 0.01, 0.01);
         this.geometry.rotateY(Math.PI * 0.5);
         this.geometry.rotateZ(Math.PI * 1);
