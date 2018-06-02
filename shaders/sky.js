@@ -28,9 +28,10 @@ var fragmentShader = require('./skyFragmentShader.glsl');
 
 AFRAME.registerShader('sky', {
   schema: {
+    sunColor: { type: 'color', default: 'white', is: 'uniform' },
     colorTop: { type: 'color', default: 'black', is: 'uniform' },
     colorBottom: { type: 'color', default: 'red', is: 'uniform' },
-    sunPosition: { type: 'vec3', default: '1 1 0', is: 'uniform' },
+    sunPosition: { type: 'vec3', default: '0 0.2 -1', is: 'uniform' },
     sunscattering: { type: 'float', default: '0', is: 'uniform' },
     atmosphericDensity: { type: 'float', default: '0', is: 'uniform' }
   },

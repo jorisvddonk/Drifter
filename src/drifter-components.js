@@ -334,11 +334,8 @@ AFRAME.registerComponent('planet-sky', {
     var r = toHex(Math.min(255, nearstar_r * 4));
     var g = toHex(Math.min(255, nearstar_g * 4));
     var b = toHex(Math.min(255, nearstar_b * 4));
-    /*var sunColor = getSunColor();
-    this.el.setAttribute('material', 'sunColor', sunColor);*/
-    var skyColor = getSkyHexColor();
-    this.el.setAttribute('material', 'colorTop', skyColor);
-    this.el.setAttribute('material', 'colorBottom', skyColor);
+    var sunColor = getSunColor();
+    this.el.setAttribute('material', 'sunColor', sunColor);
     this.el.setAttribute('material', 'sunscattering', sunscattering);
     this.el.setAttribute('material', 'atmosphericDensity', atmosphericDensity);
   }
