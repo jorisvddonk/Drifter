@@ -94,6 +94,10 @@ AFRAME.registerSystem('noctis', {
         this.starmap_loaded_handlers.forEach(function(handler) {
           handler(stars);
         });
+        // select balastrackonastreya by default
+        setTimeout(() => {
+          this.selectedStar(this.getStarByName('BALASTRACKONASTREYA'));
+        }, 1);
       })
       .catch(console.error);
 
