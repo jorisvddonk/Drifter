@@ -35,3 +35,12 @@ window.searchStar = function(starname) {
   var noctis_system = document.getElementById('scene').systems['noctis'];
   noctis_system.selectedStar(noctis_system.getStarByName(starname));
 };
+
+document.addEventListener('DOMContentLoaded', function() {
+  document
+    .getElementById('searchStarForm')
+    .addEventListener('submit', function(e) {
+      e.preventDefault();
+      window.searchStar(document.getElementById('searchStarInput').value);
+    });
+});

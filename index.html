@@ -15,7 +15,13 @@
     <!-- End of Noctis IV code -->
   </head>
   <body>
-    <button style="position: absolute; z-index: 9999; top: 0px; right: 0px; width: 150px; height: 50px;" onclick="switchScene()">Switch between surface and stardrifter</button>
+    <div style="position: absolute; top: 0px; z-index: 9999; right: 0px;">
+      <button onclick="switchScene()">Switch between surface and stardrifter</button>
+      <form id="searchStarForm">
+        <input id="searchStarInput" placeholder="Search star...">
+      </form>
+
+    </div>
     <a-scene stats id="scene" vr-mode-ui="enabled: true" global-controller-actions>
       <a-assets>
         <script id="planet_surface" type="html">
