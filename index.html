@@ -65,7 +65,10 @@
               <a-light type="point" color="#ccf" position="-7.5 2.2 -9"></a-light>
               <a-entity light="type: ambient; color: #225"></a-entity>
 
-              <a-entity position="0 1.3 0" ncc-model="scale:0.04; filename: assets/noctis/VEHICLE.NCC"></a-entity>
+              <a-entity position="0 1.3 0" ncc-model="scale:0.04; filename: assets/noctis/VEHICLE.NCC">
+                <a-entity show-star-details text="width: 2" position="-1 0 -9.5"></a-entity>
+                <a-entity show-guide-entries text="width: 2" position="1 0 -9.5"></a-entity>
+              </a-entity>
               <a-entity position="0 1.3 0" id="starmap-parent">
                 <a-entity id="starmap"  3d-starmap></a-entity>
                 <a-sphere id="starmap-search-marker" star-marker debug-show-always color="#f00" radius="0.004">
@@ -84,7 +87,7 @@
                 </a-entity>
                 <a-entity hand-controls="right" remove-hand-controls>
                   <a-entity hand-tool="hand: right; name: first">
-                      <a-entity show-star-details rotation="0 0 90" text="width: 0.4"></a-entity>
+                    <a-entity show-star-details rotation="0 0 90" text="width: 0.4"></a-entity>
                   </a-entity>
                   <a-entity hand-tool="hand: right; name: second">
                     <a-entity show-guide-entries rotation="0 0 90" text="width: 0.4"></a-entity>
