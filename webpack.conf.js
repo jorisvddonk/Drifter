@@ -1,12 +1,14 @@
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
 var plugins = [
   new HtmlWebpackPlugin({
     template: 'index.html',
     inject: 'head'
-  })
+  }),
+  new CopyWebpackPlugin([{ from: 'assets', to: 'assets' }])
 ];
 if (
   process.env.NODE_ENV === 'production' ||
