@@ -9,13 +9,19 @@ Currently, it consists of two parts:
 
 http://drifter.sarvva.moos.es/
 
+## System requirements
+
+You'll need a recent desktop browser to be able to run this. I recommend the latest version of Google Chrome or Firefox, as those are the browsers that have been tested thoroughly. For VR support, you'll want to run Firefox or another [WebVR supported browser](https://webvr.info/).
+
+You're also probably going to need some hardware acceleration.
+
+Drifter has not been tested on smartphones.
+
 ## Running Drifter locally
 
 First, you need to install all dependencies with `npm install`. Following that, run `npm run-script dev` and then visit http://localhost:8080/
 
 ## VR support
-
-Drifter has support for the Oculus Rift on [WebVR supported browsers](https://webvr.info/).
 
 Oculus Touch controls:
 
