@@ -43,12 +43,12 @@
               <a-plane width="0.1" height="0.1" rotation="-90 0 0" position="0 0 0" debug-show-always></a-plane>
               <a-entity hand-controller-actions>
                 <a-entity hand-controls="left" remove-hand-controls>
-                  <a-sphere hand-tool="hand: left; name: planet" radius="0.1" position="0 0 0" rotation="0 60 80" planet-space-material></a-sphere>
+                  <a-sphere hand-tool="hand: left; name: first" radius="0.1" position="0 0 0" rotation="0 60 80" planet-space-material></a-sphere>
                 </a-entity>
                 <a-entity hand-controls="right" remove-hand-controls>
-                  <a-entity hand-tool="hand: right; name: map" rotation="0 60 80" material="color: cyan; roughness: 1; metalness: 1;" geometry="primitive: planetsurface; xmin: 0; xmax: 199; ymin: 0; ymax: 199" scale="0.0015 0.0015 0.0015"></a-entity>
-                  <a-entity hand-tool="hand: right; name: texture_surface" rotation="0 -20 0" geometry="primitive: plane" texture-material="src: txtr" scale="0.4 0.4 0.4"></a-entity>
-                  <a-entity hand-tool="hand: right; name: texture_planet" rotation="0 -20 0" geometry="primitive: plane" texture-material="src: p_background; width: 360; height: 160; type: space" scale="0.36 0.16 0.4"></a-entity>
+                  <a-entity hand-tool="hand: right; name: first" rotation="0 60 80" material="color: cyan; roughness: 1; metalness: 1;" geometry="primitive: planetsurface; xmin: 0; xmax: 199; ymin: 0; ymax: 199" scale="0.0015 0.0015 0.0015"></a-entity>
+                  <a-entity hand-tool="hand: right; name: second" rotation="0 -20 0" geometry="primitive: plane" texture-material="src: txtr" scale="0.4 0.4 0.4"></a-entity>
+                  <a-entity hand-tool="hand: right; name: third" rotation="0 -20 0" geometry="primitive: plane" texture-material="src: p_background; width: 360; height: 160; type: space" scale="0.36 0.16 0.4"></a-entity>
                 </a-entity>
               </a-entity>
             </a-entity>
@@ -79,13 +79,15 @@
               <a-camera wasd-controls-enabled="false"></a-camera>
               <a-plane width="0.1" height="0.1" rotation="-90 0 0" position="0 0 0" debug-show-always></a-plane>
               <a-entity hand-controller-actions>
-                <a-entity starmap-star-selector hand-controls="left" translate-with-grip="elementsToTranslate: #starmap-parent" remove-hand-controls hand-tool="hand: left; name: planet">
+                <a-entity starmap-star-selector hand-controls="left" translate-with-grip="elementsToTranslate: #starmap-parent" remove-hand-controls hand-tool="hand: left; name: first">
                   <a-sphere debug-show-always color="#f00" radius="0.01"></a-sphere>
                 </a-entity>
                 <a-entity hand-controls="right" remove-hand-controls>
-                  <a-entity hand-tool="hand: right; name: map">
+                  <a-entity hand-tool="hand: right; name: first">
                     <a-entity show-guide-entries rotation="0 0 90" text="width: 0.4"></a-entity>
                   </a-entity>
+                  <a-sphere hand-tool="hand: right; name: second" color="#f99" radius="0.01"></a-sphere>
+                  <a-sphere hand-tool="hand: right; name: third" color="#9f9" radius="0.01"></a-sphere>
                 </a-entity>
               </a-entity>
             </a-entity>
