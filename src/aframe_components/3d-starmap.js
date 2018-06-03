@@ -66,7 +66,7 @@ AFRAME.registerComponent('3d-starmap', {
 
         for (var i = 0; i < numEntries; i++) {
           var star_x = readInt32();
-          var star_y = readInt32();
+          var star_y = -readInt32(); // in Noctis, Y coordinate is reversed
           var star_z = readInt32();
           var star_index = readInt32();
           var star_unused = readInt32();
