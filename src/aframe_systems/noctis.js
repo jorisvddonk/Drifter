@@ -11,6 +11,91 @@ var toHex = function(i) {
 AFRAME.registerSystem('noctis', {
   init: function() {
     this.star_selected_handlers = [];
+    this.starmap_loaded_handlers = [];
+
+    fetch('assets/starmap2.bin')
+      .then(function(res) {
+        return res.arrayBuffer();
+      })
+      .then(buffer => {
+        var dataView = new DataView(buffer);
+        var offset = 0;
+        var readUInt8 = function() {
+          var retval = dataView.getUint8(offset, true);
+          offset += 1;
+          return retval;
+        };
+        var readInt32 = function() {
+          var retval = dataView.getInt32(offset, true);
+          offset += 4;
+          return retval;
+        };
+
+        var numEntries = dataView.byteLength / 44;
+        var stars = [];
+        var scale = 0.0000001;
+
+        for (var i = 0; i < numEntries; i++) {
+          var star_x = readInt32();
+          var star_y = readInt32();
+          var star_z = readInt32();
+          var star_index = readInt32();
+          var star_unused = readInt32();
+          var star_name = [
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8()
+          ]
+            .map(x => String.fromCodePoint(x))
+            .join('')
+            .trim();
+          var star_typestr = [
+            readUInt8(),
+            readUInt8(),
+            readUInt8(),
+            readUInt8()
+          ]
+            .map(x => String.fromCodePoint(x))
+            .join('');
+
+          if (star_typestr[1] === 'S') {
+            stars.push({
+              x: star_x,
+              y: star_y,
+              z: star_z,
+              vector_scaled: new THREE.Vector3(
+                star_x * scale,
+                -star_y * scale,
+                star_z * scale
+              ),
+              name: star_name,
+              type: star_typestr.substr(2)
+            });
+          }
+        }
+        this.stars = stars;
+        this.starmap_loaded_handlers.forEach(function(handler) {
+          handler(stars);
+        });
+      })
+      .catch(console.error);
 
     fetch('./assets/GUIDE.BIN')
       .then(function(res) {
@@ -185,6 +270,14 @@ AFRAME.registerSystem('noctis', {
     convTerrain();
   },
 
+  onStarmapLoaded: function(handler) {
+    this.starmap_loaded_handlers.push(handler);
+    if (this.stars) {
+      // already loaded
+      handler(this.stars);
+    }
+  },
+
   onStarSelected: function(handler) {
     this.star_selected_handlers.push(handler);
   },
@@ -201,12 +294,9 @@ AFRAME.registerSystem('noctis', {
 
   getStarByName: function(starname) {
     var starname_lower = starname.toLowerCase();
-    // TODO: move star data into the noctis system, as well.
-    return document
-      .getElementById('starmap')
-      .components['3d-starmap'].stars.find(star => {
-        return star.name.toLowerCase() == starname_lower;
-      });
+    return this.el.sceneEl.systems['noctis'].stars.find(star => {
+      return star.name.toLowerCase() == starname_lower;
+    });
   },
 
   getIDForStar: function(starname_or_object) {

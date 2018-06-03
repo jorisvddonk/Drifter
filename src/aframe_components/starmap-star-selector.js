@@ -35,9 +35,7 @@ AFRAME.registerComponent('starmap-star-selector', {
         });
       }
     };
-    findClosest(
-      document.getElementById('starmap').components['3d-starmap'].stars
-    );
+    findClosest(this.el.sceneEl.systems['noctis'].stars);
     if (!closest.starpos_starmap_local) {
       return;
     }
