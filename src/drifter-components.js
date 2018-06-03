@@ -32,6 +32,7 @@ require('./aframe_components/texture-material');
 require('./aframe_components/planet-space-material');
 require('./aframe_components/hide');
 require('./aframe_components/collider-check');
+require('./aframe_components/global-controller-actions');
 
 var RIGHT_HAND_TOOLS = ['none', 'map', 'texture_surface', 'texture_planet'];
 var LEFT_HAND_TOOLS = ['none', 'planet'];
@@ -59,18 +60,8 @@ AFRAME.registerComponent('hand-tool', {
   }
 });
 
-AFRAME.registerComponent('controller-actions', {
+AFRAME.registerComponent('hand-controller-actions', {
   init: function() {
-    this.el.addEventListener('gamepadbuttondown', function(e) {
-      if (e.detail.index === 0) {
-        // 'action' button, e.g. A
-        window.location.reload();
-      }
-    });
-    this.el.addEventListener('xbuttondown', function(e) {
-      // X button on left Oculus controller
-      window.location.reload();
-    });
     this.el.addEventListener('ybuttondown', function(e) {
       SELECTED_LEFT_HAND_TOOL += 1;
       if (SELECTED_LEFT_HAND_TOOL > LEFT_HAND_TOOLS.length - 1) {

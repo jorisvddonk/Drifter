@@ -16,7 +16,7 @@
   </head>
   <body>
     <button style="position: absolute; z-index: 9999; top: 0px; right: 0px; width: 150px; height: 50px;" onclick="switchScene()">Switch between surface and stardrifter</button>
-    <a-scene stats id="scene" vr-mode-ui="enabled: true">
+    <a-scene stats id="scene" vr-mode-ui="enabled: true" global-controller-actions>
       <a-assets>
         <script id="planet_surface" type="html">
           <a-entity planet-fog>
@@ -30,7 +30,8 @@
             <a-entity id="collider" follow-camera>
               <a-box width="0.1" height="0.1" depth="0.1" position="0 -1 0" hide debug-show-always></a-box>
             </a-entity>
-            <a-entity follow-room controller-actions>
+
+            <a-entity follow-room hand-controller-actions>
               <a-sphere radius="0.1" position="0 0 0" hide debug-show-always></a-sphere>
               <a-entity hand-controls="left" remove-hand-controls>
                 <a-sphere hand-tool="hand: left; name: planet" radius="0.1" position="0 0 0" rotation="0 60 80" planet-space-material></a-sphere>
@@ -60,6 +61,14 @@
 
               <a-entity position="0 1.5 0" ncc-model="scale:0.04; filename: assets/noctis/VEHICLE.NCC"></a-entity>
               <a-entity position="0 1.5 0" 3d-starmap="filename: assets/starmap2.bin"></a-entity>
+            </a-entity>
+
+            <a-entity follow-room hand-controller-actions>
+              <a-sphere radius="0.1" position="0 0 0" hide debug-show-always></a-sphere>
+              <a-entity hand-controls="left" remove-hand-controls>
+              </a-entity>
+              <a-entity hand-controls="right" remove-hand-controls>
+              </a-entity>
             </a-entity>
           </a-entity>
 
