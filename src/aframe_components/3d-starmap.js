@@ -65,6 +65,7 @@ AFRAME.registerComponent('3d-starmap', {
         var points = COLORMAP.map(() => []);
         var numEntries = dataView.byteLength / 44;
         var stars = [];
+        var scale = this.data.scale;
 
         for (var i = 0; i < numEntries; i++) {
           var star_x = readInt32();
@@ -111,15 +112,20 @@ AFRAME.registerComponent('3d-starmap', {
               x: star_x,
               y: star_y,
               z: star_z,
+              vector_scaled: new THREE.Vector3(
+                star_x * scale,
+                star_y * scale,
+                star_z * scale
+              ),
               name: star_name,
               type: star_typestr.substr(2)
             });
           }
         }
 
+        var typed_stars = COLORMAP.map(() => []);
         for (var i = 0; i < stars.length; i++) {
           var star = stars[i];
-          var scale = this.data.scale;
           var startype = parseInt(star.type, 10);
           if (points[startype]) {
             points[startype].push([
@@ -127,6 +133,7 @@ AFRAME.registerComponent('3d-starmap', {
               star.y * scale,
               star.z * scale
             ]);
+            typed_stars[startype].push(star.name);
           } else {
             console.warn(
               'Unknown star type in starmap file:',
@@ -138,6 +145,7 @@ AFRAME.registerComponent('3d-starmap', {
 
         for (var i = 0; i < COLORMAP.length; i++) {
           starPointsElements.get(i).components.point.setPoints(points[i]);
+          this.el.components['3d-starmap'].stars = stars;
         }
       });
   }

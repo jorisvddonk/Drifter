@@ -32,6 +32,8 @@ require('./aframe_components/planet-space-material');
 require('./aframe_components/hide');
 require('./aframe_components/collider-check');
 require('./aframe_components/global-controller-actions');
+require('./aframe_components/face-camera');
+require('./aframe_components/starmap-star-selector');
 
 var RIGHT_HAND_TOOLS = ['none', 'map', 'texture_surface', 'texture_planet'];
 var LEFT_HAND_TOOLS = ['none', 'planet'];
