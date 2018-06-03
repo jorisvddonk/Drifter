@@ -1,8 +1,4 @@
 AFRAME.registerComponent('starmap-star-selector', {
-  schema: {
-    markerselector: { type: 'string', default: '#starmap-search-marker' },
-    textselector: { type: 'string', default: '#starmap-search-text' }
-  },
   init: function() {
     // Set up the tick throttling.
     this.tick = AFRAME.utils.throttleTick(this.tick, 500, this);
@@ -46,12 +42,6 @@ AFRAME.registerComponent('starmap-star-selector', {
       return;
     }
     try {
-      var markerElem = document.querySelector(this.data.markerselector);
-      markerElem.object3D.position.x = closest.starpos_starmap_local.x;
-      markerElem.object3D.position.y = closest.starpos_starmap_local.y;
-      markerElem.object3D.position.z = closest.starpos_starmap_local.z;
-      var textElem = document.querySelector(this.data.textselector);
-      textElem.setAttribute('text', 'value', closest.name);
       if (this.previouslySelected !== closest) {
         this.el.sceneEl.systems['noctis'].selectedStar(closest.star_object);
       }
