@@ -16,6 +16,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 // renderPlanetTexture(txtr,256,256,2); // render surface texture
 // renderPalette(); // render palette
 
+require('./aframe_systems/noctis.js');
 require('./aframe_components/ncc-model');
 require('./aframe_components/remove-hand-controls');
 require('./aframe_components/follow-room');
@@ -23,145 +24,10 @@ require('./aframe_components/follow-camera');
 require('./aframe_components/debug-show-always');
 require('./aframe_components/3d-starmap');
 
-var url = require('url');
 var RIGHT_HAND_TOOLS = ['none', 'map', 'texture_surface', 'texture_planet'];
 var LEFT_HAND_TOOLS = ['none', 'planet'];
 var SELECTED_LEFT_HAND_TOOL = 0;
 var SELECTED_RIGHT_HAND_TOOL = 0;
-var PLANET_TYPE = undefined;
-
-AFRAME.registerSystem('noctis', {
-  init: function() {
-    c_srand(parseInt(Math.random() * 256));
-    xinited = true;
-    var randCoord = function() {
-      var range = 10000000;
-      return parseInt(Math.random() * range) - range * 0.5;
-    };
-
-    TGT_INFO = extract_target_info({
-      x: randCoord(),
-      y: randCoord(),
-      z: randCoord()
-    });
-    CURRENTSTAR = prepare_star(TGT_INFO);
-    console.log('Star class: ', CURRENTSTAR.class);
-    nearstar_r = CURRENTSTAR['r'];
-    nearstar_g = CURRENTSTAR['g'];
-    nearstar_b = CURRENTSTAR['b'];
-
-    console.log('Seed is: ' + Seed);
-
-    var generatePlanet = function(typeId) {
-      console.log('Generating planet of type ' + planet_typesStr[typeId]);
-      PLANET_TYPE = typeId;
-      generatePalette(typeId);
-      //create_sky_for_planettype(typeId);
-      switch (typeId) {
-        case 0:
-          create_volcanic_world();
-          break;
-        case 1:
-          create_craterized_world();
-          break;
-        case 2:
-          create_thickatmosphere_world();
-          break;
-        case 3:
-          //create_felisian_world(); // TODO
-          console.log(
-            'Felysian world not supported yet; creating Icy world instead'
-          );
-          create_icy_world();
-          break;
-        case 4:
-          create_creased_world();
-          break;
-        case 5:
-          create_thinatmosphere_world();
-          break;
-        case 6:
-          // large not consistent; not supported
-          break;
-        case 7:
-          create_icy_world();
-          break;
-        case 8:
-          create_quartz_world();
-          break;
-        case 9:
-          // substellar object; not supported
-          break;
-        case 10:
-          // companion star; not supported
-          break;
-      }
-
-      prepare_space();
-      switch (typeId) {
-        case 0:
-          create_volcanic_space();
-          break;
-        case 1:
-          create_craterized_space();
-          break;
-        case 2:
-          create_thickatmosphere_space();
-          break;
-        case 3:
-          create_felysian_space();
-          break;
-        case 4:
-          create_creased_space();
-          break;
-        case 5:
-          create_thinatmosphere_space();
-          break;
-        case 6:
-          create_largeinconsistent_space();
-          break;
-        case 7:
-          create_icy_space();
-          break;
-        case 8:
-          create_quartz_space();
-          break;
-        case 9:
-          // substellar object; not supported yet
-          break;
-        case 10:
-          // companion star; not supported yet
-          break;
-      }
-
-      finish_space();
-    };
-
-    var force_planet_type = null;
-    var parsedURL = url.parse(document.location.toString(), true);
-    if (parsedURL.query.planetType) {
-      force_planet_type = parseInt(parsedURL.query.planetType);
-    }
-    if (force_planet_type !== null) {
-      generatePlanet(force_planet_type);
-    } else {
-      generatePlanet(
-        _.sample(
-          _.without(
-            _.map(planet_typesWithSurface, function(x, i) {
-              if (x) {
-                return i;
-              }
-            }),
-            undefined
-          )
-        )
-      );
-    }
-
-    convTerrain();
-  }
-});
 
 AFRAME.registerGeometry('planetsurface', {
   schema: {
@@ -226,8 +92,12 @@ var getSunColor = function() {
   return '#' + r + g + b;
 };
 
+var getPlanetType = function() {
+  return document.querySelector('a-scene').systems.noctis.planet_type;
+};
+
 var getSkyHexColor = function() {
-  var atmosphericDensity = planet_typesAtmosphericDensity[PLANET_TYPE];
+  var atmosphericDensity = planet_typesAtmosphericDensity[getPlanetType()];
   var r = Math.min(255, nearstar_r * 4);
   var g = Math.min(255, nearstar_g * 4);
   var b = Math.min(255, nearstar_b * 4);
@@ -251,8 +121,8 @@ var getSkyHexColor = function() {
 
 AFRAME.registerComponent('planet-sky', {
   init: function() {
-    var atmosphericDensity = planet_typesAtmosphericDensity[PLANET_TYPE];
-    var sunscattering = planet_typesSunScattering[PLANET_TYPE];
+    var atmosphericDensity = planet_typesAtmosphericDensity[getPlanetType()];
+    var sunscattering = planet_typesSunScattering[getPlanetType()];
     var r = toHex(Math.min(255, nearstar_r * 4));
     var g = toHex(Math.min(255, nearstar_g * 4));
     var b = toHex(Math.min(255, nearstar_b * 4));
@@ -272,7 +142,7 @@ AFRAME.registerComponent('hide', {
 AFRAME.registerComponent('planet-fog', {
   init: function() {
     var skyColor = getSkyHexColor();
-    var atmosphericDensity = planet_typesAtmosphericDensity[PLANET_TYPE];
+    var atmosphericDensity = planet_typesAtmosphericDensity[getPlanetType()];
     if (atmosphericDensity > 0) {
       this.el.sceneEl.setAttribute('fog', 'type', 'linear');
       this.el.sceneEl.setAttribute('fog', 'near', '1');
