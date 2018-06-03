@@ -38,6 +38,7 @@ require('./aframe_components/translate-with-grip');
 require('./aframe_components/show-guide-entries');
 require('./aframe_components/star-marker');
 require('./aframe_components/star-marker-text');
+require('./aframe_components/star-selected-actions');
 
 var RIGHT_HAND_TOOLS = ['none', 'map', 'texture_surface', 'texture_planet'];
 var LEFT_HAND_TOOLS = ['none', 'planet'];
