@@ -10,6 +10,50 @@ var toHex = function(i) {
 
 AFRAME.registerSystem('noctis', {
   init: function() {
+    fetch('./assets/GUIDE.BIN')
+      .then(function(res) {
+        return res.arrayBuffer();
+      })
+      .then(buffer => {
+        var dataView = new DataView(buffer);
+        var offset = 4;
+        var getUInt8 = function() {
+          var retval = dataView.getUint8(offset);
+          offset += 1;
+          return retval;
+        };
+        var datas = [];
+        while (offset < dataView.byteLength) {
+          try {
+            var sub = new DataView(
+              new Uint8Array([
+                getUInt8(),
+                getUInt8(),
+                getUInt8(),
+                getUInt8(),
+                getUInt8(),
+                getUInt8(),
+                getUInt8(),
+                getUInt8()
+              ]).buffer
+            );
+            var objid = sub.getFloat64(0, true);
+            var text = '';
+            for (var j = 0; j < 76; j++) {
+              text = text + String.fromCharCode(getUInt8());
+            }
+          } catch (e) {
+            console.error(e);
+          }
+          var newdata = {
+            object_id: objid,
+            text: text
+          };
+          datas.push(newdata);
+        }
+        this.guide_data = datas;
+      });
+
     c_srand(parseInt(Math.random() * 256));
     var randCoord = function() {
       var range = 10000000;
@@ -137,6 +181,34 @@ AFRAME.registerSystem('noctis', {
     }
 
     convTerrain();
+  },
+
+  getIDForStarCoordinates: function(x, y, z) {
+    return x / 100000 * (y / 100000) * (z / 100000);
+  },
+
+  getIDForStar: function(starname_or_object) {
+    var star = starname_or_object;
+    if (typeof starname_or_object === 'string') {
+      var starname_lower = starname_or_object.toLowerCase();
+      // TODO: move star data into the noctis system, as well.
+      star = document
+        .getElementById('starmap')
+        .components['3d-starmap'].stars.find(star => {
+          return star.name.toLowerCase() == starname_lower;
+        });
+    }
+    return this.getIDForStarCoordinates(star.x, star.y, star.z);
+  },
+
+  getGuideEntriesForStar: function(starid) {
+    if (typeof starid !== 'number') {
+      starid = this.getIDForStar(starid);
+    }
+    return this.guide_data.filter(function(entry) {
+      var diff = entry.object_id - starid;
+      return diff > -0.00001 && diff < 0.00001;
+    });
   },
 
   getSkyHexColor: function() {
