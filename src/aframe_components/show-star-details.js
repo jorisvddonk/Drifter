@@ -7,7 +7,13 @@ AFRAME.registerComponent('show-star-details', {
         }\nNumber of planets: ${
           CURRENTSTAR.nop
         }\nNumber of moons: ${CURRENTSTAR.nob -
-          CURRENTSTAR.nop}\nNumber of bodies: ${CURRENTSTAR.nob}`;
+          CURRENTSTAR.nop}\nNumber of bodies: ${
+          CURRENTSTAR.nob
+        }\n\nRadius: ${CURRENTSTAR.ray.toFixed(
+          3
+        )} centidyams\n\nParsis coordinates:\n ${
+          CURRENTSTAR.x
+        }; ${-CURRENTSTAR.y}; ${CURRENTSTAR.z}`;
         this.el.setAttribute('text', 'value', text);
       }, 0);
     });
