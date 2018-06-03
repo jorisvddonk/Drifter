@@ -107,7 +107,7 @@ AFRAME.registerComponent('3d-starmap', {
             .map(x => String.fromCodePoint(x))
             .join('');
 
-          if (star_index === 0) {
+          if (star_typestr[1] === 'S') {
             stars.push({
               x: star_x,
               y: star_y,
