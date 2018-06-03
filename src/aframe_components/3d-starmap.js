@@ -15,8 +15,9 @@ starmap2.bin (The starmap format used by NoctisMapper)
 AFRAME.registerComponent('3d-starmap', {
   schema: {
     filename: { default: '', type: 'string' },
+    perspective: { default: true, type: 'boolean' },
     scale: { default: 0.0000001, type: 'float' },
-    starsize: { default: 2, type: 'int' }
+    starsize: { default: 0.001, type: 'float' }
   },
   init: function() {
     var COLORMAP = new Array(); // colormapping by Neuzd
@@ -39,6 +40,7 @@ AFRAME.registerComponent('3d-starmap', {
       this.el.appendChild(elem);
       elem.setAttribute('color', COLORMAP[i]);
       elem.setAttribute('size', this.data.starsize);
+      elem.setAttribute('perspective', this.data.perspective);
       starPointsElements.set(i, elem);
     }
 
