@@ -55,12 +55,12 @@
               <a-entity id="sky" geometry="primitive: sphere; radius: 1000;" material="color: black; side: back"></a-entity>
             </a-entity>
 
-            <a-entity follow-room>
+            <a-entity>
               <a-light color="#111" position="-1 1 0"></a-light>
               <a-light type="point" color="#ffc" position="5 0 5"></a-light>
 
-              <a-entity position="0 1.5 0" ncc-model="scale:0.04; filename: assets/noctis/VEHICLE.NCC"></a-entity>
-              <a-entity position="0 1.5 0" 3d-starmap="filename: assets/starmap2.bin"></a-entity>
+              <a-entity position="0 2.5 0" ncc-model="scale:0.04; filename: assets/noctis/VEHICLE.NCC"></a-entity>
+              <a-entity position="0 2.5 0" 3d-starmap="filename: assets/starmap2.bin"></a-entity>
             </a-entity>
 
             <a-entity follow-room hand-controller-actions>
@@ -70,11 +70,12 @@
               <a-entity hand-controls="right" remove-hand-controls>
               </a-entity>
             </a-entity>
+
+            <a-entity>
+              <a-camera gamepad-controls></a-camera>
+            </a-entity>
           </a-entity>
 
-          <a-entity>
-            <a-camera gamepad-controls></a-camera>
-          </a-entity>
         </script>
       </a-assets>
 
