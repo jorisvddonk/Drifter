@@ -26,25 +26,20 @@
               <a-entity id="sky" geometry="primitive: sphere; radius: 1000;" planet-sky material="shader: sky; side: back"></a-entity>
               <a-entity position="0 0 -3" hide ncc-model="filename: assets/noctis/mammal.ncc"></a-entity>
             </a-entity>
-
-            <a-entity id="collider" follow-camera>
-              <a-box width="0.1" height="0.1" depth="0.1" position="0 -1 0" hide debug-show-always></a-box>
-            </a-entity>
-
-            <a-entity follow-room hand-controller-actions>
-              <a-sphere radius="0.1" position="0 0 0" hide debug-show-always></a-sphere>
-              <a-entity hand-controls="left" remove-hand-controls>
-                <a-sphere hand-tool="hand: left; name: planet" radius="0.1" position="0 0 0" rotation="0 60 80" planet-space-material></a-sphere>
-              </a-entity>
-              <a-entity hand-controls="right" remove-hand-controls>
-                <a-entity hand-tool="hand: right; name: map" rotation="0 60 80" material="color: cyan; roughness: 1; metalness: 1;" geometry="primitive: planetsurface; xmin: 0; xmax: 199; ymin: 0; ymax: 199" scale="0.0015 0.0015 0.0015"></a-entity>
-                <a-entity hand-tool="hand: right; name: texture_surface" rotation="0 -20 0" geometry="primitive: plane" texture-material="src: txtr" scale="0.4 0.4 0.4"></a-entity>
-                <a-entity hand-tool="hand: right; name: texture_planet" rotation="0 -20 0" geometry="primitive: plane" texture-material="src: p_background; width: 360; height: 160; type: space" scale="0.36 0.16 0.4"></a-entity>
-              </a-entity>
-            </a-entity>
             
-            <a-entity>
-              <a-camera gamepad-controls collider-check="targetElement: #planet_geometry"></a-camera>
+            <a-entity movement-controls id="camera-rig">
+              <a-camera wasd-controls-enabled="false" collider-check="targetElement: #planet_geometry"></a-camera>
+              <a-plane width="0.1" height="0.1" rotation="-90 0 0" position="0 0 0" debug-show-always></a-plane>
+              <a-entity hand-controller-actions>
+                <a-entity hand-controls="left" remove-hand-controls>
+                  <a-sphere hand-tool="hand: left; name: planet" radius="0.1" position="0 0 0" rotation="0 60 80" planet-space-material></a-sphere>
+                </a-entity>
+                <a-entity hand-controls="right" remove-hand-controls>
+                  <a-entity hand-tool="hand: right; name: map" rotation="0 60 80" material="color: cyan; roughness: 1; metalness: 1;" geometry="primitive: planetsurface; xmin: 0; xmax: 199; ymin: 0; ymax: 199" scale="0.0015 0.0015 0.0015"></a-entity>
+                  <a-entity hand-tool="hand: right; name: texture_surface" rotation="0 -20 0" geometry="primitive: plane" texture-material="src: txtr" scale="0.4 0.4 0.4"></a-entity>
+                  <a-entity hand-tool="hand: right; name: texture_planet" rotation="0 -20 0" geometry="primitive: plane" texture-material="src: p_background; width: 360; height: 160; type: space" scale="0.36 0.16 0.4"></a-entity>
+                </a-entity>
+              </a-entity>
             </a-entity>
           </a-entity>
         </script>
@@ -59,20 +54,22 @@
               <a-light color="#111" position="-1 1 0"></a-light>
               <a-light type="point" color="#ffc" position="5 0 5"></a-light>
 
-              <a-entity position="0 2.5 0" ncc-model="scale:0.04; filename: assets/noctis/VEHICLE.NCC"></a-entity>
-              <a-entity position="0 2.5 0" 3d-starmap="filename: assets/starmap2.bin"></a-entity>
+              <a-entity position="0 1.5 0" ncc-model="scale:0.04; filename: assets/noctis/VEHICLE.NCC"></a-entity>
+              <a-entity position="0 1.5 0" 3d-starmap="filename: assets/starmap2.bin"></a-entity>
             </a-entity>
 
-            <a-entity follow-room hand-controller-actions>
-              <a-sphere radius="0.1" position="0 0 0" hide debug-show-always></a-sphere>
-              <a-entity hand-controls="left" remove-hand-controls>
+            
+            <a-entity movement-controls id="camera-rig">
+              <a-camera wasd-controls-enabled="false"></a-camera>
+              <a-plane width="0.1" height="0.1" rotation="-90 0 0" position="0 0 0" debug-show-always></a-plane>
+              <a-entity hand-controller-actions>
+                <a-entity hand-controls="left" remove-hand-controls>
+                    <a-sphere hand-tool="hand: left; name: planet" radius="0.1" position="0 0 0" rotation="0 60 80" planet-space-material></a-sphere>
+                </a-entity>
+                <a-entity hand-controls="right" remove-hand-controls>
+                  <a-sphere hand-tool="hand: left; name: planet" radius="0.1" position="0 0 0" rotation="0 60 80" planet-space-material></a-sphere>
+                </a-entity>
               </a-entity>
-              <a-entity hand-controls="right" remove-hand-controls>
-              </a-entity>
-            </a-entity>
-
-            <a-entity>
-              <a-camera gamepad-controls></a-camera>
             </a-entity>
           </a-entity>
 

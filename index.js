@@ -14,8 +14,6 @@ require('aframe-extras');
 require('super-hands');
 require('aframe-point-component');
 require('aframe-template-component');
-var GamepadControls = require('aframe-gamepad-controls');
-AFRAME.registerComponent('gamepad-controls', GamepadControls);
 
 require('./shaders/sky.js');
 require('./src/drifter-components.js');

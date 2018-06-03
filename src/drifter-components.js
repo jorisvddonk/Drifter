@@ -19,7 +19,6 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 require('./aframe_systems/noctis.js');
 require('./aframe_components/ncc-model');
 require('./aframe_components/remove-hand-controls');
-require('./aframe_components/follow-room');
 require('./aframe_components/follow-camera');
 require('./aframe_components/debug-show-always');
 require('./aframe_components/3d-starmap');
