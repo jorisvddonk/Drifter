@@ -4,6 +4,11 @@ Drifter is a space exploration experiment, based on Noctis IV, made with a-frame
 
 http://drifter.sarvva.moos.es/
 
+See also:
+
+* [Video of Drifter's starmap in VR](https://youtu.be/0MSrKIqAq9Q)
+* [Video of Drifter's surface renderer in VR](https://youtu.be/vBojEvKK4pU)
+
 ## Running Drifter locally
 
 First, you need to install all dependencies with `npm install`. Following that, run `npm run-script dev` and then visit http://localhost:8080/
@@ -15,7 +20,8 @@ Drifter has support for the Oculus Rift on [WebVR supported browsers](https://we
 Oculus Touch controls:
 
 * Stick on left Touch controller: Move around.
-* Y / B: Switch tools in left and right hand. Currently, the tools available are mostly for debug purposes, allowing you to inspect various planet textures and a 3d map of the planet terrain.
+* Y / B: Switch tools in left and right hand. On the planet surface, you can view various textures, a rendering of the planet from space, and a heightmap of the planet surface. On the Stardrifter, you can open up the star selection tool (left hand) and show various details of the selected star (right hand), including GUIDE notes.
+* A: Switch beteween Stardrifter and planet surface.
 * X: Refresh the page, to visit a new planet.
 
 ## A note on Noctis IV source code ported to JavaScript
