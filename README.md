@@ -1,13 +1,13 @@
 # Drifter - a space exploration experiment
 
-Drifter is a space exploration experiment, based on Noctis IV, made with a-frame.
+Drifter is a space exploration experiment, based on Noctis IV, made with [A-Frame](https://aframe.io/).
+
+Currently, it consists of two parts:
+
+* A [Noctis IV STARMAP viewer](https://youtu.be/0MSrKIqAq9Q), reminiscient of NoctisMapper, accessible from within the Stardrifter. Full functionality only works if you have VR controllers available (most likely, only the Touch controllers of the Oculus Rift work properly).
+* A [simple planet exploration demo](https://youtu.be/vBojEvKK4pU), with planet terrains mimicing those of Noctis IV. Some of the original code has been ported to JavaScript for this to work.
 
 http://drifter.sarvva.moos.es/
-
-See also:
-
-* [Video of Drifter's starmap in VR](https://youtu.be/0MSrKIqAq9Q)
-* [Video of Drifter's surface renderer in VR](https://youtu.be/vBojEvKK4pU)
 
 ## Running Drifter locally
 
