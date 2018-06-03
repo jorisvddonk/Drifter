@@ -199,16 +199,20 @@ AFRAME.registerSystem('noctis', {
     return x / 100000 * (y / 100000) * (z / 100000);
   },
 
+  getStarByName: function(starname) {
+    var starname_lower = starname.toLowerCase();
+    // TODO: move star data into the noctis system, as well.
+    return document
+      .getElementById('starmap')
+      .components['3d-starmap'].stars.find(star => {
+        return star.name.toLowerCase() == starname_lower;
+      });
+  },
+
   getIDForStar: function(starname_or_object) {
     var star = starname_or_object;
     if (typeof starname_or_object === 'string') {
-      var starname_lower = starname_or_object.toLowerCase();
-      // TODO: move star data into the noctis system, as well.
-      star = document
-        .getElementById('starmap')
-        .components['3d-starmap'].stars.find(star => {
-          return star.name.toLowerCase() == starname_lower;
-        });
+      star = this.getStarByName(starname_or_object);
     }
     return this.getIDForStarCoordinates(star.x, star.y, star.z);
   },

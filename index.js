@@ -30,3 +30,8 @@ window.switchScene = function() {
       : '#stardrifter'
   );
 };
+
+window.searchStar = function(starname) {
+  var noctis_system = document.getElementById('scene').systems['noctis'];
+  noctis_system.selectedStar(noctis_system.getStarByName(starname));
+};
