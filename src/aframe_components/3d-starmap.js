@@ -69,7 +69,7 @@ AFRAME.registerComponent('3d-starmap', {
 
         for (var i = 0; i < numEntries; i++) {
           var star_x = readInt32();
-          var star_y = -readInt32(); // in Noctis, Y coordinate is reversed
+          var star_y = readInt32();
           var star_z = readInt32();
           var star_index = readInt32();
           var star_unused = readInt32();
@@ -114,7 +114,7 @@ AFRAME.registerComponent('3d-starmap', {
               z: star_z,
               vector_scaled: new THREE.Vector3(
                 star_x * scale,
-                star_y * scale,
+                -star_y * scale,
                 star_z * scale
               ),
               name: star_name,
@@ -130,7 +130,7 @@ AFRAME.registerComponent('3d-starmap', {
           if (points[startype]) {
             points[startype].push([
               star.x * scale,
-              star.y * scale,
+              -star.y * scale,
               star.z * scale
             ]);
             typed_stars[startype].push(star.name);
