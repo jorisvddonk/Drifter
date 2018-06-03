@@ -1,5 +1,13 @@
 var url = require('url');
 
+var toHex = function(i) {
+  var v = i.toString(16);
+  if (v.length === 1) {
+    v = '0' + v;
+  }
+  return v;
+};
+
 AFRAME.registerSystem('noctis', {
   init: function() {
     c_srand(parseInt(Math.random() * 256));
@@ -129,5 +137,43 @@ AFRAME.registerSystem('noctis', {
     }
 
     convTerrain();
-  }
+  },
+
+  getSkyHexColor: function() {
+    var atmosphericDensity = planet_typesAtmosphericDensity[this.planet_type];
+    var r = Math.min(255, nearstar_r * 4);
+    var g = Math.min(255, nearstar_g * 4);
+    var b = Math.min(255, nearstar_b * 4);
+    if (atmosphericDensity === 0) {
+      r = 0;
+      g = 0;
+      b = 0;
+    } else {
+      r = r * (atmosphericDensity / 100);
+      g = g * (atmosphericDensity / 100);
+      b = b * (atmosphericDensity / 100);
+    }
+    r = parseInt(r);
+    g = parseInt(g);
+    b = parseInt(b);
+    r = toHex(r);
+    g = toHex(g);
+    b = toHex(b);
+    return '#' + r + g + b;
+  },
+
+  getSunColor: function() {
+    var r = Math.min(255, nearstar_r * 4);
+    var g = Math.min(255, nearstar_g * 4);
+    var b = Math.min(255, nearstar_b * 4);
+    r = parseInt(r);
+    g = parseInt(g);
+    b = parseInt(b);
+    r = toHex(r);
+    g = toHex(g);
+    b = toHex(b);
+    return '#' + r + g + b;
+  },
+
+  toHex: toHex
 });

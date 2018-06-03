@@ -71,62 +71,18 @@ AFRAME.registerComponent('planetsurfacegridmaker', {
   }
 });
 
-var toHex = function(i) {
-  var v = i.toString(16);
-  if (v.length === 1) {
-    v = '0' + v;
-  }
-  return v;
-};
-
-var getSunColor = function() {
-  var r = Math.min(255, nearstar_r * 4);
-  var g = Math.min(255, nearstar_g * 4);
-  var b = Math.min(255, nearstar_b * 4);
-  r = parseInt(r);
-  g = parseInt(g);
-  b = parseInt(b);
-  r = toHex(r);
-  g = toHex(g);
-  b = toHex(b);
-  return '#' + r + g + b;
-};
-
-var getPlanetType = function() {
-  return document.querySelector('a-scene').systems.noctis.planet_type;
-};
-
-var getSkyHexColor = function() {
-  var atmosphericDensity = planet_typesAtmosphericDensity[getPlanetType()];
-  var r = Math.min(255, nearstar_r * 4);
-  var g = Math.min(255, nearstar_g * 4);
-  var b = Math.min(255, nearstar_b * 4);
-  if (atmosphericDensity === 0) {
-    r = 0;
-    g = 0;
-    b = 0;
-  } else {
-    r = r * (atmosphericDensity / 100);
-    g = g * (atmosphericDensity / 100);
-    b = b * (atmosphericDensity / 100);
-  }
-  r = parseInt(r);
-  g = parseInt(g);
-  b = parseInt(b);
-  r = toHex(r);
-  g = toHex(g);
-  b = toHex(b);
-  return '#' + r + g + b;
-};
-
 AFRAME.registerComponent('planet-sky', {
   init: function() {
-    var atmosphericDensity = planet_typesAtmosphericDensity[getPlanetType()];
-    var sunscattering = planet_typesSunScattering[getPlanetType()];
-    var r = toHex(Math.min(255, nearstar_r * 4));
-    var g = toHex(Math.min(255, nearstar_g * 4));
-    var b = toHex(Math.min(255, nearstar_b * 4));
-    var sunColor = getSunColor();
+    var atmosphericDensity =
+      planet_typesAtmosphericDensity[
+        this.el.sceneEl.systems.noctis.planet_type
+      ];
+    var sunscattering =
+      planet_typesSunScattering[this.el.sceneEl.systems.noctis.planet_type];
+    var r = this.el.sceneEl.systems.noctis.toHex(Math.min(255, nearstar_r * 4));
+    var g = this.el.sceneEl.systems.noctis.toHex(Math.min(255, nearstar_g * 4));
+    var b = this.el.sceneEl.systems.noctis.toHex(Math.min(255, nearstar_b * 4));
+    var sunColor = this.el.sceneEl.systems.noctis.getSunColor();
     this.el.setAttribute('material', 'sunColor', sunColor);
     this.el.setAttribute('material', 'sunscattering', sunscattering);
     this.el.setAttribute('material', 'atmosphericDensity', atmosphericDensity);
@@ -141,8 +97,13 @@ AFRAME.registerComponent('hide', {
 
 AFRAME.registerComponent('planet-fog', {
   init: function() {
-    var skyColor = getSkyHexColor();
-    var atmosphericDensity = planet_typesAtmosphericDensity[getPlanetType()];
+    console.log('AY');
+    var skyColor = this.el.sceneEl.systems.noctis.getSkyHexColor();
+    console.log('LMAO');
+    var atmosphericDensity =
+      planet_typesAtmosphericDensity[
+        this.el.sceneEl.systems.noctis.planet_type
+      ];
     if (atmosphericDensity > 0) {
       this.el.sceneEl.setAttribute('fog', 'type', 'linear');
       this.el.sceneEl.setAttribute('fog', 'near', '1');
