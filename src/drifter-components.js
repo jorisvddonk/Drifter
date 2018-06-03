@@ -24,15 +24,14 @@ require('./aframe_components/debug-show-always');
 require('./aframe_components/3d-starmap');
 
 var url = require('url');
-var xinited = false;
 var RIGHT_HAND_TOOLS = ['none', 'map', 'texture_surface', 'texture_planet'];
 var LEFT_HAND_TOOLS = ['none', 'planet'];
 var SELECTED_LEFT_HAND_TOOL = 0;
 var SELECTED_RIGHT_HAND_TOOL = 0;
 var PLANET_TYPE = undefined;
 
-var xinit = function() {
-  if (!xinited) {
+AFRAME.registerSystem('noctis', {
+  init: function() {
     c_srand(parseInt(Math.random() * 256));
     xinited = true;
     var randCoord = function() {
@@ -162,7 +161,7 @@ var xinit = function() {
 
     convTerrain();
   }
-};
+});
 
 AFRAME.registerGeometry('planetsurface', {
   schema: {
@@ -172,7 +171,6 @@ AFRAME.registerGeometry('planetsurface', {
     ymax: { default: 199, min: 0, max: 200, type: 'int' }
   },
   init: function(data) {
-    xinit();
     this.geometry = getTerrainGeometry(
       data.xmin,
       data.ymin,
@@ -184,7 +182,6 @@ AFRAME.registerGeometry('planetsurface', {
 
 AFRAME.registerComponent('planetsurfacegridmaker', {
   init: function() {
-    xinit();
     // Generate planet surface by generating a bunch of entity elements that each cover a small section of the planet geometry
     // Splitting a planet surface up into multiple geometries speeds up things like collision detection massively.
     var gridelements = 10; //the actual number of grid elements generated is this number, squared
@@ -254,7 +251,6 @@ var getSkyHexColor = function() {
 
 AFRAME.registerComponent('planet-sky', {
   init: function() {
-    xinit();
     var atmosphericDensity = planet_typesAtmosphericDensity[PLANET_TYPE];
     var sunscattering = planet_typesSunScattering[PLANET_TYPE];
     var r = toHex(Math.min(255, nearstar_r * 4));
@@ -275,7 +271,6 @@ AFRAME.registerComponent('hide', {
 
 AFRAME.registerComponent('planet-fog', {
   init: function() {
-    xinit();
     var skyColor = getSkyHexColor();
     var atmosphericDensity = planet_typesAtmosphericDensity[PLANET_TYPE];
     if (atmosphericDensity > 0) {
@@ -301,7 +296,6 @@ AFRAME.registerComponent('texture-material', {
     type: { type: 'string', default: 'surface' }
   },
   init: function() {
-    xinit();
     var texture;
     if (this.data.type === 'surface') {
       texture = generateNIVDataTexture(
@@ -326,7 +320,6 @@ AFRAME.registerComponent('texture-material', {
 
 AFRAME.registerComponent('planet-space-material', {
   init: function() {
-    xinit();
     THREE_texturespace = generateNIVSpaceDataTexture(360, 120, p_background);
     var geommat = new THREE.MeshBasicMaterial({
       map: THREE_texturespace
