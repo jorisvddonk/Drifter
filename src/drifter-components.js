@@ -35,6 +35,7 @@ require('./aframe_components/global-controller-actions');
 require('./aframe_components/face-camera');
 require('./aframe_components/starmap-star-selector');
 require('./aframe_components/translate-with-grip');
+require('./aframe_components/show-guide-entries');
 
 var RIGHT_HAND_TOOLS = ['none', 'map', 'texture_surface', 'texture_planet'];
 var LEFT_HAND_TOOLS = ['none', 'planet'];

@@ -6,6 +6,7 @@ AFRAME.registerComponent('starmap-star-selector', {
   init: function() {
     // Set up the tick throttling.
     this.tick = AFRAME.utils.throttleTick(this.tick, 500, this);
+    this.previouslySelected = null;
   },
   tick: function(time, timeDelta) {
     if (!this.el.object3D.visible) {
@@ -33,6 +34,7 @@ AFRAME.registerComponent('starmap-star-selector', {
             closest.starpos_starmap_local = star.vector_scaled;
             closest.i = i;
             closest.name = star.name;
+            closest.star_object = star;
           }
         });
       }
@@ -50,6 +52,10 @@ AFRAME.registerComponent('starmap-star-selector', {
       markerElem.object3D.position.z = closest.starpos_starmap_local.z;
       var textElem = document.querySelector(this.data.textselector);
       textElem.setAttribute('text', 'value', closest.name);
+      if (this.previouslySelected !== closest) {
+        this.el.sceneEl.systems['noctis'].selectedStar(closest.star_object);
+      }
+      this.previouslySelected = closest;
     } catch (e) {}
   }
 });

@@ -10,6 +10,8 @@ var toHex = function(i) {
 
 AFRAME.registerSystem('noctis', {
   init: function() {
+    this.star_selected_handlers = [];
+
     fetch('./assets/GUIDE.BIN')
       .then(function(res) {
         return res.arrayBuffer();
@@ -181,6 +183,16 @@ AFRAME.registerSystem('noctis', {
     }
 
     convTerrain();
+  },
+
+  onStarSelected: function(handler) {
+    this.star_selected_handlers.push(handler);
+  },
+
+  selectedStar: function(star) {
+    this.star_selected_handlers.forEach(function(handler) {
+      handler(star);
+    });
   },
 
   getIDForStarCoordinates: function(x, y, z) {
