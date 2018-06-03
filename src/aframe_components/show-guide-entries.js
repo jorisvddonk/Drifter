@@ -18,7 +18,7 @@ AFRAME.registerComponent('show-guide-entries', {
             .join('\n')
         );
       } else {
-        this.el.setAttribute('text', 'value', '');
+        this.el.setAttribute('text', 'value', 'no guide entries available');
       }
     });
   }
