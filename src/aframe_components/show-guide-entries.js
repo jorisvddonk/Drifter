@@ -1,7 +1,4 @@
 AFRAME.registerComponent('show-guide-entries', {
-  schema: {
-    selected_star: { type: 'string', default: {} }
-  },
   init: function() {
     this.el.sceneEl.systems['noctis'].onStarSelected(selectedstar => {
       var guideEntries = this.el.sceneEl.systems[
