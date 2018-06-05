@@ -21,20 +21,20 @@
     "aframe-point-component": "^1.1.1",
     "aframe-template-component": "^3.2.1",
     "copy-webpack-plugin": "^4.5.1",
-    "file-loader": "^1.1.6",
+    "file-loader": "^1.1.11",
     "html-webpack-plugin": "^2.30.1",
     "husky": "^0.14.3",
-    "lint-staged": "^6.1.0",
-    "lodash": "^4.17.4",
+    "lint-staged": "^6.1.1",
+    "lodash": "^4.17.10",
     "super-hands": "^2.1.0",
-    "uglifyjs-webpack-plugin": "^1.1.6",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "url": "^0.11.0",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.1",
+    "webpack": "^3.12.0",
+    "webpack-dev-server": "^2.11.2",
     "webpack-glsl-loader": "^1.0.1"
   },
   "devDependencies": {
-    "prettier": "^1.10.2"
+    "prettier": "^1.13.4"
   },
   "lint-staged": {
     "*.js": [
