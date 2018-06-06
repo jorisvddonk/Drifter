@@ -24,7 +24,7 @@
     </div>
     <a-scene stats id="scene" vr-mode-ui="enabled: true" global-controller-actions>
       <a-assets>
-        <script id="planet_surface" type="html">
+        <script id="planet_surface" type="text/html">
           <a-entity planet-fog>
             <a-entity id="planet_geometry" planetsurfacegridmaker></a-entity>
             
@@ -55,7 +55,7 @@
           </a-entity>
         </script>
 
-        <script id="stardrifter" type="html">
+        <script id="stardrifter" type="text/html">
           <a-entity no-fog star-selected-actions>
             <a-entity follow-camera>
               <a-entity id="sky" geometry="primitive: sphere; radius: 1000;" material="shader: flat; color: black; side: back"></a-entity>
