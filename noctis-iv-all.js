@@ -384,6 +384,7 @@ function getFromPalette(index) {
 
 function generatePalette(type) {
   var tmppal = palette;
+  var colorbase = type * 64;
 
   type <<= 2;
   r = planet_rgb_and_var[type + 0];
