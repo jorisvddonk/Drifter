@@ -274,7 +274,7 @@ var kfract = 2;
 var c, gr, r, g, b, Acr, Acx, Acy, px, py;
 var r1, g1, b1, r2, g2, b2, r3, g3, b3;
 var vptr, al, ah, tgr, di, ebx, cl, ax, bl, dx, cx, knot1;
-var palette = new Uint8Array(768);
+var palette = new Uint8Array(1920); // 10 types * 64 colors * 3 channels
 
 // ============ Random functions ============
 function c_rand() {
@@ -428,6 +428,17 @@ function generatePalette(type) {
   shade(tmppal, colorbase + 16, 16, r1, g1, b1, r2, g2, b2);
   shade(tmppal, colorbase + 32, 16, r2, g2, b2, r3, g3, b3);
   shade(tmppal, colorbase + 48, 16, r3, g3, b3, 64, 64, 64);
+
+  console.log(
+    'After shade, palette at colorbase:',
+    tmppal[colorbase],
+    tmppal[colorbase + 1],
+    tmppal[colorbase + 2],
+    '...',
+    tmppal[colorbase + 60],
+    tmppal[colorbase + 61],
+    tmppal[colorbase + 62]
+  );
 }
 
 function setPixel(imageData, x, y, r, g, b, a) {
@@ -1094,7 +1105,11 @@ function generatePlanetTexture(type, seed) {
   switch (type) {
     case 0:
       console.log('Creating type 0');
-      create_volcanic_space();
+      try {
+        create_volcanic_space();
+      } catch (e) {
+        console.error('type 0 error:', e);
+      }
       break;
     case 1:
       console.log('Creating type 1');
@@ -1105,6 +1120,7 @@ function generatePlanetTexture(type, seed) {
       }
       break;
     case 2:
+      console.log('Creating type 2');
       try {
         create_thickatmosphere_space();
       } catch (e) {
@@ -1112,6 +1128,7 @@ function generatePlanetTexture(type, seed) {
       }
       break;
     case 3:
+      console.log('Creating type 3');
       try {
         create_felysian_space();
       } catch (e) {
@@ -1119,6 +1136,7 @@ function generatePlanetTexture(type, seed) {
       }
       break;
     case 4:
+      console.log('Creating type 4');
       try {
         create_creased_space();
       } catch (e) {
@@ -1126,6 +1144,7 @@ function generatePlanetTexture(type, seed) {
       }
       break;
     case 5:
+      console.log('Creating type 5');
       try {
         create_thinatmosphere_space();
       } catch (e) {
@@ -1133,6 +1152,7 @@ function generatePlanetTexture(type, seed) {
       }
       break;
     case 6:
+      console.log('Creating type 6');
       try {
         create_largeinconsistent_space();
       } catch (e) {
@@ -1157,14 +1177,6 @@ function generatePlanetTexture(type, seed) {
       create_icy_space();
       break;
   }
-
-  console.log(
-    'After switch, p_background sample:',
-    p_background[0],
-    p_background[100],
-    p_background[1000],
-    p_background[10000]
-  );
 
   finish_space();
 
