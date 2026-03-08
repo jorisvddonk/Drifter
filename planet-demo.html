@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noctis IV Planet Widget Demo</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0a0a12;
+      color: #eee;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    p.subtitle {
+      text-align: center;
+      color: #888;
+      margin-bottom: 40px;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    label {
+      font-size: 12px;
+      color: #888;
+      text-transform: uppercase;
+    }
+    select, input {
+      padding: 8px 12px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      background: #1a1a24;
+      color: #eee;
+      font-size: 14px;
+    }
+    .planets-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .planet-card {
+      background: #12121a;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .planet-card h3 {
+      margin: 15px 0 5px;
+      font-size: 14px;
+      font-weight: normal;
+    }
+    .planet-card .type-name {
+      font-size: 11px;
+      color: #666;
+      margin: 0;
+    }
+    noctis-planet {
+      border-radius: 50%;
+      overflow: hidden;
+      box-shadow: 0 0 30px rgba(0,0,0,0.5);
+    }
+  </style>
+</head>
+<body>
+  <h1>Noctis IV Planet Widget</h1>
+  <p class="subtitle">A Lit component that renders procedurally generated planets</p>
+
+  <div class="controls">
+    <div class="control-group">
+      <label>Planet Type</label>
+      <select id="typeSelect">
+        <option value="0">Internally Hot (Volcanic)</option>
+        <option value="1" selected>Craterized No Atmosphere</option>
+        <option value="2">Thick Atmosphere</option>
+        <option value="3">Felysian</option>
+        <option value="4">Creased No Atmosphere</option>
+        <option value="5">Thin Atmosphere</option>
+        <option value="6">Large Not Consistent</option>
+        <option value="7">Icy</option>
+        <option value="8">Quartz</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>Size (px)</label>
+      <input type="range" id="sizeInput" min="100" max="400" value="200">
+    </div>
+    <div class="control-group">
+      <label>Spin Speed</label>
+      <input type="range" id="speedInput" min="1" max="50" value="5">
+    </div>
+    <div class="control-group">
+      <label>Random Seed</label>
+      <input type="number" id="seedInput" value="12345">
+    </div>
+  </div>
+
+  <div class="planets-grid" id="planetsGrid"></div>
+
+  <script type="module">
+    import './noctis-planet.js';
+
+    const planetTypes = [
+      'Internally Hot',
+      'Craterized No Atmosphere',
+      'Thick Atmosphere',
+      'Felysian',
+      'Creased No Atmosphere',
+      'Thin Atmosphere',
+      'Large Not Consistent',
+      'Icy',
+      'Quartz',
+      'Substellar Object',
+      'Companion Star'
+    ];
+
+    const grid = document.getElementById('planetsGrid');
+    let demoPlanet = null;
+
+    function createDemoPlanet() {
+      if (demoPlanet) {
+        demoPlanet.remove();
+      }
+      demoPlanet = document.createElement('noctis-planet');
+      demoPlanet.setAttribute('type', document.getElementById('typeSelect').value);
+      demoPlanet.setAttribute('size', document.getElementById('sizeInput').value);
+      demoPlanet.setAttribute('speed', document.getElementById('speedInput').value / 1000);
+      demoPlanet.setAttribute('seed', document.getElementById('seedInput').value);
+      
+      const card = document.createElement('div');
+      card.className = 'planet-card';
+      card.innerHTML = `<h3>Interactive Demo</h3><p class="type-name">Adjust controls above</p>`;
+      card.insertBefore(demoPlanet, card.children[1]);
+      
+      grid.innerHTML = '';
+      grid.appendChild(card);
+    }
+
+    function createAllPlanets() {
+      grid.innerHTML = '';
+      for (let i = 0; i < 9; i++) {
+        const card = document.createElement('div');
+        card.className = 'planet-card';
+        
+        const planet = document.createElement('noctis-planet');
+        planet.setAttribute('type', i);
+        planet.setAttribute('size', '180');
+        planet.setAttribute('speed', '3');
+        
+        card.innerHTML = `<h3>Type ${i}</h3><p class="type-name">${planetTypes[i]}</p>`;
+        card.insertBefore(planet, card.children[1]);
+        grid.appendChild(card);
+      }
+    }
+
+    document.getElementById('typeSelect').addEventListener('change', createDemoPlanet);
+    document.getElementById('sizeInput').addEventListener('input', createDemoPlanet);
+    document.getElementById('speedInput').addEventListener('input', createDemoPlanet);
+    document.getElementById('seedInput').addEventListener('change', createDemoPlanet);
+
+    createDemoPlanet();
+  </script>
+</body>
+</html>
