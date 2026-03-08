@@ -641,9 +641,9 @@ function combine_textures() {
     objectschart.length
   );
   for (px = 0, py = 0; px < 32400; py += 2, px++) {
-    console.log('px:', px, 'py:', py, 'objectschart[px]:', objectschart[px]);
+    //console.log('px:', px, 'py:', py, 'objectschart[px]:', objectschart[px]);
     if (px > 16100 && px < 16200) {
-      console.log('Accessing beyond objectschart bounds at px:', px);
+      //console.log('Accessing beyond objectschart bounds at px:', px);
     }
     p_background[py] += objectschart[px];
     if (p_background[py] > 0x3e) p_background[py] = 0x3e;
