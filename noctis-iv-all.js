@@ -1303,8 +1303,8 @@ function generatePlanetTexture(type, seed) {
   var width = 512;
   var height = 256;
   var canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
+  canvas.width = 360;
+  canvas.height = 180;
   var ctx = canvas.getContext('2d');
 
   var imageData = ctx.createImageData(360, 180);
@@ -1331,7 +1331,7 @@ function generatePlanetTexture(type, seed) {
   var scaledCtx = scaled.getContext('2d');
   scaledCtx.imageSmoothingEnabled = true;
   scaledCtx.imageSmoothingQuality = 'high';
-  scaledCtx.drawImage(canvas, 0, 0, width, height);
+  scaledCtx.drawImage(canvas, 0, 0, 360, 180, 0, 0, width, height);
 
   return scaled;
 }
