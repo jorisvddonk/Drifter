@@ -340,6 +340,12 @@ function shade(
   finish_g,
   finish_b
 ) {
+  console.log(
+    'shade called: first_color:',
+    first_color,
+    'number_of_colors:',
+    number_of_colors
+  );
   var count = number_of_colors;
   var k = 1.0 / number_of_colors;
   var delta_r = (finish_r - start_r) * k;
@@ -347,6 +353,12 @@ function shade(
   var delta_b = (finish_b - start_b) * k;
   first_color *= 3;
   first_color = parseInt(first_color);
+  console.log(
+    'shade after *3: first_color:',
+    first_color,
+    'palette_buffer.length:',
+    palette_buffer.length
+  );
   while (count) {
     if (start_r >= 0 && start_r < 64)
       palette_buffer[first_color + 0] = parseInt(start_r);
@@ -424,7 +436,54 @@ function generatePalette(type) {
 
   type >>= 2;
 
+  console.log(
+    'Calling shade with colorbase:',
+    colorbase,
+    'r1:',
+    r1,
+    'g1:',
+    g1,
+    'b1:',
+    b1,
+    'r2:',
+    r2,
+    'g2:',
+    g2,
+    'b2:',
+    b2,
+    'r3:',
+    r3,
+    'g3:',
+    g3,
+    'b3:',
+    b3
+  );
+  console.log(
+    'Palette buffer length:',
+    tmppal.length,
+    'colorbase+63*3:',
+    (colorbase + 63) * 3
+  );
+
   shade(tmppal, colorbase + 0, 16, 0, 0, 0, r1, g1, b1);
+  var actualIdx = (colorbase + 0) * 3;
+  console.log(
+    'After first shade, palette at actual index',
+    actualIdx,
+    ':',
+    tmppal[actualIdx],
+    tmppal[actualIdx + 1],
+    tmppal[actualIdx + 2]
+  );
+  var checkIdx = colorbase * 3;
+  console.log(
+    'Palette at colorbase*3',
+    checkIdx,
+    ':',
+    tmppal[checkIdx],
+    tmppal[checkIdx + 1],
+    tmppal[checkIdx + 2]
+  );
   shade(tmppal, colorbase + 16, 16, r1, g1, b1, r2, g2, b2);
   shade(tmppal, colorbase + 32, 16, r2, g2, b2, r3, g3, b3);
   shade(tmppal, colorbase + 48, 16, r3, g3, b3, 64, 64, 64);
@@ -575,23 +634,42 @@ function create_largeinconsistent_space() {
 
 //Combines the atmosphere and surface textures.
 function combine_textures() {
+  console.log(
+    'combine_textures: p_background.length:',
+    p_background.length,
+    'objectschart.length:',
+    objectschart.length
+  );
   for (px = 0, py = 0; px < 32400; py += 2, px++) {
+    console.log('px:', px, 'py:', py, 'objectschart[px]:', objectschart[px]);
+    if (px > 16100 && px < 16200) {
+      console.log('Accessing beyond objectschart bounds at px:', px);
+    }
     p_background[py] += objectschart[px];
     if (p_background[py] > 0x3e) p_background[py] = 0x3e;
     p_background[py + 1] += objectschart[px];
     if (p_background[py + 1] > 0x3e) p_background[py + 1] = 0x3e;
+    if (px > 16200) break; // Debug - stop after going beyond bounds
   }
 }
 
 function create_thickatmosphere_space() {
+  console.log(
+    'create_thickatmosphere_space start, p_background[0]:',
+    p_background[0],
+    'hasNaN:',
+    p_background.some(isNaN)
+  );
   r = 5 + ranged_fast_random(25);
   for (c = 0; c < r; c++) {
     Acr = ranged_fast_random(20) + 1;
     Acy = ranged_fast_random(178 - 2 * Acr) + Acr;
+    console.log('Loop', c, 'Acr:', Acr, 'Acy:', Acy);
     switch (RANDOM(2)) {
       case 0:
         Acx = ((10 * secs) / (ranged_fast_random(3600) + 180)) % 360;
         gr = ranged_fast_random(12) + 2;
+        console.log('  storm case - Acx:', Acx, 'gr:', gr);
         storm();
         break;
       case 1:
@@ -599,12 +677,24 @@ function create_thickatmosphere_space() {
         py = Acy * 360;
         Acr *= 360;
         g = 1 + ranged_fast_random(gr);
+        console.log('  band case - gr:', gr, 'py:', py, 'Acr:', Acr, 'g:', g);
         band();
     }
+    if (p_background.some(isNaN)) {
+      console.log('NaN detected after loop', c);
+      break;
+    }
   }
-  if (!ranged_fast_random(3)) negate();
+  console.log('After loop, hasNaN:', p_background.some(isNaN));
+  if (!ranged_fast_random(3)) {
+    console.log('Calling negate');
+    negate();
+    console.log('After negate, hasNaN:', p_background.some(isNaN));
+  }
 
+  console.log('Before combine_textures, hasNaN:', p_background.some(isNaN));
   combine_textures();
+  console.log('After combine_textures, hasNaN:', p_background.some(isNaN));
 
   knot1 = 0;
   if (!RANDOM(3)) {
@@ -1073,6 +1163,7 @@ function pclear(target, newval) {
 // ============ Module initialization and exports ============
 
 function generatePlanetTexture(type, seed) {
+  console.log('generatePlanetTexture: palette.length =', palette.length);
   if (seed === undefined) seed = 12345;
 
   c_srand(seed);
@@ -1126,6 +1217,14 @@ function generatePlanetTexture(type, seed) {
       } catch (e) {
         console.error('type 2 error:', e);
       }
+      console.log(
+        'After create_thickatmosphere_space, p_background sample:',
+        p_background[0],
+        p_background[100],
+        p_background[1000],
+        'hasNaN:',
+        p_background.some(isNaN)
+      );
       break;
     case 3:
       console.log('Creating type 3');
@@ -1134,6 +1233,14 @@ function generatePlanetTexture(type, seed) {
       } catch (e) {
         console.error('type 3 error:', e);
       }
+      console.log(
+        'After create_felysian_space, p_background sample:',
+        p_background[0],
+        p_background[100],
+        p_background[1000],
+        'hasNaN:',
+        p_background.some(isNaN)
+      );
       break;
     case 4:
       console.log('Creating type 4');
@@ -1179,6 +1286,18 @@ function generatePlanetTexture(type, seed) {
   }
 
   finish_space();
+
+  console.log(
+    'After finish_space, p_background sample:',
+    p_background[0],
+    p_background[100],
+    p_background[1000],
+    p_background[10000],
+    'min:',
+    Math.min(...p_background),
+    'max:',
+    Math.max(...p_background)
+  );
 
   // Convert to canvas
   var width = 512;
