@@ -1081,11 +1081,22 @@ function generatePlanetTexture(type, seed) {
   generatePalette(type);
   prepare_space();
 
+  console.log(
+    'Type',
+    type,
+    'p_background sample:',
+    p_background[0],
+    p_background[100],
+    p_background[1000]
+  );
+
   switch (type) {
     case 0:
+      console.log('Creating type 0');
       create_volcanic_space();
       break;
     case 1:
+      console.log('Creating type 1');
       try {
         create_craterized_space();
       } catch (e) {
@@ -1114,21 +1125,45 @@ function generatePlanetTexture(type, seed) {
       }
       break;
     case 5:
-      create_thinatmosphere_space();
+      try {
+        create_thinatmosphere_space();
+      } catch (e) {
+        console.error('type 5 error:', e);
+      }
       break;
     case 6:
-      create_largeinconsistent_space();
+      try {
+        create_largeinconsistent_space();
+      } catch (e) {
+        console.error('type 6 error:', e);
+      }
       break;
     case 7:
-      create_icy_space();
+      try {
+        create_icy_space();
+      } catch (e) {
+        console.error('type 7 error:', e);
+      }
       break;
     case 8:
-      create_quartz_space();
+      try {
+        create_quartz_space();
+      } catch (e) {
+        console.error('type 8 error:', e);
+      }
       break;
     default:
       create_icy_space();
       break;
   }
+
+  console.log(
+    'After switch, p_background sample:',
+    p_background[0],
+    p_background[100],
+    p_background[1000],
+    p_background[10000]
+  );
 
   finish_space();
 

@@ -36,7 +36,7 @@ function c_srand(seed) {
 
 //In noctis: RANDOM() or random()
 function c_random(num) {
-  return parseInt(c_rand() * num / (RAND_MAX + 1));
+  return parseInt((c_rand() * num) / (RAND_MAX + 1));
 }
 var random = c_random;
 var RANDOM = c_random;

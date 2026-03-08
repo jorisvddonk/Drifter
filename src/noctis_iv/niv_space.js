@@ -111,7 +111,7 @@ function create_largeinconsistent_space() {
   for (c = 0; c < r; c++) {
     Acr = ranged_fast_random(15) + 1;
     Acy = ranged_fast_random(178 - 2 * Acr) + Acr;
-    Acx = (60 * secs / (ranged_fast_random(8000) + 360)) % 360;
+    Acx = ((60 * secs) / (ranged_fast_random(8000) + 360)) % 360;
     gr = ranged_fast_random(2) + 1;
     if (ranged_fast_random(10)) Acr = Acr / 2 + 1;
     else gr *= 3;
@@ -140,7 +140,7 @@ function create_thickatmosphere_space() {
     Acy = ranged_fast_random(178 - 2 * Acr) + Acr;
     switch (RANDOM(2)) {
       case 0:
-        Acx = (10 * secs / (ranged_fast_random(3600) + 180)) % 360;
+        Acx = ((10 * secs) / (ranged_fast_random(3600) + 180)) % 360;
         gr = ranged_fast_random(12) + 2;
         storm();
         break;
@@ -221,7 +221,7 @@ function create_thinatmosphere_space() {
   for (c = 0; c < r; c++) {
     Acr = ranged_fast_random(30) + 1;
     Acy = ranged_fast_random(178 - 2 * Acr) + Acr;
-    Acx = (60 * secs / (ranged_fast_random(3600) + 360)) % 360;
+    Acx = ((60 * secs) / (ranged_fast_random(3600) + 360)) % 360;
     gr = ranged_fast_random(2) + 1;
     permanent_storm();
   }

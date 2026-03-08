@@ -293,7 +293,7 @@ AFRAME.registerSystem('noctis', {
   },
 
   getIDForStarCoordinates: function(x, y, z) {
-    return x / 100000 * (y / 100000) * (z / 100000);
+    return (x / 100000) * (y / 100000) * (z / 100000);
   },
 
   getStarByName: function(starname) {

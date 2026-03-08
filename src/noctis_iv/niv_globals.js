@@ -24,7 +24,7 @@ var star_classes = 12;
 var planet_types = 10;
 var maxbodies = 80;
 var deg = Math.PI / 180;
-var qt_M_PI = 4 * Math.PI / 3;
+var qt_M_PI = (4 * Math.PI) / 3;
 var class_ray = [
   5000,
   15000,

@@ -21,7 +21,7 @@ function extract_target_info(sysinfo) {
 	echo $ss."\n";
 	c_srand($ss);
 	*/
-  var seed = parseInt(x / 100000 * (y / 100000) * (z / 100000));
+  var seed = parseInt((x / 100000) * (y / 100000) * (z / 100000));
   c_srand(seed);
   console.log('Target info seed: ', seed);
   var s_class = c_random(star_classes);
@@ -241,9 +241,9 @@ function prepare_star(sysinfo) {
   for (n = 0; n < nop; n++) {
     nearstar_p_ray[n] =
       avg_planet_ray[nearstar_p_type[n]] +
-      avg_planet_ray[nearstar_p_type[n]] * zrandom(100) / 200;
+      (avg_planet_ray[nearstar_p_type[n]] * zrandom(100)) / 200;
     nearstar_p_ray[n] *= avg_planet_sizing;
-    nearstar_p_orb_ray[n] = key_radius + key_radius * zrandom(100) / 500;
+    nearstar_p_orb_ray[n] = key_radius + (key_radius * zrandom(100)) / 500;
     nearstar_p_orb_ray[n] += key_radius * avg_planet_ray[nearstar_p_type[n]];
     if (n < 8) key_radius += nearstar_p_orb_ray[n];
     else key_radius += 0.22 * nearstar_p_orb_ray[n];
