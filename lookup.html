@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Planet Lookup</title>
+    <style>
+        body { font-family: monospace; background: #111; color: #0f0; padding: 20px; }
+        h1 { color: #0f0; }
+        input { padding: 8px; font-size: 16px; background: #222; color: #0f0; border: 1px solid #0f0; }
+        button { padding: 8px 16px; font-size: 16px; background: #0f0; color: #111; border: none; cursor: pointer; }
+        button:hover { background: #0a0; }
+        #result { margin-top: 20px; }
+        .entry { background: #222; padding: 15px; margin: 10px 0; border: 1px solid #0f0; }
+        .star { border-color: #ff0; }
+        .planet { border-color: #0ff; }
+        .error { color: #f00; }
+        .type-0 { color: #f55; }
+        .type-1 { color: #aa5; }
+        .type-2 { color: #5af; }
+        .type-3 { color: #faf; }
+        .type-4 { color: #a5a; }
+        .type-5 { color: #5aa; }
+        .type-7 { color: #aaf; }
+        .type-8 { color: #ffa; }
+    </style>
+</head>
+<body>
+    <h1>Planet Lookup</h1>
+    <p>Enter a planet or star name to look up:</p>
+    <input type="text" id="searchName" placeholder="e.g., FENIA, BALASTRACKONASTREYA" />
+    <button onclick="lookup()">Lookup</button>
+    <div id="result"></div>
+
+    <script src="./niv_engine.js"></script>
+
+    <script>
+var typeToClass = {
+    ' S00': 0, ' S01': 1, ' S02': 2, ' S03': 3, ' S04': 4,
+    ' S05': 5, ' S06': 6, ' S07': 7, ' S08': 8, ' S09': 9,
+    ' S10': 10, ' S11': 11
+};
+
+function getStarClassFromType(typeStr) {
+    return typeToClass[typeStr] !== undefined ? typeToClass[typeStr] : 0;
+}
+
+var starmapData = null;
+
+function loadStarmap() {
+    return fetch('assets/starmap2.bin')
+        .then(function(res) { return res.arrayBuffer(); })
+        .then(function(buffer) {
+            var dataView = new DataView(buffer);
+            var offset = 0;
+            var entries = [];
+            
+            while (offset < dataView.byteLength) {
+                var star_x = dataView.getInt32(offset, true); offset += 4;
+                var star_y = dataView.getInt32(offset, true); offset += 4;
+                var star_z = dataView.getInt32(offset, true); offset += 4;
+                var index = dataView.getInt32(offset, true); offset += 4;
+                var unused = dataView.getInt32(offset, true); offset += 4;
+                
+                var nameBytes = [];
+                for (var i = 0; i < 20; i++) {
+                    nameBytes.push(dataView.getUint8(offset + i));
+                }
+                var name = String.fromCodePoint.apply(null, nameBytes).trim();
+                offset += 20;
+                
+                var typeBytes = [];
+                for (var i = 0; i < 4; i++) {
+                    typeBytes.push(dataView.getUint8(offset + i));
+                }
+                var typeStr = String.fromCodePoint.apply(null, typeBytes);
+                offset += 4;
+                
+                if (name.length > 0) {
+                    var isPlanet = typeStr[1] === 'P';
+                    var bodyNum = 0;
+                    if (isPlanet) {
+                        var numStr = typeStr.substring(2);
+                        bodyNum = parseInt(numStr, 10);
+                    }
+                    
+                    var idscale = 0.00001;
+                    var object_id;
+                    if (isPlanet) {
+                        object_id = (star_x * idscale) * (star_y * idscale) * (star_z * idscale) - bodyNum;
+                    } else {
+                        object_id = (star_x * idscale) * (star_y * idscale) * (star_z * idscale);
+                    }
+                    
+                    entries.push({
+                        name: name,
+                        x: star_x,
+                        y: star_y,
+                        z: star_z,
+                        type: typeStr,
+                        isPlanet: isPlanet,
+                        bodyNum: bodyNum,
+                        objectId: object_id
+                    });
+                }
+            }
+            
+            starmapData = entries;
+            return entries;
+        });
+}
+
+function lookup() {
+    var searchName = document.getElementById('searchName').value.trim().toUpperCase();
+    var resultDiv = document.getElementById('result');
+    
+    if (!starmapData) {
+        resultDiv.innerHTML = '<p class="error">Loading starmap...</p>';
+        loadStarmap().then(function() { lookup(); });
+        return;
+    }
+    
+    var matches = starmapData.filter(function(entry) {
+        return entry.name.toUpperCase().indexOf(searchName) === 0;
+    });
+    
+    if (matches.length === 0) {
+        resultDiv.innerHTML = '<p class="error">No matches found for "' + searchName + '"</p>';
+        return;
+    }
+    
+    if (matches.length > 10) {
+        resultDiv.innerHTML = '<p class="error">Too many matches (' + matches.length + '). Please be more specific.</p>';
+        return;
+    }
+    
+    var html = '';
+    
+    matches.forEach(function(entry) {
+        if (entry.isPlanet) {
+            var starId = entry.objectId - entry.bodyNum;
+            
+            var starEntry = starmapData.find(function(e) {
+                return !e.isPlanet && Math.abs(e.objectId - starId) < 0.0001;
+            });
+            
+            var starClass = 0;
+            var starX = entry.x;
+            var starY = entry.y;
+            var starZ = entry.z;
+            
+            if (starEntry) {
+                starClass = getStarClassFromType(starEntry.type);
+                starX = starEntry.x;
+                starY = starEntry.y;
+                starZ = starEntry.z;
+            } else {
+                starClass = getStarClassFromType(entry.type);
+            }
+            
+            var systemInfo = getSystemInfo(starX, starY, starZ);
+            var planetType = systemInfo.bodies[entry.bodyNum - 1].type;
+            
+            if (planetType === undefined) {
+                planetType = 0;
+            }
+            
+            html += '<div class="entry planet">';
+            html += '<h3>' + entry.name + ' (Planet)</h3>';
+            html += '<p><strong>Planet Number:</strong> ' + entry.bodyNum + '</p>';
+            html += '<p><strong>Type:</strong> <span class="type-' + planetType + '">' + PLANET_CODES[planetType] + '</span> (type ' + planetType + ')</p>';
+            if (starEntry) {
+                html += '<p><strong>Parent Star:</strong> ' + starEntry.name + '</p>';
+                html += '<p><strong>Star Coordinates:</strong> (' + starEntry.x + ', ' + starEntry.y + ', ' + starEntry.z + ')</p>';
+            }
+            html += '<p><strong>Planet Coordinates:</strong> (' + entry.x + ', ' + entry.y + ', ' + entry.z + ')</p>';
+            html += '</div>';
+        } else {
+            var starClass = getStarClassFromType(entry.type);
+            var systemInfo = getSystemInfo(entry.x, entry.y, entry.z);
+            
+            html += '<div class="entry star">';
+            html += '<h3>' + entry.name + ' (Star)</h3>';
+            html += '<p><strong>Star Class:</strong> ' + starClass + '</p>';
+            html += '<p><strong>Coordinates:</strong> (' + entry.x + ', ' + entry.y + ', ' + entry.z + ')</p>';
+            html += '<p><strong>Number of Planets:</strong> ' + systemInfo.nop + '</p>';
+            
+            if (systemInfo.nop > 0) {
+                html += '<p><strong>Planets:</strong></p><ul>';
+                for (var i = 0; i < systemInfo.nop; i++) {
+                    var pt = systemInfo.bodies[i].type;
+                    html += '<li>Planet ' + (i + 1) + ': <span class="type-' + pt + '">' + PLANET_CODES[pt] + '</span> (type ' + pt + ')</li>';
+                }
+                html += '</ul>';
+            }
+            
+            html += '</div>';
+        }
+    });
+    
+    resultDiv.innerHTML = html;
+}
+
+document.getElementById('searchName').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') lookup();
+});
+
+loadStarmap();
+    </script>
+</body>
+</html>
