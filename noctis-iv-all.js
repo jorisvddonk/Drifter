@@ -1324,14 +1324,276 @@ function generatePlanetTexture(type, seed) {
 
   ctx.putImageData(imageData, 0, 0);
 
-  // Scale up
+  // Scale up to 512x256
   var scaled = document.createElement('canvas');
-  scaled.width = width;
-  scaled.height = height;
+  scaled.width = 512;
+  scaled.height = 256;
   var scaledCtx = scaled.getContext('2d');
   scaledCtx.imageSmoothingEnabled = true;
   scaledCtx.imageSmoothingQuality = 'high';
-  scaledCtx.drawImage(canvas, 0, 0, 360, 180, 0, 0, width, height);
+  scaledCtx.drawImage(canvas, 0, 0, 360, 180, 0, 0, 512, 256);
+
+  return scaled;
+}
+
+var star_class_names = [
+  'Class 0',
+  'Class 1',
+  'Class 2',
+  'Class 3',
+  'Class 4',
+  'Class 5',
+  'Class 6',
+  'Class 7',
+  'Class 8',
+  'Class 9',
+  'Class 10',
+  'Class 11'
+];
+
+// Colors from Noctis IV class_rgb (index * 3 for r,g,b)
+var star_class_colors = [
+  [63, 58, 40],
+  [30, 50, 63],
+  [63, 63, 63],
+  [63, 63, 30],
+  [30, 20, 63],
+  [63, 55, 32],
+  [32, 28, 24],
+  [10, 20, 63],
+  [63, 63, 32],
+  [16, 48, 32],
+  [63, 40, 10],
+  [63, 63, 63]
+];
+
+// Colors from Noctis IV class_rgb (index * 3 for r,g,b)
+var star_class_colors = [
+  [63, 58, 40],
+  [30, 50, 63],
+  [63, 63, 63],
+  [63, 63, 30],
+  [30, 20, 63],
+  [63, 55, 32],
+  [32, 28, 24],
+  [10, 20, 63],
+  [63, 63, 32],
+  [16, 48, 32],
+  [63, 40, 10],
+  [63, 63, 63]
+];
+
+var star_palette = new Uint8Array(768);
+
+function generateStarPalette(type) {
+  var baseColor = star_class_colors[type];
+  var r = baseColor[0];
+  var g = baseColor[1];
+  var b = baseColor[2];
+  var variation = 8 + type * 2;
+
+  var colorbase = type * 64;
+
+  for (var i = 0; i < 64; i++) {
+    var t = i / 63;
+    var brightness = Math.pow(t, 0.7);
+
+    var pr = r + (63 - r) * brightness + (Math.random() - 0.5) * variation;
+    var pg = g + (63 - g) * brightness + (Math.random() - 0.5) * variation;
+    var pb = b + (63 - b) * brightness + (Math.random() - 0.5) * variation;
+
+    pr = Math.max(0, Math.min(63, pr));
+    pg = Math.max(0, Math.min(63, pg));
+    pb = Math.max(0, Math.min(63, pb));
+
+    star_palette[colorbase * 3 + i * 3 + 0] = pr;
+    star_palette[colorbase * 3 + i * 3 + 1] = pg;
+    star_palette[colorbase * 3 + i * 3 + 2] = pb;
+  }
+}
+
+function generateStarTexture(type, seed) {
+  if (seed === undefined) seed = 12345;
+  if (type === undefined) type = 4;
+
+  c_srand(seed);
+
+  var star_surface = [];
+
+  for (var y = 0; y < 180; y++) {
+    for (var x = 0; x < 360; x++) {
+      star_surface.push(0);
+    }
+  }
+
+  generateStarPalette(type);
+
+  var num_cells = 20 + type * 5;
+  for (var c = 0; c < num_cells; c++) {
+    var cx = ranged_fast_random(360);
+    var cy = ranged_fast_random(180);
+    var radius = 5 + ranged_fast_random(15);
+    var intensity = ranged_fast_random(30) + 20;
+
+    for (var angle = 0; angle < 2 * Math.PI; angle += 0.1) {
+      for (var r = 0; r < radius; r++) {
+        var px = parseInt(cx + Math.cos(angle) * r);
+        var py = parseInt(cy + Math.sin(angle) * r);
+
+        if (px >= 0 && px < 360 && py >= 0 && py < 180) {
+          var dist = r / radius;
+          var val = intensity * (1 - dist * dist);
+          var idx = py * 360 + px;
+          star_surface[idx] = Math.min(63, star_surface[idx] + val);
+        }
+      }
+    }
+  }
+
+  var num_spots = 2 + ranged_fast_random(5);
+  for (var s = 0; s < num_spots; s++) {
+    var sx = ranged_fast_random(360);
+    var sy = ranged_fast_random(180);
+    var spot_radius = 3 + ranged_fast_random(10);
+
+    for (var angle = 0; angle < 2 * Math.PI; angle += 0.1) {
+      for (var r = 0; r < spot_radius; r++) {
+        var px = parseInt(sx + Math.cos(angle) * r);
+        var py = parseInt(sy + Math.sin(angle) * r);
+
+        if (px >= 0 && px < 360 && py >= 0 && py < 180) {
+          var idx = py * 360 + px;
+          star_surface[idx] = Math.max(0, star_surface[idx] - 15);
+        }
+      }
+    }
+  }
+
+  var num_flares = ranged_fast_random(4);
+  for (var f = 0; f < num_flares; f++) {
+    var fx = ranged_fast_random(360);
+    var fy = ranged_fast_random(180);
+    var flare_len = 10 + ranged_fast_random(30);
+
+    for (var fl = 0; fl < flare_len; fl++) {
+      var fpx = parseInt(fx + (Math.random() - 0.5) * fl * 0.5);
+      var fpy = parseInt(fy + fl * 0.3);
+
+      if (fpx >= 0 && fpx < 360 && fpy >= 0 && fpy < 180) {
+        var idx = fpy * 360 + fpx;
+        var flare_val = ((flare_len - fl) / flare_len) * 20;
+        star_surface[idx] = Math.min(63, star_surface[idx] + flare_val);
+      }
+    }
+  }
+
+  var centerX = 180;
+  var centerY = 90;
+  var maxRadius = 85;
+
+  for (var y = 0; y < 180; y++) {
+    for (var x = 0; x < 360; x++) {
+      var idx = y * 360 + x;
+      var dx = x - centerX;
+      var dy = y - centerY;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+
+      if (dist > maxRadius) {
+        star_surface[idx] = 0;
+      } else {
+        var limb_factor = 1 - Math.pow(dist / maxRadius, 2);
+        limb_factor = Math.pow(limb_factor, 0.5);
+        star_surface[idx] = parseInt(star_surface[idx] * limb_factor);
+      }
+    }
+  }
+
+  for (var i = 0; i < 64800; i++) {
+    star_surface[i] += ranged_fast_random(8) - 4;
+    star_surface[i] = Math.max(0, Math.min(63, star_surface[i]));
+  }
+
+  // Apply smoothing to remove vertical line artifacts
+  function smoothStarSurface(target) {
+    var temp = new Array(64800);
+    for (var y = 0; y < 180; y++) {
+      for (var x = 0; x < 360; x++) {
+        var sum = 0;
+        var count = 0;
+        for (var dy = -1; dy <= 1; dy++) {
+          for (var dx = -1; dx <= 1; dx++) {
+            var nx = x + dx;
+            var ny = y + dy;
+            if (nx >= 0 && nx < 360 && ny >= 0 && ny < 180) {
+              sum += target[ny * 360 + nx];
+              count++;
+            }
+          }
+        }
+        temp[y * 360 + x] = sum / count;
+      }
+    }
+    for (var i = 0; i < 64800; i++) {
+      target[i] = temp[i];
+    }
+  }
+
+  // Apply multiple passes of smoothing
+  for (var s = 0; s < 5; s++) {
+    smoothStarSurface(star_surface);
+  }
+
+  var baseColor = star_class_colors[type];
+
+  // Create canvas at 360x180 (full spherical map)
+  var canvas = document.createElement('canvas');
+  canvas.width = 360;
+  canvas.height = 180;
+  var ctx = canvas.getContext('2d');
+  var imageData = ctx.createImageData(360, 180);
+
+  // Render directly as equirectangular projection
+  for (var y = 0; y < 180; y++) {
+    for (var x = 0; x < 360; x++) {
+      var idx = y * 360 + x;
+      var val = (star_surface[idx] / 63) * 0.5 + 0.5;
+
+      // Apply limb darkening (darker at edges)
+      var centerY = 90;
+      var centerX = 180;
+      var dx = (x - centerX) / 180;
+      var dy = (y - centerY) / 90;
+      var dist = Math.sqrt(dx * dx + dy * dy);
+      var limb = 1 - Math.pow(Math.min(1, dist), 2) * 0.5;
+      val *= limb;
+
+      var dataIdx = idx * 4;
+      imageData.data[dataIdx + 0] = Math.min(
+        255,
+        Math.floor(baseColor[0] * val * 2)
+      );
+      imageData.data[dataIdx + 1] = Math.min(
+        255,
+        Math.floor(baseColor[1] * val * 2)
+      );
+      imageData.data[dataIdx + 2] = Math.min(
+        255,
+        Math.floor(baseColor[2] * val * 2)
+      );
+      imageData.data[dataIdx + 3] = 255;
+    }
+  }
+
+  ctx.putImageData(imageData, 0, 0);
+
+  // Scale up to 512x256
+  var scaled = document.createElement('canvas');
+  scaled.width = 512;
+  scaled.height = 256;
+  var scaledCtx = scaled.getContext('2d');
+  scaledCtx.imageSmoothingEnabled = true;
+  scaledCtx.imageSmoothingQuality = 'high';
+  scaledCtx.drawImage(canvas, 0, 0, 360, 180, 0, 0, 512, 256);
 
   return scaled;
 }
@@ -1339,22 +1601,25 @@ function generatePlanetTexture(type, seed) {
 if (typeof module !== 'undefined' && module.exports) {
   module.exports = {
     generatePlanetTexture,
+    generateStarTexture,
     generatePalette,
     prepare_space,
     finish_space,
     p_background,
-    palette
+    palette,
+    star_class_names
   };
 }
 
-// Also expose for ES6 modules
 window.NoctisIV = {
   generatePlanetTexture,
+  generateStarTexture,
   generatePalette,
   prepare_space,
   finish_space,
   p_background,
-  palette
+  palette,
+  star_class_names
 };
 
-export { generatePlanetTexture };
+export { generatePlanetTexture, generateStarTexture, star_class_colors };

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Noctis IV Star Widget Demo</title>
+  <style>
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background: #0a0a12;
+      color: #eee;
+      margin: 0;
+      padding: 20px;
+      min-height: 100vh;
+    }
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    p.subtitle {
+      text-align: center;
+      color: #888;
+      margin-bottom: 40px;
+    }
+    .controls {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 30px;
+      flex-wrap: wrap;
+    }
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    label {
+      font-size: 12px;
+      color: #888;
+      text-transform: uppercase;
+    }
+    select, input {
+      padding: 8px 12px;
+      border: 1px solid #333;
+      border-radius: 4px;
+      background: #1a1a24;
+      color: #eee;
+      font-size: 14px;
+    }
+    .stars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .star-card {
+      background: #12121a;
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .star-card h3 {
+      margin: 15px 0 5px;
+      font-size: 14px;
+      font-weight: normal;
+    }
+    .star-card .type-name {
+      font-size: 11px;
+      color: #666;
+      margin: 0;
+    }
+    noctis-star {
+      border-radius: 50%;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+  <h1>Noctis IV Star Widget</h1>
+  <p class="subtitle">A Lit component that renders procedurally generated stars</p>
+
+  <div class="controls">
+    <div class="control-group">
+      <label>Star Type</label>
+      <select id="typeSelect">
+        <option value="0">Class 0</option>
+        <option value="1">Class 1</option>
+        <option value="2">Class 2</option>
+        <option value="3">Class 3</option>
+        <option value="4" selected>Class 4</option>
+        <option value="5">Class 5</option>
+        <option value="6">Class 6</option>
+        <option value="7">Class 7</option>
+        <option value="8">Class 8</option>
+        <option value="9">Class 9</option>
+        <option value="10">Class 10</option>
+        <option value="11">Class 11</option>
+      </select>
+    </div>
+    <div class="control-group">
+      <label>Size (px)</label>
+      <input type="range" id="sizeInput" min="100" max="400" value="200">
+    </div>
+    <div class="control-group">
+      <label>Spin Speed</label>
+      <input type="range" id="speedInput" min="1" max="50" value="2">
+    </div>
+    <div class="control-group">
+      <label>Random Seed</label>
+      <input type="number" id="seedInput" value="12345">
+    </div>
+  </div>
+
+  <div class="stars-grid" id="starsGrid"></div>
+
+  <script type="module">
+    import './noctis-star.js';
+
+    const starTypes = [
+      'Class 0',
+      'Class 1',
+      'Class 2',
+      'Class 3',
+      'Class 4',
+      'Class 5',
+      'Class 6',
+      'Class 7',
+      'Class 8',
+      'Class 9',
+      'Class 10',
+      'Class 11'
+    ];
+
+    const grid = document.getElementById('starsGrid');
+    let demoStar = null;
+
+    function createDemoStar() {
+      if (demoStar) {
+        demoStar.remove();
+      }
+      demoStar = document.createElement('noctis-star');
+      demoStar.setAttribute('type', document.getElementById('typeSelect').value);
+      demoStar.setAttribute('size', document.getElementById('sizeInput').value);
+      demoStar.setAttribute('speed', document.getElementById('speedInput').value / 1000);
+      demoStar.setAttribute('seed', document.getElementById('seedInput').value);
+      
+      const card = document.createElement('div');
+      card.className = 'star-card';
+      card.innerHTML = `<h3>Interactive Demo</h3><p class="type-name">Adjust controls above</p>`;
+      card.insertBefore(demoStar, card.children[1]);
+      
+      grid.innerHTML = '';
+      grid.appendChild(card);
+    }
+
+    function createAllStars() {
+      grid.innerHTML = '';
+      for (let i = 0; i < 12; i++) {
+        const card = document.createElement('div');
+        card.className = 'star-card';
+        
+        const star = document.createElement('noctis-star');
+        star.setAttribute('type', i);
+        star.setAttribute('size', '180');
+        star.setAttribute('speed', '2');
+        
+        card.innerHTML = `<h3>Type ${i}</h3><p class="type-name">${starTypes[i]}</p>`;
+        card.insertBefore(star, card.children[1]);
+        grid.appendChild(card);
+      }
+    }
+
+    document.getElementById('typeSelect').addEventListener('change', createDemoStar);
+    document.getElementById('sizeInput').addEventListener('input', createDemoStar);
+    document.getElementById('speedInput').addEventListener('input', createDemoStar);
+    document.getElementById('seedInput').addEventListener('change', createDemoStar);
+
+    createDemoStar();
+  </script>
+</body>
+</html>
