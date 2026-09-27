@@ -1,35 +1,37 @@
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const path = require('path');
 
-var plugins = [
-  new HtmlWebpackPlugin({
-    template: 'index.html',
-    inject: 'head'
-  }),
-  new CopyWebpackPlugin([{ from: 'assets', to: 'assets' }])
-];
-if (
-  process.env.NODE_ENV === 'production' ||
-  process.env.npm_lifecycle_event === 'webpack'
-) {
-  plugins.unshift(new UglifyJsPlugin({}));
-}
-
 module.exports = {
+  mode: 'production',
   entry: './index.js',
   output: {
-    path: path.resolve('./dist/'),
-    filename: 'bundle.js'
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+    publicPath: '',
+    clean: true,
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.glsl$/,
-        loader: 'webpack-glsl-loader'
-      }
-    ]
+        type: 'asset/source',
+      },
+    ],
   },
-  plugins: plugins
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: 'index.html',
+      inject: 'head',
+      scriptLoading: 'blocking',
+    }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: 'assets', to: 'assets' }],
+    }),
+  ],
+  resolve: {
+    fallback: {
+      url: require.resolve('url/'),
+    },
+  },
 };
