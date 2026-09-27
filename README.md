@@ -7,7 +7,7 @@ Currently, it consists of two parts:
 * A [Noctis IV STARMAP viewer](https://youtu.be/0MSrKIqAq9Q), reminiscient of NoctisMapper, accessible from within the Stardrifter. Full functionality only works if you have VR controllers available (most likely, only the Touch controllers of the Oculus Rift work properly).
 * A [simple planet exploration demo](https://youtu.be/vBojEvKK4pU), with planet terrains mimicing those of Noctis IV. Some of the original code has been ported to JavaScript for this to work.
 
-http://drifter.sarvva.moos.es/
+https://jorisvddonk.github.io/Drifter/
 
 ## System requirements
 
