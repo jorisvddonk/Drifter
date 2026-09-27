@@ -32,7 +32,8 @@
     "webpack-dev-server": "^6.0.0"
   },
   "devDependencies": {
-    "prettier": "^3.9.9"
+    "prettier": "^3.9.9",
+    "webpack-cli": "^7.2.3"
   },
   "lint-staged": {
     "*.js": [
